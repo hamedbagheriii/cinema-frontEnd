@@ -2,6 +2,7 @@ import Layout from '@/components/auth/layout';
 import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import FormikInput from '@/components/formik/input';
+import SubmitBtn from '@/components/formik/submitButton';
 
 // ! dependencies
 const initalvalues = {
@@ -17,10 +18,10 @@ const onSubmit = (values: any, actions: any) => {
 const Login = () => {
   return (
     <Layout>
-      <div dir='rtl' className='w-6/12 h-fit py-3 rounded-lg bg-slate-50 shadow-md'>
+      <div dir='rtl' className='w-11/12 md:w-6/12 h-fit py-5 max-w-96 rounded-lg bg-white shadow-2xl'>
         <div className='flex flex-col items-center justify-center '>
           <i className='bi bi-person-circle text-[70px] text-red-700'></i>
-          <span className='text-[20px] -mt-5 font-bold text-red-700'>ورود به حساب</span>
+          <span className='text-[20px] -mt-4 font-bold text-red-700'>ورود به حساب</span>
         </div>
         <Formik
           initialValues={initalvalues}
@@ -30,7 +31,7 @@ const Login = () => {
         >
           {(formik: FormikProps<any>) => {
             return (
-              <Form className='flex flex-col gap-4 items-center pt-4 border-t-2 mt-5 justify-center '>
+              <Form className='flex flex-col gap-5 items-center pt-6 pb-3 border-t-2 mt-5 justify-center '>
                 <FormikInput
                   name='email'
                   type='email'
@@ -46,7 +47,9 @@ const Login = () => {
                   control='password'
                 />
 
-
+                <SubmitBtn control='' formik={formik} title='ورود'
+                 className='w-9/12 mt-4 bg-red-700 hover:bg-red-800
+                 mx-auto ' />
               </Form>
             );
           }}
