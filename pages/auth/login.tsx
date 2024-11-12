@@ -3,8 +3,9 @@ import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import FormikControl from '@/components/formik/formikControl';
 import * as Yup from 'yup';
-
-
+import { loginUserService } from '@/services/auth/auth';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 // ! formik dependencies
 const initalvalues = {
@@ -12,37 +13,51 @@ const initalvalues = {
   password: '',
 };
 
-const onSubmit = (values: any, actions: any) => {
-  console.log(values);
+const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
+  const res = await loginUserService(values);
+  if (res.status === 200) {
+    setTimeout(() => {
+      toast({
+        title: 'شما با موفقیت وارد حساب کاربری خود شدید !',
+        status: 'success',
+        duration: 3000,
+        className: `bg-green-500 text-white shadow-lg
+        border-0 shadow-green-800`,
+        dir: 'rtl',
+      });
+    }, 1000);
+
+    setTimeout(() => {
+      router.push('/dashboard');
+    }, 3000);
+  } else {
+    actions.setIsSubmiting(false);
+  }
 };
 
 const validationSchema = Yup.object({
-  email : Yup.string().email('لطفا فرمت ایمیل را رعایت کنید .')
-  .required('این فیلد الزامی میباشد .'),
+  email: Yup.string()
+    .email('لطفا فرمت ایمیل را رعایت کنید .')
+    .required('این فیلد الزامی میباشد .'),
 
-  password : Yup.string().required('این فیلد الزامی میباشد .')
-  .min(6,'حداقل 6 کاراکتر وارد کنید .')
-})
+  password: Yup.string()
+    .required('این فیلد الزامی میباشد .')
+    .min(6, 'حداقل 6 کاراکتر وارد کنید .'),
+});
 // ! formik dependencies
 
 
-
 const Login = () => {
-  return (
-    <Layout>
-      <div
-        dir='rtl'
-        className='w-11/12 md:w-6/12 h-fit py-5 max-w-96 rounded-lg bg-white shadow-black/50 shadow-2xl'
-      >
-        <div className='flex flex-col items-center justify-center '>
-          <i className='bi bi-person-circle text-[70px] text-red-700'></i>
-          <span className='text-[20px] -mt-4 font-bold text-red-700'>ورود به حساب</span>
-        </div>
+  const router = useRouter();
+  const { toast } = useToast();
 
+  return (
+    <Layout title={'ورود به حساب'} icon={'bi bi-person-circle'}>
+      <>
         <Formik
           initialValues={initalvalues}
           onSubmit={(values, actions) => {
-            onSubmit(values, actions);
+            onSubmit(values, actions, toast, router);
           }}
           validationSchema={validationSchema}
         >
@@ -74,8 +89,7 @@ const Login = () => {
             );
           }}
         </Formik>
-
-      </div>
+      </>
     </Layout>
   );
 };
