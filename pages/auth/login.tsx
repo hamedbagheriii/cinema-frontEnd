@@ -1,4 +1,4 @@
-import Layout from '@/components/auth/layout';
+import Layout from '@/components/layout/auth/layout';
 import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import FormikControl from '@/components/formik/formikControl';
@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { loginUserService } from '@/services/auth/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 // ! formik dependencies
 const initalvalues = {
@@ -46,7 +47,6 @@ const validationSchema = Yup.object({
 });
 // ! formik dependencies
 
-
 const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
@@ -85,6 +85,11 @@ const Login = () => {
                   title='ورود'
                   className='w-9/12 mt-4'
                 />
+
+                <Link href='/auth/register' className='text-sm'>
+                  حساب کاربری ندارید ؟{' '}
+                  <span className='text-red-700'>ثبت نام . . .</span>
+                </Link>
               </Form>
             );
           }}
