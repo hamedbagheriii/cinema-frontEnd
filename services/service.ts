@@ -1,9 +1,8 @@
 import axios, { AxiosPromise } from 'axios';
-import { error } from 'console';
 import Cookie from 'universal-cookie';
 
 // ! dependencies
-export const Cookies = new Cookie();
+export const Cookies = new Cookie(null , {path : '/'});
 // ! dependencies
 
 // ! interceptors =>>>
@@ -23,9 +22,10 @@ axios.interceptors.response.use((res : any)=>{
 
 
 // ! service =>>>
+export const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
 type ServiceProps = (url: string, method: string, data?: any) => AxiosPromise;
 export const service: ServiceProps = async (url, method, data = null) => {
-  const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
   return await axios({
     baseURL,
@@ -34,7 +34,7 @@ export const service: ServiceProps = async (url, method, data = null) => {
     data,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: (await Cookies.get('token') || ''),
+      Authorization: (await Cookies.get('userToken') || ''),
     },
   });
 };

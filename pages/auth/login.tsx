@@ -7,6 +7,7 @@ import { loginUserService } from '@/services/auth/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Cookies } from '@/services/service';
 
 // ! formik dependencies
 const initalvalues = {
@@ -17,6 +18,8 @@ const initalvalues = {
 const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
   const res = await loginUserService(values);
   if (res.status === 200) {
+    Cookies.set('userToken', res.data.token);
+
     setTimeout(() => {
       toast({
         title: 'شما با موفقیت وارد حساب کاربری خود شدید !',
@@ -33,6 +36,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
     }, 3000);
   } else {
     actions.setIsSubmiting(false);
+    Cookies.remove('userToken');
   }
 };
 

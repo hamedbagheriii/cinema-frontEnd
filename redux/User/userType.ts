@@ -1,0 +1,3 @@
+export const GET_USER_RESPONSE = 'GET_USER_RESPONSE';
+export const GET_USER_LOADING = 'GET_USER_LOADING';
+export const GET_USER_ERROR = 'GET_USER_ERROR'; 
