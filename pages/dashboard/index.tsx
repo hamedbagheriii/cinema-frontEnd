@@ -1,22 +1,20 @@
-import { handleGetUser } from '@/redux/User/userAction';
-
+import { useToken } from '@/hooks/use-Token';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 const Index = () => {
-    const dispatch : any = useDispatch();
+  const { isLoading, isUser } = useToken();
+const router = useRouter()
 
-    useEffect(() => {
-        dispatch(handleGetUser());
-    }, []);
-    const {user , loading} = useSelector((state : any)=>state.user);
-
-    
-    return (
+  return (
+    isLoading || isUser ? (
         <div>
-
+            sd
         </div>
-    );
-}
+    ) : (
+        router.push('/auth/login')
+    )
+  )
+};
 
 export default Index;

@@ -1,18 +1,19 @@
+import Header from '@/components/layout/main/header';
 import { Toaster } from '@/components/ui/toaster';
-import store from '@/redux/store';
+import { useToken } from '@/hooks/use-Token';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
+import { useRouter } from 'next/router';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const { isLoading } = useToken();
+  const router = useRouter()
+
   return (
     <>
-      <Provider store={store}>
-        <>
-          <Component {...pageProps} />
-          <Toaster />
-        </>
-      </Provider>
+      {!router.pathname.startsWith('/auth/') ? <Header/> : null}
+      <Component {...pageProps} />
+      <Toaster />
     </>
   );
 }

@@ -9,7 +9,7 @@ export const Cookies = new Cookie(null , {path : '/'});
 axios.interceptors.response.use((res : any)=>{
   if (!res.data.success) {
     console.log(res.data.message);
-    return alert(res.data.message);
+    return console.log(res.data.message);
   }  
 
 
