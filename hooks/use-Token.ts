@@ -7,10 +7,9 @@ export const useToken = () => {
 
     const handleCheckToken = async ()=>{
         const res = await getUserDataService();
-        console.log(res);
         
         if (res?.status === 200) {
-            setIsUser(res.data);
+            setIsUser(res.data.data);
         } else {
             setIsUser(null);
         }
