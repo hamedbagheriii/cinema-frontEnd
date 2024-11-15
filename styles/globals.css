@@ -117,3 +117,13 @@ body {
   background:linear-gradient(#800101ef, #800101ef) ,
   url('../assets/image/images.png')  center center fixed ;
 }
+
+.isSidebar{
+  width: 65% !important;
+  transform: translateX(-120%);
+}
+
+.isSidebar.active{
+  transition: all 1s ease-in-out;
+  transform: translateX(0%);
+}

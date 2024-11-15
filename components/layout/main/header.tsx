@@ -11,11 +11,13 @@ import {
 } from '@radix-ui/react-dropdown-menu';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
+import Sidebar from './sidebar';
 
 const Header = () => {
   const { isUser } = useToken();
   const router = useRouter();
+  const [isSidebar, setSidebar] = useState(false);
 
   const LinkStyle = `hover:bg-black/90 transition-all px-4 py-1
   rounded-full font-normal duration-200 text-white `;
@@ -34,15 +36,15 @@ const Header = () => {
         >
           سینما TV
         </Link>
-        <Link href={'/movie'} className={LinkStyle}>
+        <Link href={'/movie'} className={LinkStyle + ' hidden sm:flex'}>
           فیلم
         </Link>
-        <Link href={'/cinema'} className={LinkStyle}>
+        <Link href={'/cinema'} className={LinkStyle + ' hidden sm:flex'}>
           سینما
         </Link>
         <Input
           className='max-w-56 hidden border-2 hover:border-black/60 hover:shadow-black/50 lg:flex placeholder:text-white'
-          placeholder='جستجو . . . ' 
+          placeholder='جستجو . . . '
         />
       </div>
 
@@ -50,7 +52,7 @@ const Header = () => {
       <div className='w-full flex justify-end pe-4'>
         <DropdownMenu>
           {isUser ? (
-            <DropdownMenuTrigger className={`${buttonStyle} ${LinkStyle}`}>
+            <DropdownMenuTrigger className={`${buttonStyle} ${LinkStyle} hidden sm:flex`}>
               حساب کاربری
             </DropdownMenuTrigger>
           ) : (
@@ -60,8 +62,10 @@ const Header = () => {
           )}
 
           <DropdownMenuContent className=' mt-4 text-center flex bg-red-800 flex-col rounded-lg px-7 py-4 space-y-3'>
+            <span>{isUser?.fristName + ' ' + isUser?.lastName}</span>
+            <hr />
             <Link href={'/movie'} className={LinkStyle + '  px-10'}>
-              داشبورد 
+              داشبورد
             </Link>
             <Link href={'/cinema'} className={LinkStyle + '  px-10'}>
               سینما
@@ -72,7 +76,17 @@ const Header = () => {
             </Link>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <i
+          className='bi bi-list text-center sm:hidden flex cursor-pointer'
+          onClick={() => setSidebar(true)}
+          style={{ fontSize: '1.5rem' }}
+        ></i>
       </div>
+
+      {/* sidebar */}
+      <Sidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser}/>
+
     </div>
   );
 };
