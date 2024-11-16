@@ -1,3 +1,4 @@
+import { useToast } from '@/hooks/use-toast';
 import axios, { AxiosPromise } from 'axios';
 import Cookie from 'universal-cookie';
 
@@ -17,7 +18,9 @@ axios.interceptors.response.use(
   },
   (err: any) => {
     if (!err.request.responseURL.includes('/auth/user')) {
-      alert(err.response.data.message || err.message);
+      console.log(err.response.data.message || err.message);
+
+      return err;
     }
   }
 );

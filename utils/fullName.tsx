@@ -7,8 +7,8 @@ interface fullNameProps {
 }
 const FullName: FC<fullNameProps> = ({ isUser, className, icon = false }) => {
   return (
-    <span dir='ltr' className={className}>
-      {icon && <i className='bi bi-person-circle me-2 ' style={{ fontSize: 17 }}></i>}
+    <span dir='ltr' className={`${className}`}>
+      {icon && <i className='bi bi-person-circle me-2' style={{ fontSize: 17 }}></i>}
       {`${isUser?.fristName}  ${isUser?.lastName}`}
     </span>
   );

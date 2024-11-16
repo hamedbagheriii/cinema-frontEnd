@@ -20,3 +20,11 @@ export const checkUserService = async (Cookie : any) => {
 export const getUserDataService = async () => {
   return await service('/auth/user', 'get');
 };
+
+export const updateUserService = async (data : any)=>{
+  return service('/auth/update' , 'put' , data)
+}
+
+export const updatePassService = async (data : any)=>{
+  return service('/auth/update/password' , 'put' , data)
+}

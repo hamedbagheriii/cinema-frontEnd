@@ -17,7 +17,7 @@ const FormikSwitch: FC<SwitchProps> = ({ name, className, label }) => {
       {(formik: FieldProps<any>) => {
         return (
           <div
-            className={`flex flex-row w-11/12 items-center mx-auto max-w-sm justify-around ${className}`}
+            className={`flex flex-row w-11/12 items-center mt-5 mx-auto max-w-sm justify-around ${className}`}
           >
             <Label htmlFor={name} className='text-[17px] font-bold text-red-700'>
               {label} :
