@@ -13,17 +13,9 @@ interface sidebarProps {
   isSidebar: boolean;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   isUser: any;
+  handleCheckLink : (path : string) => string | undefined;
 }
-const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
-    const router = useRouter();
-
-    // handle check Link Active =>
-    const handleCheckLink = (path: string) => {
-      if (router.pathname === path) {
-        return ' bg-black/50 font-bold';
-      }
-    };
-
+const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser , handleCheckLink }) => {
 
   return (
     <>
@@ -42,7 +34,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
         <div className={`w-full h-16 flex ${isUser ? 'mt-3 mb-2' : 'mt-1 mb-0'} justify-between items-center  `}>
           <i className='bi bi-x-lg cursor-pointer hover:bg-black/50 transition-all duration-150 px-2
           pt-2 pb-1 rounded-md' onClick={() => setSidebar(false)}></i>
-          {isUser && <FullName icon={true} isUser={isUser} />}
+          {isUser && <FullName icon={true} isUser={isUser} className='pt-1'/>}
         </div>
         <hr className='mb-4' />
 
