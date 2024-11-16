@@ -6,6 +6,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import LinkCompo from '@/utils/Link';
+import FullName from '@/utils/fullName';
+import { useRouter } from 'next/router';
 
 interface sidebarProps {
   isSidebar: boolean;
@@ -13,6 +15,16 @@ interface sidebarProps {
   isUser: any;
 }
 const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
+    const router = useRouter();
+
+    // handle check Link Active =>
+    const handleCheckLink = (path: string) => {
+      if (router.pathname === path) {
+        return ' bg-black/50 font-bold';
+      }
+    };
+
+
   return (
     <>
         {/* sidebar layer */}
@@ -27,8 +39,10 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       shadow-red-800 z-10 flex px-6 flex-col`} >
 
         {/* sidebar header */}
-        <div className='w-full h-16 flex mb-3 pt-2 justify-between items-center  '>
-          <i className='bi bi-x-lg cursor-pointer' onClick={() => setSidebar(false)}></i>
+        <div className={`w-full h-16 flex ${isUser ? 'mt-3 mb-2' : 'mt-1 mb-0'} justify-between items-center  `}>
+          <i className='bi bi-x-lg cursor-pointer hover:bg-black/50 transition-all duration-150 px-2
+          pt-2 pb-1 rounded-md' onClick={() => setSidebar(false)}></i>
+          {isUser && <FullName icon={true} isUser={isUser} />}
         </div>
         <hr className='mb-4' />
 
@@ -38,8 +52,10 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
           {isUser ? (
             <Accordion type='single' collapsible>
               <AccordionItem value='item-1' className='text-white Accordion'>
-                <AccordionTrigger className='text-[16px] text-white
-                mb-3 decoration-red-700 font-normal'>
+                <AccordionTrigger className={`text-[16px] text-white px-3
+                mb-3 decoration-black/50 font-normal hover:bg-black/50 
+                transition-all duration-150 rounded-md 
+                ${handleCheckLink(('/dashboard' || '/dashboard/ticket'))}`}>
                   <div className='flex gap-2 text-center'>
                     <i className='bi bi-columns-gap mt-0.5'></i>
                     داشبورد
@@ -50,7 +66,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                   <hr className='w-full' />
                   <LinkCompo
                     title='پنل کاربری'
-                    linkClass='pl-8'
+                    linkClass={`pl-8 ${handleCheckLink('/dashboard')}`}
                     iconClass='person-circle me-2'
                     path={'/dashboard'}
                   />
@@ -58,8 +74,8 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                   <hr className='w-11/12 ms-auto' />
                   <LinkCompo
                     title='بلیط ها'
-                    iconClass='ticket-perforated me-2'
-                    linkClass='pl-8'
+                    iconClass='ticket-perforated me-2 '
+                    linkClass={`pl-8 ${handleCheckLink('/dashboard/ticket')}`}
                     path={'/dashboard/ticket'}
                   />
                 </AccordionContent>
@@ -70,7 +86,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
               <LinkCompo
                 title='ورود یا ثبت نام'
                 iconClass='person-add me-2'
-                linkClass='mt-2'
+                linkClass='mt-2 pl-3'
                 path={'/auth/login'}
               />
               <hr />
@@ -80,25 +96,26 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
           <LinkCompo
             title='سینما'
             iconClass='camera-reels me-2 -mt-0.5'
+            linkClass={`pl-3 pt-4 ${handleCheckLink('/cinema')}`}
             path={'/cinema'}
           />
           <hr />
           <LinkCompo
             title='فیلم'
             iconClass='film me-2 mt-0.5'
-            linkClass='mt-2'
+            linkClass={`pl-3 pt-4 ${handleCheckLink('/movie')}`}
             path={'/movie'}
           />
         </div>
 
         {/* sidebar footer */}
         {isUser && (
-          <div className='mt-auto flex-col mb-2 flex'>
+          <div className='mt-auto w-full flex-col mb-2 flex'>
             <hr className='w-full' />
             <LinkCompo
               title='خروج از حساب'
-              iconClass='box-arrow-right me-2 mt-0.5'
-              linkClass='text-center mx-auto'
+              iconClass='box-arrow-right me-2 mt-1'
+              linkClass='text-center justify-center mt-2 items-center '
               path={'/auth/logout'}
             />
           </div>

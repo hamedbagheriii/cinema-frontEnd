@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Sidebar from './sidebar';
+import FullName from '@/utils/fullName';
 
 const Header = () => {
   const { isUser } = useToken();
@@ -21,7 +22,7 @@ const Header = () => {
 
   const LinkStyle = `hover:bg-black/90 transition-all px-4 py-1
   rounded-full font-normal duration-200 text-white hidden sm:flex`;
-  const buttonStyle = `bg-transparent border-2 border-black rounded-full`;
+  const buttonStyle = `bg-transparent border-2 border-black rounded-full hidden sm:flex`;
 
   return (
     <div
@@ -69,7 +70,7 @@ const Header = () => {
 
           <DropdownMenuContent className=' mt-4 text-center flex 
            bg-red-800 flex-col rounded-lg px-7 py-4 space-y-3'>
-            <span>{`${isUser?.fristName}  ${isUser?.lastName}`}</span>
+            <FullName isUser={isUser} />
             <hr />
 
             <Link href={'/movie'} className={LinkStyle + ' mx-auto flex px-10'}>
