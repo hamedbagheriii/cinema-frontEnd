@@ -118,12 +118,28 @@ body {
   url('../assets/image/images.png')  center center fixed ;
 }
 
+
+/* ! =============================================      sidbar      ============================================= */
 .isSidebar{
   width: 65% !important;
   transform: translateX(-120%);
 }
 
-.isSidebar.active{
+.isSidebar.active {
   transition: all 1s ease-in-out;
   transform: translateX(0%);
+}
+
+.Accordion svg {
+  color: #ffffff !important;
+}
+
+.sidebarLyer{
+  width: 100% !important;
+  transform: translateX(-120%) !important;
+}
+
+.sidebarLyer.active{
+  transition: all 1.2s ease-in-out !important;
+  transform: translateX(0%) !important;
 }
