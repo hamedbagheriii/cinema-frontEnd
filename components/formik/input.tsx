@@ -11,8 +11,9 @@ export interface InputProps {
   placeholder: string;
   label: string;
   className?: string;
+  disabled ?: boolean;
 }
-const FormikInput: FC<InputProps> = ({ name, type, placeholder, className , label}) => {
+const FormikInput: FC<InputProps> = ({ name, type, placeholder, className , label , disabled = false}) => {
   return (
     <FastField name={name} type={type} placeholder={placeholder}>
       {(form: FieldProps<any>) => {
@@ -25,7 +26,8 @@ const FormikInput: FC<InputProps> = ({ name, type, placeholder, className , labe
               type={type}
               id={name}
               className='h-10 border-2 border-black/80 bg-white font-bold text-[14px] placeholder:text-[14px]'
-              {...form.field}
+              {...form.field} 
+              disabled={disabled}
               placeholder={ placeholder}
             />
             <ErrorAlert name={name} />
