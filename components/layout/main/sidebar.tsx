@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import LinkCompo from '@/utils/Link';
+import LinkCompo, { handleCheckLink } from '@/utils/Link';
 import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
 
@@ -13,41 +13,51 @@ interface sidebarProps {
   isSidebar: boolean;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   isUser: any;
-  handleCheckLink : (path : string) => string | undefined;
 }
-const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser , handleCheckLink }) => {
+const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
+  const router = useRouter();
 
   return (
     <>
-        {/* sidebar layer */}
-        <div className={`fixed top-0 left-0 z-10 h-dvh
+      {/* sidebar layer */}
+      <div
+        className={`fixed top-0 left-0 z-10 h-dvh
         bg-black/30 sm:hidden sidebarLyer w-full ${isSidebar ? 'active' : ''}`}
-        onClick={() => setSidebar(false)}></div>
+        onClick={() => setSidebar(false)}
+      ></div>
 
-
-        {/* sidebar  */}
-        <div className={`fixed transition-all isSidebar duration-300  
+      {/* sidebar  */}
+      <div
+        className={`fixed transition-all isSidebar duration-300  
         top-0 left-0 ${isSidebar ? 'active' : ''} sm:hidden h-dvh bg-red-700 shadow-lg
-      shadow-red-800 z-10 flex px-6 flex-col`} >
-
+      shadow-red-800 z-10 flex px-6 flex-col`}
+      >
         {/* sidebar header */}
-        <div className={`w-full h-16 flex ${isUser ? 'mt-3 mb-2' : 'mt-1 mb-0'} justify-between items-center  `}>
-          <i className='bi bi-x-lg cursor-pointer hover:bg-black/50 transition-all duration-150 px-2
-          pt-2 pb-1 rounded-md' onClick={() => setSidebar(false)}></i>
-          {isUser && <FullName icon={true} isUser={isUser} className='pt-1'/>}
+        <div
+          className={`w-full h-16 flex ${
+            isUser ? 'mt-3 mb-2' : 'mt-1 mb-0'
+          } justify-between items-center  `}
+        >
+          <i
+            className='bi bi-x-lg cursor-pointer hover:bg-black/50 transition-all duration-150 px-2
+          pt-2 pb-1 rounded-md'
+            onClick={() => setSidebar(false)}
+          ></i>
+          {isUser && <FullName icon={true} isUser={isUser} className='pt-1' />}
         </div>
         <hr className='mb-4' />
-
 
         {/* sidebar content */}
         <div dir='ltr' className='flex text-left space-y-6 flex-col w-full h-full '>
           {isUser ? (
             <Accordion type='single' collapsible>
               <AccordionItem value='item-1' className='text-white Accordion'>
-                <AccordionTrigger className={`text-[16px] text-white px-3
+                <AccordionTrigger
+                  className={`text-[16px] text-white px-3
                 mb-3 decoration-black/50 font-normal hover:bg-black/50 
                 transition-all duration-150 rounded-md 
-                ${handleCheckLink(('/dashboard' || '/dashboard/ticket'))}`}>
+                ${handleCheckLink('/dashboard' || '/dashboard/ticket', router)}`}
+                >
                   <div className='flex gap-2 text-center'>
                     <i className='bi bi-columns-gap mt-0.5'></i>
                     داشبورد
@@ -58,7 +68,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser , handleCheck
                   <hr className='w-full' />
                   <LinkCompo
                     title='پنل کاربری'
-                    linkClass={`pl-8 ${handleCheckLink('/dashboard')}`}
+                    linkClass={`pl-8 `}
                     iconClass='person-circle me-2'
                     path={'/dashboard'}
                   />
@@ -67,7 +77,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser , handleCheck
                   <LinkCompo
                     title='بلیط ها'
                     iconClass='ticket-perforated me-2 '
-                    linkClass={`pl-8 ${handleCheckLink('/dashboard/ticket')}`}
+                    linkClass={`pl-8`}
                     path={'/dashboard/ticket'}
                   />
                 </AccordionContent>
@@ -88,14 +98,14 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser , handleCheck
           <LinkCompo
             title='سینما'
             iconClass='camera-reels me-2 -mt-0.5'
-            linkClass={`pl-3 pt-4 ${handleCheckLink('/cinema')}`}
+            linkClass={`pl-3 pt-4 `}
             path={'/cinema'}
           />
           <hr />
           <LinkCompo
             title='فیلم'
             iconClass='film me-2 mt-0.5'
-            linkClass={`pl-3 pt-4 ${handleCheckLink('/movie')}`}
+            linkClass={`pl-3 pt-4`}
             path={'/movie'}
           />
         </div>
@@ -109,10 +119,12 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser , handleCheck
               iconClass='box-arrow-right me-2 mt-1'
               linkClass='text-center justify-center mt-2 items-center '
               path={'/auth/logout'}
+              arrow={false}
+              dir='rtl'
             />
           </div>
         )}
-       </div>
+      </div>
     </>
   );
 };

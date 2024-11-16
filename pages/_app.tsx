@@ -1,6 +1,5 @@
 import Header from '@/components/layout/main/header';
 import { Toaster } from '@/components/ui/toaster';
-import { useToken } from '@/hooks/use-Token';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';

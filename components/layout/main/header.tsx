@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Sidebar from './sidebar';
 import FullName from '@/utils/fullName';
-import LinkCompo from '@/utils/Link';
+import LinkCompo, { handleCheckLink } from '@/utils/Link';
 
 const Header = () => {
   const { isUser } = useToken();
@@ -26,20 +26,16 @@ const Header = () => {
   rounded-full font-normal duration-200 text-white hidden sm:flex`;
   const buttonStyle = `bg-transparent border-2 border-black rounded-full hidden sm:flex`;
 
-  // handle check Link Active =>
-  const handleCheckLink = (path: string) => {
-    if (router.pathname === path) {
-      return ' bg-black/80 font-bold';
-    }
-  };
+
 
   return (
     <div
       dir='rtl'
-      className='top-0 left-0 w-full text-white px-5 items-center flex justify-between h-16 bg-red-700'
+      className='top-0 left-0 w-full text-white px-5 shadow-md
+    shadow-black/50 items-center flex justify-between h-16 bg-red-700'
     >
       {/* right side */}
-      <div className='flex items-center justify-start gap-6 w-8/12 '>
+      <div className='flex items-center justify-start gap-4 w-8/12 '>
         <Link
           href={'/'}
           className='w-fit text-[20px] border-l-2
@@ -48,13 +44,11 @@ const Header = () => {
           سینما TV
         </Link>
 
-        <Link href={'/movie'} className={`${LinkStyle} 
-        ${handleCheckLink('/movie')}`}>
+        <Link href={'/movie'} className={`${LinkStyle} w-24 justify-center`}>
           فیلم
         </Link>
 
-        <Link href={'/cinema'} className={`${LinkStyle} 
-        ${handleCheckLink('/cinema')}`}>
+        <Link href={'/cinema'} className={`${LinkStyle} w-24 justify-center`}>
           سینما
         </Link>
 
@@ -68,13 +62,14 @@ const Header = () => {
       </div>
 
       {/* left side */}
-      <div className='w-full flex justify-end pe-4'>
+      <div className='w-4/12 flex justify-end pe-4'>
         {/* dropdown */}
         <DropdownMenu>
           {isUser ? (
-            <DropdownMenuTrigger className={`${buttonStyle} ${LinkStyle} border-white 
-            ${handleCheckLink(('/dashboard') || ('/dashboard/ticket'))}`}>
-              حساب کاربری
+            <DropdownMenuTrigger className={`${buttonStyle} ${LinkStyle} border-white items-center
+            ${handleCheckLink(('/dashboard') || ('/dashboard/ticket') , router)}`}>
+              <i className='bi bi-person  me-2' style={{fontSize:20}}></i>
+              پروفایل
             </DropdownMenuTrigger>
           ) : (
             <Button className={buttonStyle} onClick={() => router.push('/auth/login')}>
@@ -92,8 +87,7 @@ const Header = () => {
             <LinkCompo
               title='پنل کاربری'
               iconClass='columns-gap me-2 mt-0.5'
-              linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 
-              ${handleCheckLink('/dashboard')}`}
+              linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
               path={'/dashboard'}
               dir='rtl'
             />
@@ -101,16 +95,15 @@ const Header = () => {
             <hr />
             <LinkCompo
               title='بلیط ها'
-              iconClass='ticket-perforated me-2 '
-              linkClass={`rounded-full justify-center pb-1 pt-2 hover:bg-black/80 
-              ${handleCheckLink('/dashboard/ticket')}`}
+              iconClass='ticket-perforated me-2 pb-1'
+              linkClass={`rounded-full justify-center pb-1 pt-2 hover:bg-black/80 `}
               path={'/dashboard/ticket'}
               dir='rtl'
             />
 
             <hr />
             <LinkCompo
-              title='خروج'
+              title='خروج از حساب'
               iconClass='box-arrow-right me-2 mt-0.5'
               linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
               path={'/auht/logout'}
@@ -132,7 +125,6 @@ const Header = () => {
         isSidebar={isSidebar}
         setSidebar={setSidebar}
         isUser={isUser}
-        handleCheckLink={handleCheckLink}
       />
     </div>
   );

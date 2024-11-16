@@ -144,3 +144,9 @@ body {
   transform: translateX(0%) !important;
 }
 
+
+/* ! =============================================      dashoard Layouyt      =================================================== */
+
+.dashboardLayout{
+  height: calc(100vh - 76px);
+}
