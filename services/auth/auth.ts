@@ -28,3 +28,7 @@ export const updateUserService = async (data : any)=>{
 export const updatePassService = async (data : any)=>{
   return service('/auth/update/password' , 'put' , data)
 }
+
+export const logoutUserService = async ()=>{
+  return service('/auth/logout' , 'get' )
+}

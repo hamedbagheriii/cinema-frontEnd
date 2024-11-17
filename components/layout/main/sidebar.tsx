@@ -8,6 +8,7 @@ import {
 import LinkCompo, { handleCheckLink } from '@/utils/Link';
 import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
+import { ConfirmAlert } from '@/utils/AlertCompo';
 
 interface sidebarProps {
   isSidebar: boolean;
@@ -29,7 +30,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       {/* sidebar  */}
       <div
         className={`fixed transition-all isSidebar duration-300  
-        top-0 left-0 ${isSidebar ? 'active' : ''} sm:hidden h-dvh bg-red-700 shadow-lg
+        top-0 left-0 ${isSidebar ? 'active' : ''} sm:hidden  bg-red-700 shadow-lg 
       shadow-red-800 z-10 flex px-6 flex-col`}
       >
         {/* sidebar header */}
@@ -120,16 +121,21 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
 
         {/* sidebar footer */}
         {isUser && (
-          <div className='mt-auto w-full flex-col mb-2 flex'>
+          <div className='mt-auto w-full pt-[200px] flex-col mb-2 flex'>
             <hr className='w-full' />
-            <LinkCompo
-              title='خروج از حساب'
-              iconClass='box-arrow-right me-2 mt-1'
-              linkClass='text-center justify-center mt-2 items-center '
-              path={'/auth/logout'}
-              arrow={false}
-              dir='rtl'
-            />
+            <ConfirmAlert
+              title='آیا میخواهد از حساب کاربری خارج شوید ؟'
+              onClick={() => {
+                router.push('/auth/logout');
+              }}
+            >
+              <div className='flex items-center px-2 mt-2 transition-all duration-150 rounded-md
+             font-normal justify-center pb-2 pt-2 hover:bg-black/80'
+              >
+                <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
+                <span>خروج از حساب</span>
+              </div>
+            </ConfirmAlert>
           </div>
         )}
       </div>

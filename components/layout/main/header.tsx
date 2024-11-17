@@ -15,6 +15,7 @@ import React, { useState } from 'react';
 import Sidebar from './sidebar';
 import FullName from '@/utils/fullName';
 import LinkCompo, { handleCheckLink } from '@/utils/Link';
+import { ConfirmAlert } from '@/utils/AlertCompo';
 
 const Header = () => {
   const { isUser } = useToken();
@@ -111,13 +112,22 @@ const Header = () => {
             />
 
             <hr />
-            <LinkCompo
-              title='خروج از حساب'
-              iconClass='box-arrow-right me-2 mt-0.5'
-              linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-              path={'/auht/logout'}
-              dir='rtl'
-            />
+            <ConfirmAlert
+            title='آیا میخواهد از حساب کاربری خارج شوید ؟'
+            onClick={() => {
+              router.push('/auth/logout');
+            }}
+          >
+            <div dir='rtl' className='flex items-center px-2 
+            transition-all duration-150 rounded-md
+             font-normal justify-center pb-2 pt-2 hover:bg-black/80'>
+              <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
+              <span >
+                خروج از حساب
+              </span>
+              <i className={`bi bi-caret-left mt-0.5 ms-auto`}></i>
+            </div>
+          </ConfirmAlert>
           </DropdownMenuContent>
         </DropdownMenu>
 

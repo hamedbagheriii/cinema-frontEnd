@@ -54,7 +54,6 @@ const onSubmit = async (values: any, action: any, toast: any) => {
     }
   } 
   catch (error: any) {
-    console.log(error);
     handleShowAlert(error.response.data.message || error.message,
   false, 'error', toast);
   } 
@@ -150,6 +149,7 @@ const Index = () => {
                     name='fristName'
                     type='text'
                     className='md:w-5/12 lg:w-4/12  '
+                    padding={true}
                   />
 
                   <FormikControl
@@ -159,6 +159,7 @@ const Index = () => {
                     name='lastName'
                     type='text'
                     className='md:w-5/12 lg:w-4/12'
+                    padding={true}
                   />
                 </div>
 
@@ -170,6 +171,7 @@ const Index = () => {
                   type='text'
                   disabled={true}
                   className='lg:w-4/12'
+                  padding={true}
                 />
 
                 <FormikControl
@@ -188,6 +190,7 @@ const Index = () => {
                       placeholder='مثال : ghasuf23'
                       label='رمز عبور فعلی'
                       className='md:w-5/12 lg:w-4/12'
+                      padding={true}
                     />
 
                     <FormikControl
@@ -197,6 +200,7 @@ const Index = () => {
                       placeholder='مثال : ghasem12'
                       label='رمز عبور جدید'
                       className='md:w-5/12 lg:w-4/12'
+                      padding={true}
                     />
                   </div>
                 )}

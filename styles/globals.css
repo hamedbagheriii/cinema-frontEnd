@@ -123,6 +123,8 @@ body {
 .isSidebar{
   width: 65% !important;
   transform: translateX(-120%);
+  overflow-y: auto !important;
+  height: 100vh !important;
 }
 
 .isSidebar.active {

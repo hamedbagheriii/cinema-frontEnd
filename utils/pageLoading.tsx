@@ -13,7 +13,7 @@ const PageLoading: FC<loadingProps> = ({
       dir='rtl'
       className=' loadingLayout flex items-center gap-6 flex-col text-center justify-center h-screen w-full'>
       <span className='text-white text-[28px] text-wrap'>
-        {title} <span className='text-black'>{target} !</span>
+        {title} <span>{target} !</span>
       </span>
       <span className='text-white text-[23px]'>لطفا صبر کنید . . . </span>
     </div>

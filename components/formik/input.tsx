@@ -12,8 +12,9 @@ export interface InputProps {
   label: string;
   className?: string;
   disabled ?: boolean;
+  padding ?: boolean;
 }
-const FormikInput: FC<InputProps> = ({ name, type, placeholder, className , label , disabled = false}) => {
+const FormikInput: FC<InputProps> = ({ name, type, placeholder, className , label , disabled = false , padding = false}) => {
   return (
     <FastField name={name} type={type} placeholder={placeholder}>
       {(form: FieldProps<any>) => {
@@ -30,8 +31,8 @@ const FormikInput: FC<InputProps> = ({ name, type, placeholder, className , labe
               disabled={disabled}
               placeholder={ placeholder}
             />
-            <div className='md:relative md:-mt-2 md:mb-10'>
-              <ErrorAlert name={name} />
+            <div className={`${padding && 'md:relative md:-mt-2 md:mb-10'}`}>
+              <ErrorAlert name={name} padding={padding} />
             </div>
           </div>
         );

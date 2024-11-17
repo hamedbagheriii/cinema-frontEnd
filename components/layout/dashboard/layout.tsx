@@ -1,9 +1,16 @@
+import { ConfirmAlert } from '@/utils/AlertCompo';
 import LinkCompo from '@/utils/Link';
+import { useRouter } from 'next/navigation';
 import React, { FC, ReactNode } from 'react';
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
+  const router = useRouter();
+
   return (
-    <div dir='rtl' className='flex flex-col h-dvh mx-auto sm:flex-row w-full pt-6 xl:max-w-[80vw] px-2'>
+    <div
+      dir='rtl'
+      className='flex flex-col h-dvh mx-auto sm:flex-row w-full pt-6 xl:max-w-[80vw] px-2'
+    >
       {/* sidebar */}
       <div className='w-full sm:w-4/12 pt-2'>
         <div
@@ -34,13 +41,22 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
             dir='rtl'
           />
           <hr />
-          <LinkCompo
-            title='خروج از حساب '
-            iconClass='box-arrow-right me-2 mt-0.5'
-            linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-            path={'/auth/logout'}
-            dir='rtl'
-          />
+          <ConfirmAlert
+            title='آیا میخواهد از حساب کاربری خارج شوید ؟'
+            onClick={() => {
+              router.push('/auth/logout');
+            }}
+          >
+            <div className='flex items-center px-2 
+            transition-all duration-150 rounded-md
+             font-normal justify-center pb-2 pt-2 hover:bg-black/80'>
+              <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
+              <span >
+                خروج از حساب
+              </span>
+              <i className={`bi bi-caret-left mt-0.5 ms-auto`}></i>
+            </div>
+          </ConfirmAlert>
         </div>
       </div>
 

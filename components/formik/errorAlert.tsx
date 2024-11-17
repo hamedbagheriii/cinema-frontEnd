@@ -3,18 +3,22 @@ import { Alert, AlertTitle } from '../ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { ErrorMessage } from 'formik';
 
-interface ErrorAlertProps { 
-    name : string;
+interface ErrorAlertProps {
+  name: string;
+  padding?: boolean;
 }
-const ErrorAlert : FC<ErrorAlertProps> = ({name}) => {
+const ErrorAlert: FC<ErrorAlertProps> = ({ name, padding }) => {
   return (
     <ErrorMessage name={name}>
-      {(message : any) => {
+      {(message: any) => {
         console.log(message);
-        
+
         return (
-          <Alert className='flex align-middle md:absolute md:top-3 items-center py-0 px-0 pl-5 min-w-[170px] 
-          border-2 w-fit' variant='destructive'>
+          <Alert
+            className={`flex align-middle ${padding && 'md:absolute md:top-3 '} items-center py-0 px-0 pl-5 min-w-[170px] 
+            border-2 w-fit`}
+            variant='destructive'
+          >
             <span className='flex items-center justify-center mx-2'>
               <AlertCircle className='size-3.5 font-bold' />
             </span>
