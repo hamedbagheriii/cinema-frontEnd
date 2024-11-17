@@ -26,8 +26,6 @@ const Header = () => {
   rounded-full font-normal duration-200 text-white hidden sm:flex`;
   const buttonStyle = `bg-transparent border-2 border-black rounded-full hidden sm:flex`;
 
-
-
   return (
     <div
       dir='rtl'
@@ -66,9 +64,11 @@ const Header = () => {
         {/* dropdown */}
         <DropdownMenu>
           {isUser ? (
-            <DropdownMenuTrigger className={`${buttonStyle} ${LinkStyle} border-white items-center
-            ${handleCheckLink(('/dashboard') || ('/dashboard/ticket') , router)}`}>
-              <i className='bi bi-person  me-2' style={{fontSize:20}}></i>
+            <DropdownMenuTrigger
+              className={`${buttonStyle} ${LinkStyle} border-white items-center
+            ${handleCheckLink('/dashboard' || '/dashboard/ticket', router)}`}
+            >
+              <i className='bi bi-person  me-2' style={{ fontSize: 20 }}></i>
               پروفایل
             </DropdownMenuTrigger>
           ) : (
@@ -79,7 +79,7 @@ const Header = () => {
 
           <DropdownMenuContent
             className=' mt-4 ms-5 text-center hidden sm:flex
-           bg-red-800 flex-col rounded-lg w-52 px-4 py-4 space-y-3 '
+           bg-red-800 flex-col rounded-lg w-60 px-4 py-4 space-y-3 '
           >
             <FullName isUser={isUser} icon={true} />
             <hr />
@@ -103,6 +103,15 @@ const Header = () => {
 
             <hr />
             <LinkCompo
+              title='کیف پول'
+              iconClass='wallet2 me-2'
+              linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
+              path={'/dashboard/wallet'}
+              dir='rtl'
+            />
+
+            <hr />
+            <LinkCompo
               title='خروج از حساب'
               iconClass='box-arrow-right me-2 mt-0.5'
               linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
@@ -121,11 +130,7 @@ const Header = () => {
       </div>
 
       {/* sidebar */}
-      <Sidebar
-        isSidebar={isSidebar}
-        setSidebar={setSidebar}
-        isUser={isUser}
-      />
+      <Sidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
     </div>
   );
 };

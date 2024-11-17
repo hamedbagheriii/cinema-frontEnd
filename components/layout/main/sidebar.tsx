@@ -80,6 +80,14 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                     linkClass={`pl-8`}
                     path={'/dashboard/ticket'}
                   />
+
+                  <hr className='w-11/12 ms-auto' />
+                  <LinkCompo
+                    title='کیف پول'
+                    linkClass={`pl-8 `}
+                    iconClass='wallet2 me-2'
+                    path={'/dashboard/wallet'}
+                  />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

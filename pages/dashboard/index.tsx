@@ -30,6 +30,8 @@ const onSubmit = async (values: any, action: any, toast: any) => {
       res = await updatePassService({
         o_password: values.o_password,
         u_password: values.u_password,
+        lastName : values.lastName,
+        fristName : values.fristName,
       });
     } 
     else {
@@ -174,7 +176,7 @@ const Index = () => {
                   control='switch'
                   name='changePassword'
                   label='تغییر رمز عبور'
-                  className='mt-2'
+                  className='md:-mt-5 md:mb-2'
                 />
 
                 {formik.values.changePassword && (
@@ -204,7 +206,7 @@ const Index = () => {
                   control='submitBTN'
                   title='ویرایش اطلاعات'
                   formik={formik}
-                  disabled={formik.isSubmitting}
+                  disabled={formik.isSubmitting || !formik.dirty}
                 />
               </Form>
             );
