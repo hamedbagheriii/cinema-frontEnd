@@ -14,7 +14,7 @@ const SubmitBtn: FC<SubmitBtnProps> = ({
   title,
   className,
   formik,
-  disabled,
+  disabled = false,
   onClick,
 }) => {
   return (

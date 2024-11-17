@@ -3,8 +3,8 @@ import Layout from '@/components/layout/dashboard/layout';
 import { useToast } from '@/hooks/use-toast';
 import { useToken } from '@/hooks/use-Token';
 import { updatePassService, updateUserService } from '@/services/auth/auth';
+import { handleShowAlert } from '@/utils/AlertCompo';
 import { Form, Formik } from 'formik';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
@@ -18,47 +18,45 @@ const initalValues = {
   u_password: '',
 };
 
-const onSubmit = async (values: any, action: any, router: any, toast: any) => {
+const onSubmit = async (values: any, action: any, toast: any) => {
   console.log(values);
-  const handleShowAlert = (title: string, bgColor: string, status: string) => {
-    setTimeout(() => {
-      toast({
-        title,
-        status,
-        duration: 2000,
-        className: `bg-${bgColor} text-white shadow-md
-        border-0 shadow-${bgColor}`,
-        dir: 'rtl',
-      });
-    }, 1000);
-  };
 
+  //  request =>
   try {
     let res: any;
 
+    //  check update user or password request =>
     if (values.changePassword) {
       res = await updatePassService({
         o_password: values.o_password,
         u_password: values.u_password,
       });
-    } else {
+    } 
+    else {
       res = await updateUserService({
         fristName: values.fristName,
         lastName: values.lastName,
       });
     }
 
+    //  check request =>
     if (res.status === 200) {
       console.log(res);
 
-      handleShowAlert('ویرایش با موفقیت انجام شد !', 'green-600', 'success');
-    } else {
-      handleShowAlert(res.response.data.message || res.message, 'red-600', 'error');
+      handleShowAlert('ویرایش با موفقیت انجام شد !', true,
+      'success', toast);
+    } 
+    else {
+      handleShowAlert(res.response.data.message || res.message,
+      false, 'error', toast);
     }
-  } catch (error: any) {
+  } 
+  catch (error: any) {
     console.log(error);
-    handleShowAlert(error.response.data.message || error.message, 'red-600', 'error');
-  } finally {
+    handleShowAlert(error.response.data.message || error.message,
+  false, 'error', toast);
+  } 
+  finally {
     setTimeout(() => {
       action.setSubmitting(false);
     }, 1000);
@@ -96,7 +94,6 @@ const validationSchema = Yup.object({
 const Index = () => {
   const { isLoading, isUser } = useToken();
   const [reinitalValues, setReinitialValues] = useState<any>(null);
-  const router = useRouter();
   const { toast } = useToast();
 
   // ! handle get User data =>
@@ -116,7 +113,7 @@ const Index = () => {
   }, [isUser]);
 
   // style for box =>
-  const boxStyle = 'flex flex-col items-center md:flex-row justify-center w-full gap-4';
+  const boxStyle = 'flex flex-col items-center md:flex-row justify-center w-full gap-4 ';
 
   return (
     <Layout>
@@ -124,7 +121,7 @@ const Index = () => {
         <Formik
           initialValues={reinitalValues || initalValues}
           onSubmit={(values, actions) => {
-            onSubmit(values, actions, router, toast);
+            onSubmit(values, actions, toast);
           }}
           validationSchema={validationSchema}
           enableReinitialize={true}
@@ -150,7 +147,7 @@ const Index = () => {
                     placeholder='مثال : رضا'
                     name='fristName'
                     type='text'
-                    className='md:w-5/12 lg:w-4/12'
+                    className='md:w-5/12 lg:w-4/12  '
                   />
 
                   <FormikControl

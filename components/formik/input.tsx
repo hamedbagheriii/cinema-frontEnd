@@ -25,12 +25,14 @@ const FormikInput: FC<InputProps> = ({ name, type, placeholder, className , labe
             <Input
               type={type}
               id={name}
-              className='h-10 border-2 border-black/80 bg-white font-bold text-[14px] placeholder:text-[14px]'
+              className='h-10 border-2 border-black/80  bg-white font-bold text-[14px] placeholder:text-[14px]'
               {...form.field} 
               disabled={disabled}
               placeholder={ placeholder}
             />
-            <ErrorAlert name={name} />
+            <div className='md:relative md:-mt-2 md:mb-10'>
+              <ErrorAlert name={name} />
+            </div>
           </div>
         );
       }}

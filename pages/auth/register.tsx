@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import { handleShowAlert } from '@/utils/AlertCompo';
 
 // ! formik dependencies
 const initalvalues = {
@@ -17,24 +18,31 @@ const initalvalues = {
 };
 
 const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
-  const res = await registerUserService(values);
-  if (res.status === 200) {
-    setTimeout(() => {
-      toast({
-        title: 'حساب کاربری شما با موفقیت ساخته شد !',
-        status: 'success',
-        duration: 3000,
-        className: `bg-green-500 text-white shadow-lg
-        border-0 shadow-green-800`,
-        dir: 'rtl',
-      });
-    }, 1000);
+  console.log(actions);
+  
+  try {
+    const res: any = await registerUserService(values);
 
+    if (res.status === 200) {
+      handleShowAlert('حساب کاربری شما با موفقیت ساخته شد !', true, 'success', toast);
+
+      setTimeout(() => {
+        router.push('/auth/login');
+      }, 3000);
+    } 
+    else {
+      handleShowAlert(res.response.data.message ||
+      res.message, false, 'error', toast);
+    }
+  } 
+  catch (error : any) {
+    handleShowAlert(error.response.data.message ||
+    error.message, false, 'error' , toast);
+  }
+  finally {
     setTimeout(() => {
-      router.push('/auth/login');
-    }, 3000);
-  } else {
-    actions.setIsSubmiting(false);
+      actions.setSubmitting(false);
+    }, 1000);
   }
 };
 
@@ -43,7 +51,7 @@ const validationSchema = Yup.object({
     .email('لطفا فرمت ایمیل را رعایت کنید .')
     .required('این فیلد الزامی میباشد .'),
 
-  firstName: Yup.string()
+  fristName: Yup.string()
     .required('این فیلد الزامی میباشد .')
     .min(2, 'حداقل 2 کاراکتر وارد کنید .'),
 

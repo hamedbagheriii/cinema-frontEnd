@@ -8,9 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Cookies } from '@/services/service';
-
-
-
+import { handleShowAlert } from '@/utils/AlertCompo';
 
 // ! formik dependencies
 const initalvalues = {
@@ -19,27 +17,35 @@ const initalvalues = {
 };
 
 const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
-  const res = await loginUserService(values);
-  if (res.status === 200) {
-    Cookies.set('userToken', res.data.token);
+  try {
+    const res : any = await loginUserService(values);
+    if (res.status === 200) {
+      Cookies.set('userToken', res.data.token);
 
+      handleShowAlert(
+        'شما با موفقیت وارد حساب کاربری خود شدید !',
+        true,
+        'success',
+        toast
+      );
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 3000);
+    } else {
+      Cookies.remove('userToken');
+
+      handleShowAlert(res.response.data.message || res.message,
+      false, 'error', toast);
+    }
+  } 
+  catch (error: any) {
+    handleShowAlert(error.response.data.message ||
+    error.message, false, 'error', toast);
+  }
+  finally {
     setTimeout(() => {
-      toast({
-        title: 'شما با موفقیت وارد حساب کاربری خود شدید !',
-        status: 'success',
-        duration: 3000,
-        className: `bg-green-500 text-white shadow-lg
-        border-0 shadow-green-800`,
-        dir: 'rtl',
-      });
+      actions.setSubmitting(false);
     }, 1000);
-
-    setTimeout(() => {
-      router.push('/dashboard');
-    }, 3000);
-  } else {
-    actions.setIsSubmiting(false);
-    Cookies.remove('userToken');
   }
 };
 
@@ -53,9 +59,6 @@ const validationSchema = Yup.object({
     .min(6, 'حداقل 6 کاراکتر وارد کنید .'),
 });
 // ! formik dependencies
-
-
-
 
 const Login = () => {
   const router = useRouter();
@@ -97,8 +100,7 @@ const Login = () => {
                 />
 
                 <Link href='/auth/register' className='text-sm'>
-                  حساب کاربری ندارید ؟{' '}
-                  <span className='text-red-700'>ثبت نام . . .</span>
+                  حساب کاربری ندارید ؟ <span className='text-red-700'>ثبت نام . . .</span>
                 </Link>
               </Form>
             );
