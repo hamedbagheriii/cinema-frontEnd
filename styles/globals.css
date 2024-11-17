@@ -106,6 +106,34 @@ body {
   }
 }
 
+/* ! =============================================      scroll bar      ============================================= */
+body {
+  --sb-track-color: #ebe8e8;
+  --sb-thumb-color: #710b0b;
+  --sb-size: 14px;
+}
+
+* ::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+* ::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+* ::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+  
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  *  {
+    scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
+  }
+}
 
 /* ! =============================================      auth Layout      ============================================= */
 .authLayout{

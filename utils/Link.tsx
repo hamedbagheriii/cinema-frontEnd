@@ -5,8 +5,8 @@ import React, { FC } from 'react';
 
 // handle check Link Active =>
 export const handleCheckLink = (path: string , router : any) => {
-  if (router.pathname === path) {
-    return ' bg-black/80 font-bold';
+  if (router.pathname.startsWith(path)) {
+    return ' bg-black/80 font-bold ';
   }
 };
 

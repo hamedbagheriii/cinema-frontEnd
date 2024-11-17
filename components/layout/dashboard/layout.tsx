@@ -9,7 +9,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div
       dir='rtl'
-      className='flex flex-col h-dvh mx-auto sm:flex-row w-full pt-6 xl:max-w-[80vw] px-2'
+      className='flex flex-col mx-auto sm:flex-row w-full pt-6 xl:max-w-[80vw] px-2'
     >
       {/* sidebar */}
       <div className='w-full sm:w-4/12 pt-2'>
@@ -21,7 +21,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
             title='اطلاعات کاربری'
             iconClass='columns-gap me-2 mt-0.5'
             linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-            path={'/dashboard'}
+            path={'/dashboard/profile'}
             dir='rtl'
           />
           <hr />
@@ -47,13 +47,13 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
               router.push('/auth/logout');
             }}
           >
-            <div className='flex items-center px-2 
+            <div
+              className='flex items-center px-2 
             transition-all duration-150 rounded-md
-             font-normal justify-center pb-2 pt-2 hover:bg-black/80'>
+             font-normal justify-center pb-2 pt-2 hover:bg-black/80'
+            >
               <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
-              <span >
-                خروج از حساب
-              </span>
+              <span>خروج از حساب</span>
               <i className={`bi bi-caret-left mt-0.5 ms-auto`}></i>
             </div>
           </ConfirmAlert>
@@ -61,7 +61,12 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       </div>
 
       {/* content */}
-      <div className='w-full mt-6 sm:mt-0 sm:w-9/12 pb-8  px-3 py-2'>{children}</div>
+      <div
+        className='w-full mt-6 sm:mt-0 sm:w-9/12 pb-8 
+       px-3 py-2 '
+      >
+        {children}
+      </div>
     </div>
   );
 };

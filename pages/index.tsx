@@ -6,7 +6,7 @@ export default function Home() {
     <div>
       ss
       <br />
-      <Link href={'/dashboard'}>dashboard</Link>
+      <Link href={'/dashboard/profile'}>dashboard</Link>
     </div>
   );
 }

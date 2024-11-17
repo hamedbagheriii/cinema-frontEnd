@@ -67,7 +67,7 @@ const Header = () => {
           {isUser ? (
             <DropdownMenuTrigger
               className={`${buttonStyle} ${LinkStyle} border-white items-center
-            ${handleCheckLink('/dashboard' || '/dashboard/ticket', router)}`}
+            ${handleCheckLink('/dashboard', router)}`}
             >
               <i className='bi bi-person  me-2' style={{ fontSize: 20 }}></i>
               پروفایل
@@ -86,10 +86,10 @@ const Header = () => {
             <hr />
 
             <LinkCompo
-              title='پنل کاربری'
+              title='اطالاعات کاربری'
               iconClass='columns-gap me-2 mt-0.5'
               linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-              path={'/dashboard'}
+              path={'/dashboard/profile'}
               dir='rtl'
             />
 

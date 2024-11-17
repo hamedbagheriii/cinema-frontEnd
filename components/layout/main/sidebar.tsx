@@ -57,7 +57,8 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                   className={`text-[16px] text-white px-3
                 mb-3 decoration-black/50 font-normal hover:bg-black/50 
                 transition-all duration-150 rounded-md 
-                ${handleCheckLink('/dashboard' || '/dashboard/ticket', router)}`}
+                ${handleCheckLink('/dashboard' ,
+                 router)}`}
                 >
                   <div className='flex gap-2 text-center'>
                     <i className='bi bi-columns-gap mt-0.5'></i>
@@ -68,10 +69,10 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                 <AccordionContent className='flex flex-col space-y-3 '>
                   <hr className='w-full' />
                   <LinkCompo
-                    title='پنل کاربری'
+                    title='اطالاعات کاربری'
                     linkClass={`pl-8 `}
                     iconClass='person-circle me-2'
-                    path={'/dashboard'}
+                    path={'/dashboard/profile'}
                   />
 
                   <hr className='w-11/12 ms-auto' />
