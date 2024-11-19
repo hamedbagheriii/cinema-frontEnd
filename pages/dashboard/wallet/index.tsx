@@ -28,7 +28,7 @@ const onSubmit = async (values: any, action: any, toast: any, router: any) => {
 
       handleShowAlert(res.data.message, true, 'success', toast);
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/dashboard/profile');
       }, 1500);
     } else {
       handleShowAlert(res.response.data.message || res.message, false, 'error', toast);

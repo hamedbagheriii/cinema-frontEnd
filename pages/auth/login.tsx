@@ -29,7 +29,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
         toast
       );
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/dashboard/profile');
       }, 3000);
     } else {
       Cookies.remove('userToken');

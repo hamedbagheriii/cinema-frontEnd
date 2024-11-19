@@ -9,12 +9,14 @@ export const registerUserService = async (data: any) => {
 };
 
 export const checkUserService = async (Cookie : any) => {
+  const Token = await Cookie.get('userToken')?.value || ''
+
   return await fetch(`${baseURL}/auth/user`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: (await Cookie.get('userToken')) || '',
+      Authorization: Token ,
     },
-  });
+  }).then((res) => res.json());
 };
 
 export const getUserDataService = async () => {
