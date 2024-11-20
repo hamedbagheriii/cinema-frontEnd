@@ -7,7 +7,7 @@ interface SectionProps {
 }
 const Section : FC<SectionProps> = ({children , title , className}) => {
     return (
-        <div dir='rtl' className={`w-full mt-10 flex-col md:mt-16 flex px-4 md:px-16 ${className}`}>
+        <div dir='rtl' className={`w-full mt-10 flex-col  flex px-4 md:px-16 ${className}`}>
         <span className='flex text-[20px] cursor-pointer'>
           {title} <i className='bi bi-caret-left-fill mt-0.5 mx-1'></i>
         </span>

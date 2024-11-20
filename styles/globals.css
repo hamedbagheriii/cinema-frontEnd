@@ -181,3 +181,12 @@ body {
 .dashboardLayout{
   height: calc(100vh - 76px);
 }
+
+
+/* ! =============================================      cinema Layouyt      =================================================== */
+
+.cinemaBG{
+  background:linear-gradient(#00000082, #00000082) ,
+  url('../assets/image/cinemaBG.jpg') center no-repeat ;
+  background-size: cover;
+}
