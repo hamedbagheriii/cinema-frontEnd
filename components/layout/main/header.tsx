@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <div
       dir='rtl'
-      className='top-0 left-0 sticky w-full text-white px-5 shadow-md
+      className='top-0 z-50 left-0 sticky w-full text-white px-5 shadow-md
     shadow-black/50 items-center flex justify-between h-16 bg-red-700'
     >
       {/* right side */}

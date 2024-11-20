@@ -111,6 +111,7 @@ body {
   --sb-track-color: #ebe8e8;
   --sb-thumb-color: #710b0b;
   --sb-size: 14px;
+  overflow-x: hidden;
 }
 
 * ::-webkit-scrollbar {
