@@ -1,6 +1,7 @@
 import Section from '@/components/layout/main/section';
 import Slider from '@/utils/slider';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface HomeProps {
   movies: any[];
@@ -8,6 +9,8 @@ interface HomeProps {
   cinemas: any[];
 }
 export default function Home({ movies, slider, cinemas }: HomeProps) {
+  const router = useRouter();
+
   return (
     <div className='w-full flex pt-5  justify-center items-center flex-col'>
       {/* slider */}
@@ -51,7 +54,9 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
             key={cinema.id}
             className='text-center max-w-[250px] lg:max-w-[300px] p-1 flex flex-col gap-2 w-1/2 md:w-1/4 '
           >
-            <div className='w-full h-full relative'>
+            <div className='w-full h-full relative'
+              onClick={() => router.push(`/cinema/${cinema.id}`)}
+            >
               <div
                 className='w-full h-full absolute bg-transparent
                 hover:bg-black/20 transition-all cursor-pointer duration-150 rounded-xl'
@@ -85,9 +90,9 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      movies: movies.data,
-      slider: slider.data,
-      cinemas: cinemas.data,
+      movies: movies.data ,
+      slider: slider.data ,
+      cinemas: cinemas.data ,
     },
   };
 };

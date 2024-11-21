@@ -1,11 +1,14 @@
 import Section from '@/components/layout/main/section';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { FC } from 'react';
 
 interface cinemaProps {
     cinemas : any[]
 }
 const Index : FC<cinemaProps> = ({cinemas}) => {
+  const router = useRouter()
+
   return (
     <div className='w-full px-4'>
      {/* cienmas */}
@@ -15,7 +18,9 @@ const Index : FC<cinemaProps> = ({cinemas}) => {
             key={cinema.id}
             className='text-center max-w-[250px] lg:max-w-[300px] p-1 flex flex-col gap-2 w-1/2 md:w-1/4 '
           >
-            <div className='w-full h-full relative'>
+            <div className='w-full h-full relative'
+            onClick={() => router.push(`/cinema/${cinema.id}`)}
+            >
               <div
                 className='w-full h-full absolute bg-transparent
                 hover:bg-black/20 transition-all cursor-pointer duration-150 rounded-xl'
