@@ -1,16 +1,28 @@
+import { Button } from '@/components/ui/button';
 import CinemaDec from '@/utils/cinemaDec';
 import { convertDate } from '@/utils/convertDate';
 import MovieDec from '@/utils/movieDec';
+import { numberWithCommas } from '@/utils/numbWithCommas';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { FC, use, useEffect, useState } from 'react';
 
 interface cinemaProps {
   cinemaData: any;
 }
 const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
+  const router = useRouter();
   const [dates, setDates] = useState<string[]>([]);
   const [date, setDate] = useState<string>('');
   const [movies, setMovies] = useState<any[]>([]);
+  const times : string[] = [
+    '09:00',
+    '12:00',
+    '15:00',
+    '18:00',
+    '21:00',
+    '23:00',
+  ]
 
   // !  get dates
   const dateTime: Date = new Date();
@@ -48,9 +60,9 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
   };
 
   // ! handle show selected movie
-  const handleShowSelect =  (movie : number)=>{
+  const handleShowSelect = (movie: number) => {
     return movies[movie];
-  }
+  };
 
   useEffect(() => {
     handleGetDate();
@@ -102,8 +114,8 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
           {dates.map((d: string) => (
             <span
               key={`day-${d}`}
-              className={`bg-red-600 text-white pt-1 text-[14px] cursor-pointer
-              px-3 rounded-full ${d == date && 'bg-black'}`}
+              className={` text-white pt-1 text-[14px] cursor-pointer
+              px-3 rounded-full ${d == date ? ' bg-black' : 'bg-red-600'}`}
               onClick={() => setDate(d)}
             >
               {convertDate(d)}
@@ -123,14 +135,14 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
         {cinemaData.movies.map((movie: any) => {
           let movieIndex = cinemaData.movies.indexOf(movie);
           let movieData = movie.movie;
-          
 
           return (
-            <div
-              key={movieData.id}
+            <div key={movieData.id}
               className='w-full  flex-col  mx-auto flex min-h-[200px] bg-black/5 px-4 py-2 rounded-lg'
             >
+              {/* movie data */}
               <div className='w-full flex '>
+                {/* image */}
                 <div className='w-1/5 min-w-[130px] h-full min-h-[200px]'>
                   <Image
                     src={movieData.image?.[0].url}
@@ -143,6 +155,8 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
                     placeholder='empty'
                   />
                 </div>
+
+                {/* info */}
                 <div className='w-4/5 flex flex-col gap-2 px-6 py-2 pt-4'>
                   <span className='text-[20px]'>{movieData.movieName}</span>
                   <span className='font-normal flex'>
@@ -159,6 +173,7 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
                     />
                   </div>
 
+                  {/* button Sans */}
                   <div className='w-full flex mt-auto'>
                     <span
                       className='flex gap-2 text-red-700 cursor-pointer
@@ -174,10 +189,41 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
                 </div>
               </div>
 
+              {/* show Sans */}
               <div
-                className={` mt-5 ${handleShowSelect(movieIndex) ? 'flex' : 'hidden'} transition-all w-full bg-red-300 duration-300`}
+                className={` mt-5 ${handleShowSelect(movieIndex) ? 'flex' : 'hidden'} 
+               transition-all w-full flex-col gap-4 duration-300 py-2`}
               >
-                s
+                <span className='text-[14px] cursor-pointer px-2 flex'
+                  onClick={()=>router.push(`/movie/${movieData.id}`)}
+                >
+                  <i className='bi bi-arrow-left-square-fill mt-0.5
+                  text-[14px] text-red-700 me-2'></i>
+                  درباره فیلم {movieData.movieName}{' '}
+                </span>
+
+                <hr className='w-full my-1 bg-red-700/70 pt-1 rounded-full'/>
+
+                {cinemaData.halls.map((t: any) => (
+                  <div className='w-full min-h-[100px] px-2 py-2'>
+                    <span className='text-[14px] text-gray-500'>سالن {t.hallName} :</span>
+
+                    <div className='flex w-full gap-y-4 mt-3 flex-wrap'>
+                      {times.map((time: string) => (
+                        <div className='w-full sm:w-1/2 md:w-1/3   px-2 min-h-[40px]  rounded-md'>
+                          <div className='w-full h-full bg-white border-2 border-black px-4  rounded-md flex justify-between items-center'>
+                            <div className='w-1/2 flex flex-col gap-1 py-2'>
+                              <span className='text-black text-[16px] font-bold'>سانس {time}</span>
+                              <span className='text-sm text-gray-600'>{numberWithCommas(movieData.price)} تومان</span>
+                            </div>
+
+                            <Button className='w-1/4 min-w-[90px] bg-red-700 hover:bg-red-900'>خرید</Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           );
