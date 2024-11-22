@@ -3,17 +3,19 @@ import React, { FC } from 'react';
 interface cinemaDec {
     cinemaData : any ;
     className ?: string;
+    titleClass ?: string;
+    locClass ?: string;
 }
-const CinemaDec : FC<cinemaDec> = ({cinemaData , className}) => {
+const CinemaDec : FC<cinemaDec> = ({cinemaData , className , titleClass , locClass}) => {
   return (
     <>
-      <span className='text-[24px] mb-2'>
+      <span className={`text-[24px] mb-2 ${titleClass}`}>
         سینما {cinemaData.cinemaName} 
       </span>
 
       <span className='font-normal'>
-        <i className='bi bi-geo-alt-fill me-1'></i>
-        {cinemaData.province} ، {cinemaData.city}
+        <i className={`bi bi-geo-alt-fill me-1 ${locClass}`}></i>
+        {cinemaData.province + ' , ' + cinemaData.city + ' , ' + cinemaData.address}
       </span>
 
       <div className={`flex gap-5 text-[20px] mt-10 ${className}`}>

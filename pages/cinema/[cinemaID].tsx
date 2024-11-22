@@ -110,7 +110,7 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
         <span className='text-[20px] flex'>
           برنامه اکران های سینما <i className='bi bi-caret-left-fill mt-0.5 ms-1'></i>
         </span>
-        <div className='gap-4 flex mt-4'>
+        <div className='gap-4 flex-wrap flex mt-4'>
           {dates.map((d: string) => (
             <span
               key={`day-${d}`}
@@ -205,12 +205,12 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
                 <hr className='w-full my-1 bg-red-700/70 pt-1 rounded-full'/>
 
                 {cinemaData.halls.map((t: any) => (
-                  <div className='w-full min-h-[100px] px-2 py-2'>
+                  <div key={t.id} className='w-full min-h-[100px] px-2 py-2'>
                     <span className='text-[14px] text-gray-500'>سالن {t.hallName} :</span>
 
                     <div className='flex w-full gap-y-4 mt-3 flex-wrap'>
                       {times.map((time: string) => (
-                        <div className='w-full sm:w-1/2 md:w-1/3   px-2 min-h-[40px]  rounded-md'>
+                        <div key={time} className='w-full sm:w-1/2 md:w-1/3   px-2 min-h-[40px]  rounded-md'>
                           <div className='w-full h-full bg-white border-2 border-black px-4  rounded-md flex justify-between items-center'>
                             <div className='w-1/2 flex flex-col gap-1 py-2'>
                               <span className='text-black text-[16px] font-bold'>سانس {time}</span>

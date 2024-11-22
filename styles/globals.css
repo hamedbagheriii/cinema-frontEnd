@@ -190,3 +190,12 @@ body {
   url('../assets/image/cbg.png') center no-repeat ;
   background-size: cover;
 }
+
+.infoSection{
+  padding-top: 0px !important;
+}
+@media (min-width: 576px) {
+  .infoSection{
+    padding-top: 20px !important;
+  }
+}
