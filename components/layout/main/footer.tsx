@@ -51,9 +51,9 @@ const Footer = () => {
         <span className='text-[14px]'>
           پشتیبانی تلفنی سینما TV از ساعت ۹ الی 24 : 02192009099
         </span>
-        {/* <span className='font-normal text-[14px]'>
+        <span className='font-normal text-[14px]'>
           تمامی حقوق این نرم افزار برای موسسه دی سینما محفوظ می باشد .
-        </span> */}
+        </span>
       </div>
     </div>
   );
