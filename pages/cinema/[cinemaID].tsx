@@ -124,7 +124,7 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
       </div>
 
       {/* movies */}
-      <div className='flex w-full max-w-[800px] flex-col gap-4 px-4'>
+      <div className='flex w-full max-w-[800px]  flex-col gap-4 px-4'>
         {cinemaData.movies.map((movie: any) => {
           let movieIndex = cinemaData.movies.indexOf(movie);
           let movieData = movie.movie;

@@ -9,11 +9,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
 
   return (
-    <>
+    <div className='w-full  sm:h-[650px]'>
       {!router.pathname.startsWith('/auth/') ? <Header/> : null}
       <Component {...pageProps} />
       <Toaster />
-      {!router.pathname.startsWith('/auth/') ? <Footer/> : null}
-    </>
+      {!router.pathname.startsWith('/auth/') &&
+       !router.pathname.startsWith('/event/') &&
+        !router.pathname.startsWith('/dashboard/') ? <Footer/> : null}
+    </div>
   );
 }

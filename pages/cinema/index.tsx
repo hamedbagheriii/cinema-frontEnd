@@ -10,7 +10,7 @@ const Index : FC<cinemaProps> = ({cinemas}) => {
   const router = useRouter()
 
   return (
-    <div className='w-full px-4'>
+    <div className='w-full h-full px-4'>
      {/* cienmas */}
      <Section title='سینماها' className={'mt-0 pt-4 md:mt-0'}>
         {cinemas.map((cinema: any) => (
