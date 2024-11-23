@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <div
       dir='rtl'
-      className='w-full flex flex-col justify-center rounded-xl bg-red-500  mt-4 items-center '
+      className='w-full flex flex-col justify-center mih-h-[500px] rounded-xl  mt-4 items-center '
     >
-      <div className='bg-white w-full border-t-4 h-full border-red-700 max-h-[200px] py-5 px-10 rounded-xl'>
+      <div className='bg-white w-full border-t-4  h-full border-red-700 max-h-[200px] py-5 px-10 rounded-xl'>
         {/* main */}
         <div className='w-full flex flex-col justify-center sm:flex-row-reverse  sm:justify-around items-center'>
           {/* left side  */}

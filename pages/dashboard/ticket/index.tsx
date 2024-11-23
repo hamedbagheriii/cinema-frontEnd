@@ -22,6 +22,7 @@ const Index = () => {
   useEffect(() => {
     handleGetTickets();
   }, [isUser]);
+console.log(tickets);
 
   return (
     <Layout isTicket>
@@ -49,7 +50,7 @@ const Index = () => {
                 className={`border-2
                 w-full max-w-[700px] rounded-lg pt-4 flex justify-center
                 items-center  px-4 flex-col sm:min-h-[160px] border-black`}
-                key={ticket.ticket}
+                key={`${ticket.ticket}`}
               >
                 {/* top section */}
                 <div
@@ -132,11 +133,11 @@ const Index = () => {
                             className='flex gap-2 h-[36px] max-w-[140px] min-w-[130px] px-2 
                             text-[10px] items-center rounded-md text-nowrap
                           bg-white border-2 border-black text-red-700 justify-between'
-                            key={`${t.row}-${t.selectedSeats[0]}`}
+                            key={`${t.row}-${t.selectedSeats}-${ticket.ticket}-${Math.random()*100000}`}
                           >
                             <div className='flex flex-row w-full justify-around'>
                               <span>ردیف : {t.row} </span>
-                              <span> صندلی {t.selectedSeats[0]} </span>
+                              <span> صندلی {t.selectedSeats} </span>
                             </div>
                           </div>
                         ))}

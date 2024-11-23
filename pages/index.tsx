@@ -48,7 +48,7 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
         ))}
       </Section>
 
-      <hr className='w-11/12 mx-auto mt-14 bg-red-800 pt-1 rounded-full' />
+      <hr className='w-11/12 mx-auto mt-8  bg-red-800 pt-0.5 rounded-full' />
 
       {/* cienmas */}
       <Section title='سینماها'>
