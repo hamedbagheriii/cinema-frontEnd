@@ -1,3 +1,4 @@
+import Footer from '@/components/layout/main/footer';
 import Header from '@/components/layout/main/header';
 import { Toaster } from '@/components/ui/toaster';
 import '@/styles/globals.css';
@@ -12,6 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {!router.pathname.startsWith('/auth/') ? <Header/> : null}
       <Component {...pageProps} />
       <Toaster />
+      {!router.pathname.startsWith('/auth/') ? <Footer/> : null}
     </>
   );
 }

@@ -15,14 +15,7 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
   const [dates, setDates] = useState<string[]>([]);
   const [date, setDate] = useState<string>('');
   const [movies, setMovies] = useState<any[]>([]);
-  const times : string[] = [
-    '09:00',
-    '12:00',
-    '15:00',
-    '18:00',
-    '21:00',
-    '23:00',
-  ]
+  const times: string[] = ['09:00', '12:00', '15:00', '18:00', '21:00', '23:00'];
 
   // !  get dates
   const dateTime: Date = new Date();
@@ -137,7 +130,8 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
           let movieData = movie.movie;
 
           return (
-            <div key={movieData.id}
+            <div
+              key={movieData.id}
               className='w-full  flex-col  mx-auto flex min-h-[200px] bg-black/5 px-4 py-2 rounded-lg'
             >
               {/* movie data */}
@@ -194,15 +188,18 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
                 className={` mt-5 ${handleShowSelect(movieIndex) ? 'flex' : 'hidden'} 
                transition-all w-full flex-col gap-4 duration-300 py-2`}
               >
-                <span className='text-[14px] cursor-pointer px-2 flex'
-                  onClick={()=>router.push(`/movie/${movieData.id}`)}
+                <span
+                  className='text-[14px] cursor-pointer px-2 flex'
+                  onClick={() => router.push(`/movie/${movieData.id}`)}
                 >
-                  <i className='bi bi-arrow-left-square-fill mt-0.5
-                  text-[14px] text-red-700 me-2'></i>
+                  <i
+                    className='bi bi-arrow-left-square-fill mt-0.5
+                  text-[14px] text-red-700 me-2'
+                  ></i>
                   درباره فیلم {movieData.movieName}{' '}
                 </span>
 
-                <hr className='w-full my-1 bg-red-700/70 pt-1 rounded-full'/>
+                <hr className='w-full my-1 bg-red-700/70 pt-1 rounded-full' />
 
                 {cinemaData.halls.map((t: any) => (
                   <div key={t.id} className='w-full min-h-[100px] px-2 py-2'>
@@ -210,14 +207,30 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
 
                     <div className='flex w-full gap-y-4 mt-3 flex-wrap'>
                       {times.map((time: string) => (
-                        <div key={time} className='w-full sm:w-1/2 md:w-1/3   px-2 min-h-[40px]  rounded-md'>
+                        <div
+                          key={time}
+                          className='w-full sm:w-1/2 md:w-1/3   px-2 min-h-[40px]  rounded-md'
+                        >
                           <div className='w-full h-full bg-white border-2 border-black px-4  rounded-md flex justify-between items-center'>
                             <div className='w-1/2 flex flex-col gap-1 py-2'>
-                              <span className='text-black text-[16px] font-bold'>سانس {time}</span>
-                              <span className='text-sm text-gray-600'>{numberWithCommas(movieData.price)} تومان</span>
+                              <span className='text-black text-[16px] font-bold'>
+                                سانس {time}
+                              </span>
+                              <span className='text-sm text-gray-600'>
+                                {numberWithCommas(movieData.price)} تومان
+                              </span>
                             </div>
 
-                            <Button className='w-1/4 min-w-[90px] bg-red-700 hover:bg-red-900'>خرید</Button>
+                            <Button
+                              className='w-1/4 min-w-[90px] bg-red-700 hover:bg-red-900'
+                              onClick={() =>
+                                router.push(
+                                  `/event/${movieData.id}?cinema=${cinemaData.id}&hall=${t.id}&date=${date}&time=${time}`
+                                )
+                              }
+                            >
+                              خرید
+                            </Button>
                           </div>
                         </div>
                       ))}

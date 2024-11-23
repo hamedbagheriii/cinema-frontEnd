@@ -51,13 +51,6 @@ const Header = () => {
           سینما
         </Link>
 
-        {/* serach input */}
-        <Input
-          className='max-w-56 min-w-36 hidden border-2 focus:border-black/60
-          focus:shadow-black/50 hover:border-black/60
-          hover:shadow-black/50 lg:flex placeholder:text-white'
-          placeholder='جستجو . . . '
-        />
       </div>
 
       {/* left side */}

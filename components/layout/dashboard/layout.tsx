@@ -1,10 +1,43 @@
-import { ConfirmAlert } from '@/utils/AlertCompo';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { useTicketService } from '@/services/ticket/ticket';
+import { ConfirmAlert, handleShowAlert } from '@/utils/AlertCompo';
 import LinkCompo from '@/utils/Link';
+import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 
-const Layout: FC<{ children: ReactNode }> = ({ children }) => {
+interface layoutProps {
+  children: ReactNode;
+  isTicket?: boolean;
+}
+const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
   const router = useRouter();
+  const { toast } = useToast();
+  const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+  const [ticket, setTicket] = useState<number | null>(null);
+
+  // handle use ticket =>
+  const onSubmit = async () => {
+    if (ticket !== null) {
+      setIsSubmiting(true);
+      const res: any = await useTicketService(ticket);
+
+      if (res.status === 200) {
+        handleShowAlert('بلیط با موفقیت چاپ شد !', true, 'success', toast);
+        setTimeout(() => {
+          router.push('/dashboard/profile');
+        }, 3000);
+      } else {
+        handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
+      }
+
+      setTimeout(() => {
+        setIsSubmiting(false);
+      }, 3000);
+    }
+  };
 
   return (
     <div
@@ -58,6 +91,35 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
             </div>
           </ConfirmAlert>
         </div>
+
+        {/* ticket */}
+        {isTicket && (
+          <div
+            className='bg-red-800 w-full me-auto mt-10 sm:max-w-80 shadow-md h-fit
+          shadow-black/50 rounded-2xl my-auto text-white gap-3 flex flex-col py-4 px-2'
+          >
+            <span className='mx-auto flex font-normal'>
+              <i className='bi bi-tag mt-0.5 me-2'></i>
+              چاپ بلیط
+            </span>
+            <Input
+              onChange={(e: any) => setTicket(e.target.value)}
+              type='number'
+              className='bg-white text-black'
+              placeholder='مثال : 123456'
+            />
+            <Button
+              onClick={() => onSubmit()}
+              className='w-full bg-black hover:text-red-700
+           hover:bg-black duration-150'
+            >
+              {isSubmiting ? <Loader2 className='size-5 animate-spin' /> : 'چاپ'}
+            </Button>
+            <small className='ps-1 font-normal text-wrap'>
+              توجه : کاربر گرامی ، این یک نمونه تست است .
+            </small>
+          </div>
+        )}
       </div>
 
       {/* content */}

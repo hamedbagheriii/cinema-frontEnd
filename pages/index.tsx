@@ -23,7 +23,10 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
             key={movie.id}
             className='text-center max-w-[250px] lg:max-w-[300px] p-1 flex flex-col gap-2 w-1/3 md:w-1/4 lg:w-1/5'
           >
-            <div className='w-full h-full relative'>
+            <div
+              className='w-full h-full relative'
+              onClick={() => router.push(`/movie/${movie.id}`)}
+            >
               <div
                 className='w-full h-full absolute bg-transparent
                 hover:bg-black/20 transition-all cursor-pointer duration-150 rounded-xl'
@@ -54,7 +57,8 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
             key={cinema.id}
             className='text-center max-w-[250px] lg:max-w-[300px] p-1 flex flex-col gap-2 w-1/2 md:w-1/4 '
           >
-            <div className='w-full h-full relative'
+            <div
+              className='w-full h-full relative'
               onClick={() => router.push(`/cinema/${cinema.id}`)}
             >
               <div
@@ -90,9 +94,9 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      movies: movies.data ,
-      slider: slider.data ,
-      cinemas: cinemas.data ,
+      movies: movies.data,
+      slider: slider.data,
+      cinemas: cinemas.data,
     },
   };
 };

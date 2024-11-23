@@ -32,37 +32,37 @@ export const handleShowAlert = (
   }, 1000);
 };
 
-
 // ! confirm alert =>
 interface ConfirmProps {
   title: string;
   description?: string | null;
   onClick: () => void;
-  children : ReactNode;
+  children: ReactNode;
 }
 export const ConfirmAlert: FC<ConfirmProps> = ({
   title,
   description = null,
   onClick,
-  children
+  children,
 }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>{children}</AlertDialogTrigger>
       <AlertDialogContent dir='rtl' className='bg-white'>
         <AlertDialogHeader>
-          <AlertDialogTitle className='text-right mb-2 text-red-800'>{title}</AlertDialogTitle>
-          {description && (
-            <AlertDialogContent>
-              <AlertDialogDescription className='text-right'>
-                {description}
-              </AlertDialogDescription>
-            </AlertDialogContent>
-          )}
+          <AlertDialogTitle className='text-right mb-2 text-red-800'>
+            {title}
+          </AlertDialogTitle>
+          <AlertDialogDescription className='text-right'>
+            {description}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className='flex gap-3'>
           <AlertDialogCancel className='min-w-24'>خیر</AlertDialogCancel>
-          <AlertDialogAction className='min-w-24 bg-red-700 hover:bg-red-800' onClick={onClick}>
+          <AlertDialogAction
+            className='min-w-24 bg-red-700 hover:bg-red-800'
+            onClick={onClick}
+          >
             تایید
           </AlertDialogAction>
         </AlertDialogFooter>
