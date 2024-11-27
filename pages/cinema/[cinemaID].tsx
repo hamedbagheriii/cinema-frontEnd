@@ -75,7 +75,7 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
             alt={cinemaData.cinemaName}
             width={1}
             height={1}
-            className='rounded-xl w-full h-full sm:max-w-[400px] sm:h-4/5 '
+            className='sm:rounded-xl w-full h-full sm:max-w-[400px] sm:h-4/5 '
             style={{ objectFit: 'cover', objectPosition: 'center' }}
             loading='lazy'
             placeholder='empty'
