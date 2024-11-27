@@ -11,8 +11,6 @@ const ErrorAlert: FC<ErrorAlertProps> = ({ name, padding }) => {
   return (
     <ErrorMessage name={name}>
       {(message: any) => {
-        console.log(message);
-
         return (
           <Alert
             className={`flex align-middle ${padding && 'md:absolute md:top-3 '} items-center py-0 px-0 pl-5 min-w-[170px] 

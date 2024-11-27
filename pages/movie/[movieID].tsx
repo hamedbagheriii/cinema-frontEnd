@@ -277,7 +277,6 @@ export const getServerSideProps = async ({ params }: { params: any }) => {
   const movieData = await fetch(`${movieURL}/${params.movieID}`).then((res) =>
     res.json()
   );
-  console.log(params.movieID);
 
   return {
     props: {

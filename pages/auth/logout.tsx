@@ -10,6 +10,8 @@ const Logout = () => {
     const hanleLogoutUser = async ()=>{
         const res = await logoutUserService()
         Cookies.remove('userToken');
+        localStorage.removeItem('userToken');
+
 
         setTimeout(()=>{
             router.push('/auth/login');

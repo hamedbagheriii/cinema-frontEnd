@@ -27,6 +27,7 @@ const Header = () => {
   rounded-full font-normal duration-200 text-white hidden sm:flex`;
   const buttonStyle = `bg-transparent border-2 border-black rounded-full hidden sm:flex`;
 
+  
   return (
     <div
       dir='rtl'

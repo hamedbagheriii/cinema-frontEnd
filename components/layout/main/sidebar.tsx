@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Accordion,
   AccordionContent,
@@ -9,6 +9,7 @@ import LinkCompo, { handleCheckLink } from '@/utils/Link';
 import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
 import { ConfirmAlert } from '@/utils/AlertCompo';
+import { localToken } from '@/utils/localToken';
 
 interface sidebarProps {
   isSidebar: boolean;
@@ -17,6 +18,10 @@ interface sidebarProps {
 }
 const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
   const router = useRouter();
+
+  useEffect(() => {
+    localToken()
+  },[])
 
   return (
     <>

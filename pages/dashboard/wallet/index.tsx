@@ -17,15 +17,11 @@ const initalValues = {
 };
 
 const onSubmit = async (values: any, action: any, toast: any, router: any) => {
-  console.log(values);
-
   //  request =>
   try {
     const res: any = await incWalletService(values);
 
     if (res.status === 200) {
-      console.log(res);
-
       handleShowAlert(res.data.message, true, 'success', toast);
       setTimeout(() => {
         router.push('/dashboard/profile');

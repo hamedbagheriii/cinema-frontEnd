@@ -19,8 +19,6 @@ const initalValues = {
 };
 
 const onSubmit = async (values: any, action: any, toast: any) => {
-  console.log(values);
-
   //  request =>
   try {
     let res: any;
@@ -43,8 +41,6 @@ const onSubmit = async (values: any, action: any, toast: any) => {
 
     //  check request =>
     if (res.status === 200) {
-      console.log(res);
-
       handleShowAlert('ویرایش با موفقیت انجام شد !', true,
       'success', toast);
     } 
@@ -210,6 +206,7 @@ const Index = () => {
                   control='submitBTN'
                   title='ویرایش اطلاعات'
                   formik={formik}
+                  className='min-w-[160px] max-w-[250px]'
                   disabled={formik.isSubmitting || !formik.dirty}
                 />
               </Form>

@@ -22,7 +22,6 @@ const Index = () => {
   useEffect(() => {
     handleGetTickets();
   }, [isUser]);
-console.log(tickets);
 
   return (
     <Layout isTicket>

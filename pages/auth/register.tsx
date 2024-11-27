@@ -18,8 +18,6 @@ const initalvalues = {
 };
 
 const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
-  console.log(actions);
-  
   try {
     const res: any = await registerUserService(values);
 

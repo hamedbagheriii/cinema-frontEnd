@@ -20,7 +20,7 @@ const SubmitBtn: FC<SubmitBtnProps> = ({
   return (
     <Button
       type='submit'
-      className={`w-4/12 text-[17px]  bg-red-700 hover:bg-red-800 mx-auto  ${className}`}
+      className={`w-4/12 text-[17px] min-w-[160px] max-w-[250px]  bg-red-700 hover:bg-red-800 mx-auto  ${className}`}
       disabled={disabled}
       onClick={onClick}
     >

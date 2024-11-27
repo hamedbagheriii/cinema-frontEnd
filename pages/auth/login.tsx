@@ -21,6 +21,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
     const res : any = await loginUserService(values);
     if (res.status === 200) {
       Cookies.set('userToken', res.data.token);
+      localStorage.setItem("userToken", res.data.token);
 
       handleShowAlert(
         'شما با موفقیت وارد حساب کاربری خود شدید !',
@@ -33,6 +34,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
       }, 3000);
     } else {
       Cookies.remove('userToken');
+      localStorage.removeItem('userToken');
 
       handleShowAlert(res.response.data.message || res.message,
       false, 'error', toast);
@@ -41,6 +43,8 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
   catch (error: any) {
     handleShowAlert(error.response.data.message ||
     error.message, false, 'error', toast);
+
+    localStorage.removeItem('userToken');
   }
   finally {
     setTimeout(() => {

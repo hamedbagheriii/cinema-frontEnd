@@ -38,7 +38,7 @@ const MovieDec: FC<movieDec> = ({ movieData, title, icon, moviePage = false }) =
       </div>
     </div>
   ) : (
-    <span className='flex flex-col text-center text-[13px]'>
+    <span className='flex text-nowrap flex-col text-center text-[13px]'>
       {movieData.createdAt}
       <div className='flex gap-1.5'>
         <i className={`bi bi-${icon} mt-0.5 text-red-700`}></i> {title}

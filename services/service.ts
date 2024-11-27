@@ -8,19 +8,9 @@ export const Cookies = new Cookie(null, { path: '/' });
 // ! interceptors =>>>
 axios.interceptors.response.use(
   (res: any) => {
-    if (!res.data.success) {
-      console.log(res.data.message);
-      return console.log(res.data.message);
-    }
-
     return res;
   },
   (err: any) => {
-    if (!err.request.responseURL.includes('/auth/user')) {
-      console.log(err?.response?.data?.message || err.message);
-  
-      return err;
-    }
     return err;
   }
 );
