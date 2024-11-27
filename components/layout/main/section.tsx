@@ -12,7 +12,7 @@ const Section : FC<SectionProps> = ({children , title , className}) => {
           {title} <i className='bi bi-caret-left-fill mt-0.5 mx-1'></i>
         </span>
 
-        <div className='w-full mt-5 flex  h-fit flex-wrap flex-row justify-evenly gap-y-7 '>
+        <div className='w-full mt-5 flex  h-fit flex-row flex-wrap justify-evenly gap-y-7 '>
             {children}
         </div>
       </div>

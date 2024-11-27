@@ -54,7 +54,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
         <hr className='mb-4' />
 
         {/* sidebar content */}
-        <div dir='ltr' className='flex text-left space-y-6 flex-col w-full h-full '>
+        <div dir='ltr' className='flex text-left space-y-6 flex-col w-full '>
           {isUser ? (
             <Accordion type='single' collapsible>
               <AccordionItem value='item-1' className='text-white Accordion'>
@@ -127,7 +127,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
 
         {/* sidebar footer */}
         {isUser && (
-          <div className='mt-auto w-full pt-[200px] flex-col mb-2 flex'>
+          <div className='mt-auto w-full  flex-col mb-2 flex'>
             <hr className='w-full' />
             <ConfirmAlert
               title='آیا میخواهد از حساب کاربری خارج شوید ؟'

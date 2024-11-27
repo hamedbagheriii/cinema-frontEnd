@@ -12,19 +12,20 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
   const router = useRouter();
 
   return (
-    <div className='w-full flex pt-5  justify-center items-center flex-col'>
+    <div className='w-full flex pt-5   justify-center items-center flex-col'>
       {/* slider */}
       <Slider data={slider} />
 
+
       {/* movies */}
-      <Section title='فیلم سینمایی'>
+      <Section title='فیلم سینمایی' className=''>
         {movies.map((movie: any) => (
           <div
             key={movie.id}
-            className='text-center max-w-[250px] lg:max-w-[300px] p-1 flex flex-col gap-2 w-1/3 md:w-1/4 lg:w-1/5'
+            className='text-center max-w-[300px]  p-1 flex flex-col gap-2 w-1/3 md:w-1/4 lg:w-1/5'
           >
             <div
-              className='w-full h-full relative'
+              className='w-full h-full relative xl:max-w-[190px] mx-auto text-center'
               onClick={() => router.push(`/movie/${movie.id}`)}
             >
               <div
@@ -48,10 +49,10 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
         ))}
       </Section>
 
-      <hr className='w-11/12 mx-auto mt-8  bg-red-800 pt-0.5 rounded-full' />
+      <hr className='w-11/12 mx-auto mt-14 mb-5 bg-red-800 pt-0.5 rounded-full' />
 
       {/* cienmas */}
-      <Section title='سینماها'>
+      <Section title='سینماها' className='pb-5 '>
         {cinemas.map((cinema: any) => (
           <div
             key={cinema.id}

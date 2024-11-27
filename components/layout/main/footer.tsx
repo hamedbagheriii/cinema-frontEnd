@@ -5,11 +5,11 @@ const Footer = () => {
   return (
     <div
       dir='rtl'
-      className='w-full flex flex-col justify-center mih-h-[500px] rounded-xl  mt-4 items-center '
+      className='w-full flex flex-col justify-center bg-gray-50 mih-h-[500px] rounded-xl sm:pb-14 mt-7 items-center '
     >
-      <div className='bg-white w-full border-t-4  h-full border-red-700 max-h-[200px] py-5 px-10 rounded-xl'>
+      <div className=' w-full border-t-4 h-full border-red-700 sm:max-h-[200px] py-3 pt-7 sm:pb-12 sm:pt-8  px-10 rounded-xl'>
         {/* main */}
-        <div className='w-full flex flex-col justify-center sm:flex-row-reverse  sm:justify-around items-center'>
+        <div className='w-full flex flex-col justify-center bg-gray-300 py-3 rounded-lg shadow-lg shadow-black/20 px-4 sm:px-16 sm:flex-row-reverse  sm:justify-around items-center'>
           {/* left side  */}
           <div className='w-full flex flex-col mx-auto sm:mx-0 text-center sm:text-left  gap-3 sm:w-1/2'>
             <Link
@@ -51,9 +51,9 @@ const Footer = () => {
         </div>
 
         {/* bottom */}
-        <hr className='w-full my-5 mx-auto sm:w-3/4 bg-gray-600 flex pt-0.5 rounded-full' />
+        <hr className='w-full my-6 mx-auto sm:w-3/4 bg-gray-600 flex pt-0.5 rounded-full' />
 
-        <div className='w-full pb-2 sm:pb-0 flex flex-col mx-auto text-center gap-2'>
+        <div className='w-full pb-2 sm:pb-0 flex flex-col mx-auto text-center h-full gap-2'>
           <span className='text-[14px]'>
             پشتیبانی تلفنی سینما TV از ساعت ۹ الی 24 : 02192009099
           </span>
