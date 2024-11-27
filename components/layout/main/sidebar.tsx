@@ -57,15 +57,15 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
         <div dir='ltr' className='flex text-left space-y-6 flex-col w-full '>
           {isUser ? (
             <Accordion type='single' collapsible>
-              <AccordionItem value='item-1' className='text-white Accordion'>
+              <AccordionItem value='item-1' className='text-white Accordion '>
                 <AccordionTrigger
                   className={`text-[16px] text-white px-3
-                mb-3 decoration-black/50 font-normal hover:bg-black/50 
+                mb-3 decoration-transparent font-normal hover:bg-black/50 
                 transition-all duration-150 rounded-md 
                 ${handleCheckLink('/dashboard' ,
                  router)}`}
                 >
-                  <div className='flex gap-2 text-center'>
+                  <div className='flex gap-2 text-center '>
                     <i className='bi bi-columns-gap mt-0.5'></i>
                     داشبورد
                   </div>
