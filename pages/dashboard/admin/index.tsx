@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/dashboard/layout';
+import Layout from '@/components/layout/dashboard/admin/layout';
 import { useToken } from '@/hooks/use-Token';
 import React, { useEffect, useState } from 'react';
 

@@ -23,7 +23,8 @@ const LinkCompo: FC<LinkProps> = ({ title, linkClass, iconClass , path , dir='lt
   const router = useRouter();
 
   return (
-    <Link dir={dir} href={path} className={`py-3 pt-3.5 flex px-2 font-normal ${border && 'border-l-2 rounded-l-none border-white/50'}
+    <Link dir={dir} href={path} className={`py-3 pt-3.5 flex px-2 font-normal 
+    ${border && `${dir == 'rtl' ? 'border-r-2 rounded-r-none' : 'border-l-2 rounded-l-none'}  border-white/50`}
     hover:bg-black/50 transition-all duration-150 rounded-md ${linkClass} ${handleCheckLink(path , router)}`}>
       <i className={`me-2 bi bi-${iconClass}`} style={{ fontSize: 17 }}></i>
       {title}

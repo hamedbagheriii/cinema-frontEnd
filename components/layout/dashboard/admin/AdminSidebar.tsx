@@ -99,10 +99,8 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                 </div>
               </AccordionContent>
             </AccordionItem>
-          </Accordion>
 
-          <Accordion type='single' collapsible>
-            <AccordionItem value='item-1' className='text-white Accordion '>
+            <AccordionItem value='item-2' className='text-white Accordion mt-3'>
               <AccordionTrigger
                 className={`text-[16px] text-white px-3
                 mb-3 decoration-transparent font-normal bg-red-900 hover:bg-black/70 

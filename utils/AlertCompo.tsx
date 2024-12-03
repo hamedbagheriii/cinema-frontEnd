@@ -47,7 +47,7 @@ export const ConfirmAlert: FC<ConfirmProps> = ({
 }) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>{children}</AlertDialogTrigger>
+      <AlertDialogTrigger className='w-full'>{children}</AlertDialogTrigger>
       <AlertDialogContent dir='rtl' className='bg-white'>
         <AlertDialogHeader>
           <AlertDialogTitle className='text-right mb-2 text-red-800'>
