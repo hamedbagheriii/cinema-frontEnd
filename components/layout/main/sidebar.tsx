@@ -10,6 +10,7 @@ import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
 import { ConfirmAlert } from '@/utils/AlertCompo';
 import { localToken } from '@/utils/localToken';
+import { hasAccess } from '@/utils/hasAccess';
 
 interface sidebarProps {
   isSidebar: boolean;
@@ -20,8 +21,8 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
   const router = useRouter();
 
   useEffect(() => {
-    localToken()
-  },[])
+    localToken();
+  }, []);
 
   return (
     <>
@@ -55,15 +56,14 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
 
         {/* sidebar content */}
         <div dir='ltr' className='flex text-left space-y-6 flex-col w-full '>
-          {isUser ? (
+          {isUser && hasAccess('', isUser.roles) !== true ? (
             <Accordion type='single' collapsible>
               <AccordionItem value='item-1' className='text-white Accordion '>
                 <AccordionTrigger
                   className={`text-[16px] text-white px-3
                 mb-3 decoration-transparent font-normal hover:bg-black/50 
                 transition-all duration-150 rounded-md 
-                ${handleCheckLink('/dashboard' ,
-                 router)}`}
+                ${handleCheckLink('/dashboard', router)}`}
                 >
                   <div className='flex gap-2 text-center '>
                     <i className='bi bi-columns-gap mt-0.5'></i>
@@ -77,7 +77,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                     title='اطالاعات کاربری'
                     linkClass={`pl-8 `}
                     iconClass='person-circle me-2'
-                    path={'/dashboard/profile'}
+                    path={'/dashboard/user/profile'}
                   />
 
                   <hr className='w-11/12 ms-auto' />
@@ -85,7 +85,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                     title='بلیط ها'
                     iconClass='ticket-perforated me-2 '
                     linkClass={`pl-8`}
-                    path={'/dashboard/ticket'}
+                    path={'/dashboard/user/ticket'}
                   />
 
                   <hr className='w-11/12 ms-auto' />
@@ -93,11 +93,21 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                     title='کیف پول'
                     linkClass={`pl-8 `}
                     iconClass='wallet2 me-2'
-                    path={'/dashboard/wallet'}
+                    path={'/dashboard/user/wallet'}
                   />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+          ) : isUser && hasAccess('', isUser.roles) === true ? (
+            <>
+              <LinkCompo
+                title='داشبورد مدیریت'
+                iconClass='person-gear me-2'
+                linkClass='mt-2 pl-3'
+                path={'/dashboard/admin'}
+              />
+              <hr />
+            </>
           ) : (
             <>
               <LinkCompo
@@ -135,7 +145,8 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
                 router.push('/auth/logout');
               }}
             >
-              <div className='flex items-center px-2 mt-2 transition-all duration-150 rounded-md
+              <div
+                className='flex items-center px-2 mt-2 transition-all duration-150 rounded-md
              font-normal justify-center pb-2 pt-2 hover:bg-black/80'
               >
                 <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>

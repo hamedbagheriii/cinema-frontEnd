@@ -9,8 +9,8 @@ const Logout = () => {
 
     const hanleLogoutUser = async ()=>{
         const res = await logoutUserService()
-        Cookies.remove('userToken');
         localStorage.removeItem('userToken');
+        Cookies.remove('userToken');
 
 
         setTimeout(()=>{

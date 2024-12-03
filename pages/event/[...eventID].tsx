@@ -10,6 +10,7 @@ import { useToken } from '@/hooks/use-Token';
 import { addTicketService } from '@/services/ticket/ticket';
 import { handleShowAlert } from '@/utils/AlertCompo';
 import { convertDate } from '@/utils/convertDate';
+import { hasAccess } from '@/utils/hasAccess';
 import { numberWithCommas } from '@/utils/numbWithCommas';
 import exp from 'constants';
 import { Loader2 } from 'lucide-react';
@@ -134,39 +135,45 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
   const onSubmit = async () => {
     setIsSubmiting(true);
     if (selectSeats.length > 0) {
-      const data = {
-        ticket: Math.round(Math.random() * 1000000),
-        email: isUser.email,
-        movieId: Number(eventID?.[0]),
-        cinemaID: Number(cinema),
-        rows: selectSeats,
-        useTicket: false,
-        hallID: Number(hall),
-        dateEvent: date,
-        Time: time,
-        price: movieData.price * selectSeats.length,
-      };
+      if (hasAccess('', isUser.roles) !== true) {
+        const data = {
+          ticket: Math.round(Math.random() * 1000000),
+          email: isUser.email,
+          movieId: Number(eventID?.[0]),
+          cinemaID: Number(cinema),
+          rows: selectSeats,
+          useTicket: false,
+          hallID: Number(hall),
+          dateEvent: date,
+          Time: time,
+          price: movieData.price * selectSeats.length,
+        };
 
-      const res: any = await addTicketService(data);
+        const res: any = await addTicketService(data);
 
-      if (res.status === 200) {
-        handleShowAlert('بلیط با موفقیت ثبت شد !', true, 'success', toast);
+        if (res.status === 200) {
+          handleShowAlert('بلیط با موفقیت ثبت شد !', true, 'success', toast);
 
-        setTimeout(() => {
-          router.push('/dashboard/ticket');
-        }, 3000);
+          setTimeout(() => {
+            router.push('/dashboard/user/ticket');
+          }, 3000);
+        } else {
+          handleShowAlert(
+            res.response.data.message || res.message,
+            false,
+            'error',
+            toast
+          );
+        }
       } else {
-        handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
+        handleShowAlert('عملیات به دلیل مدیر بودن شما لغو شد .', false, 'error', toast);
       }
-
       setTimeout(() => {
         setIsSubmiting(false);
       }, 3000);
     }
   };
 
-
-  
   useEffect(() => {
     handleHallData();
   }, []);

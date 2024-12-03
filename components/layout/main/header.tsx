@@ -16,6 +16,7 @@ import Sidebar from './sidebar';
 import FullName from '@/utils/fullName';
 import LinkCompo, { handleCheckLink } from '@/utils/Link';
 import { ConfirmAlert } from '@/utils/AlertCompo';
+import { hasAccess } from '@/utils/hasAccess';
 
 const Header = () => {
   const { isUser } = useToken();
@@ -27,7 +28,6 @@ const Header = () => {
   rounded-full font-normal duration-200 text-white hidden sm:flex`;
   const buttonStyle = `bg-transparent border-2 border-black rounded-full hidden sm:flex`;
 
-  
   return (
     <div
       dir='rtl'
@@ -51,7 +51,6 @@ const Header = () => {
         <Link href={'/cinema'} className={`${LinkStyle} w-24 justify-center`}>
           سینما
         </Link>
-
       </div>
 
       {/* left side */}
@@ -79,49 +78,61 @@ const Header = () => {
             <FullName isUser={isUser} icon={true} />
             <hr />
 
-            <LinkCompo
-              title='اطالاعات کاربری'
-              iconClass='columns-gap me-2 mt-0.5'
-              linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-              path={'/dashboard/profile'}
-              dir='rtl'
-            />
+            {isUser && hasAccess('', isUser.roles) === true ? (
+              <LinkCompo
+                title='داشبورد مدیریت'
+                iconClass='person-gear me-2'
+                linkClass='mt-2 pl-3'
+                path={'/dashboard/admin'}
+                dir='rtl'
+              />
+            ) : (
+              <>
+                <LinkCompo
+                  title='اطالاعات کاربری'
+                  iconClass='columns-gap me-2 mt-0.5'
+                  linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
+                  path={'/dashboard/user/profile'}
+                  dir='rtl'
+                />
 
-            <hr />
-            <LinkCompo
-              title='بلیط ها'
-              iconClass='ticket-perforated me-2 pb-1'
-              linkClass={`rounded-full justify-center pb-1 pt-2 hover:bg-black/80 `}
-              path={'/dashboard/ticket'}
-              dir='rtl'
-            />
+                <hr />
+                <LinkCompo
+                  title='بلیط ها'
+                  iconClass='ticket-perforated me-2 pb-1'
+                  linkClass={`rounded-full justify-center pb-1 pt-2 hover:bg-black/80 `}
+                  path={'/dashboard/user/ticket'}
+                  dir='rtl'
+                />
 
-            <hr />
-            <LinkCompo
-              title='کیف پول'
-              iconClass='wallet2 me-2'
-              linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-              path={'/dashboard/wallet'}
-              dir='rtl'
-            />
-
+                <hr />
+                <LinkCompo
+                  title='کیف پول'
+                  iconClass='wallet2 me-2'
+                  linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
+                  path={'/dashboard/user/wallet'}
+                  dir='rtl'
+                />
+              </>
+            )}
             <hr />
             <ConfirmAlert
-            title='آیا میخواهد از حساب کاربری خارج شوید ؟'
-            onClick={() => {
-              router.push('/auth/logout');
-            }}
-          >
-            <div dir='rtl' className='flex items-center px-2 
+              title='آیا میخواهد از حساب کاربری خارج شوید ؟'
+              onClick={() => {
+                router.push('/auth/logout');
+              }}
+            >
+              <div
+                dir='rtl'
+                className='flex items-center px-2 
             transition-all duration-150 rounded-md
-             font-normal justify-center pb-2 pt-2 hover:bg-black/80'>
-              <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
-              <span >
-                خروج از حساب
-              </span>
-              <i className={`bi bi-caret-left mt-0.5 ms-auto`}></i>
-            </div>
-          </ConfirmAlert>
+             font-normal justify-center pb-2 pt-2 hover:bg-black/80'
+              >
+                <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
+                <span>خروج از حساب</span>
+                <i className={`bi bi-caret-left mt-0.5 ms-auto`}></i>
+              </div>
+            </ConfirmAlert>
           </DropdownMenuContent>
         </DropdownMenu>
 

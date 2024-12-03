@@ -14,14 +14,15 @@ import { handleShowAlert } from '@/utils/AlertCompo';
 const initalvalues = {
   email: '',
   password: '',
+  rememberMe:true
 };
 
 const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
   try {
     const res : any = await loginUserService(values);
     if (res.status === 200) {
-      Cookies.set('userToken', res.data.token);
       localStorage.setItem("userToken", res.data.token);
+      Cookies.set('userToken', res.data.token);
 
       handleShowAlert(
         'شما با موفقیت وارد حساب کاربری خود شدید !',
@@ -29,8 +30,9 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
         'success',
         toast
       );
+      
       setTimeout(() => {
-        router.push('/dashboard/profile');
+        router.push('/dashboard/user/profile');
       }, 3000);
     } else {
       Cookies.remove('userToken');
@@ -45,6 +47,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
     error.message, false, 'error', toast);
 
     localStorage.removeItem('userToken');
+    Cookies.remove('userToken');
   }
   finally {
     setTimeout(() => {
