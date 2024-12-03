@@ -24,12 +24,12 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       path: '/dashboard/admin/cinema',
       icon: 'camera-reels',
       accordionChild: [
-        { title: 'مدیریت سینما ها', path: '/dashboard/admin/cinema', icon: 'film' },
+        { title: 'مدیریت سینما ها', path: '/dashboard/admin/cinema', icon: 'camera-reels' },
         { title: 'مدیریت فیلم ها', path: '/dashboard/admin/cinema/movies', icon: 'film' },
         {
           title: 'مدیریت بلیط ها',
           path: '/dashboard/admin/cinema/tickets',
-          icon: 'film',
+          icon: 'ticket-perforated',
         },
       ],
     },
@@ -38,11 +38,11 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       path: '/dashboard/admin/users',
       icon: 'people',
       accordionChild: [
-        { title: 'مشاهده کاربران', path: '/dashboard/admin/users', icon: 'film' },
+        { title: 'مشاهده کاربران', path: '/dashboard/admin/users', icon: 'people' },
         {
           title: 'مدیریت کیف پول ها',
           path: '/dashboard/admin/users/wallets',
-          icon: 'film',
+          icon: 'wallet2',
         },
       ],
     },
@@ -51,11 +51,11 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       path: '/dashboard/admin/roles',
       icon: 'shield-shaded',
       accordionChild: [
-        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles', icon: 'film' },
+        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles', icon: 'person-vcard' },
         {
           title: 'مدیریت مجوز ها',
           path: '/dashboard/admin/roles/permissions',
-          icon: 'film',
+          icon: 'shield-lock-fill',
         },
       ],
     },
@@ -88,7 +88,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
                 <div
                   className='flex items-center px-2 w-full 
                 transition-all duration-150 rounded-md
-                font-normal justify-center pb-2 pt-2 hover:bg-black/80'
+                font-normal justify-center py-3 hover:bg-black/80'
                 >
                   <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
                   <span>خروج از حساب</span>
@@ -101,7 +101,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       </div>
 
       {/* content */}
-      <div className='w-full mt-6 sm:mt-0 sm:w-8/12 pb-8 px-3 py-2 '>{children}</div>
+      <div className='w-full mt-6 sm:mt-0  sm:w-8/12 pb-8 px-3 py-2 '>{children}</div>
     </div>
   );
 };

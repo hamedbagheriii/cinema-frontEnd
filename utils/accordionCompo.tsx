@@ -21,9 +21,10 @@ export interface accDataProps {
 interface accordionProps {
   data: accDataProps[];
   bgColor ?: string;
+  dir ?: string;
 }
 
-const AccordionCompo: FC<accordionProps> = ({ data , bgColor = ''}) => {
+const AccordionCompo: FC<accordionProps> = ({ data , bgColor = '' , dir = 'rtl'}) => {
   const router = useRouter();
 
   return (
@@ -52,7 +53,7 @@ const AccordionCompo: FC<accordionProps> = ({ data , bgColor = ''}) => {
                   linkClass='ps-4'
                   border={true}
                   path={item.path}
-                  dir='rtl'
+                  dir={dir}
                 />
               ))}
             </div>

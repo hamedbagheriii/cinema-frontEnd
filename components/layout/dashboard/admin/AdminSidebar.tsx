@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { ConfirmAlert } from '@/utils/AlertCompo';
 import { localToken } from '@/utils/localToken';
 import { hasAccess } from '@/utils/hasAccess';
+import AccordionCompo, { accDataProps } from '@/utils/accordionCompo';
 
 interface sidebarProps {
   isSidebar: boolean;
@@ -23,6 +24,54 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
   useEffect(() => {
     localToken();
   }, []);
+
+  // ! data for sidebar
+  const data: accDataProps[] = [
+    {
+      title: 'مدیریت سینما',
+      path: '/dashboard/admin/cinema',
+      icon: 'camera-reels',
+      accordionChild: [
+        {
+          title: 'مدیریت سینما ها',
+          path: '/dashboard/admin/cinema',
+          icon: 'camera-reels',
+        },
+        { title: 'مدیریت فیلم ها', path: '/dashboard/admin/cinema/movies', icon: 'film' },
+        {
+          title: 'مدیریت بلیط ها',
+          path: '/dashboard/admin/cinema/tickets',
+          icon: 'ticket-perforated',
+        },
+      ],
+    },
+    {
+      title: 'مدیریت کاربران',
+      path: '/dashboard/admin/users',
+      icon: 'people',
+      accordionChild: [
+        { title: 'مشاهده کاربران', path: '/dashboard/admin/users', icon: 'people' },
+        {
+          title: 'مدیریت کیف پول ها',
+          path: '/dashboard/admin/users/wallets',
+          icon: 'wallet2',
+        },
+      ],
+    },
+    {
+      title: 'مدیریت نقش ها',
+      path: '/dashboard/admin/roles',
+      icon: 'shield-shaded',
+      accordionChild: [
+        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles', icon: 'person-vcard' },
+        {
+          title: 'مدیریت مجوز ها',
+          path: '/dashboard/admin/roles/permissions',
+          icon: 'shield-lock-fill',
+        },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -52,108 +101,11 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
           ></i>
           {isUser && <FullName icon={true} isUser={isUser} className='pt-1' />}
         </div>
-        <hr className='mb-4' />
+        <hr className='' />
 
         {/* sidebar content */}
-        <div dir='ltr' className='flex text-left space-y-6 mb-28 flex-col w-full '>
-          <Accordion type='single' collapsible>
-            <AccordionItem value='item-1' className='text-white Accordion '>
-              <AccordionTrigger
-                className={`text-[16px] text-white px-3
-                mb-3 decoration-transparent font-normal bg-red-900 hover:bg-black/70 
-                transition-all duration-150 rounded-md 
-                ${handleCheckLink('/dashboard/admin/users', router)}`}
-              >
-                <div className='flex gap-2 text-center '>
-                  <i className='bi bi-columns-gap mt-0.5'></i>
-                  مدیریت سینما
-                </div>
-              </AccordionTrigger>
-
-              <AccordionContent className='flex flex-col space-y-3 '>
-                <hr className='w-full' />
-                <div className='flex flex-col space-y-3 pl-2'>
-                  <LinkCompo
-                    title='مدیریت فیلم ها'
-                    iconClass='person-add me-2'
-                    linkClass='pl-8'
-                    border={true}
-                    path={'/auth/login'}
-                  />
-                  <hr />
-                  <LinkCompo
-                    title='مدیریت سینما ها'
-                    iconClass='person-add me-2'
-                    linkClass='pl-8'
-                    border={true}
-                    path={'/auth/login'}
-                  />
-                  <hr />
-                  <LinkCompo
-                    title='مدیریت بلیط ها'
-                    iconClass='person-add me-2'
-                    linkClass='pl-8'
-                    border={true}
-                    path={'/auth/login'}
-                  />
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value='item-2' className='text-white Accordion mt-3'>
-              <AccordionTrigger
-                className={`text-[16px] text-white px-3
-                mb-3 decoration-transparent font-normal bg-red-900 hover:bg-black/70 
-                transition-all duration-150 rounded-md 
-                ${handleCheckLink('/dashboard/admin/users', router)}`}
-              >
-                <div className='flex gap-2 text-center '>
-                  <i className='bi bi-columns-gap mt-0.5'></i>
-                  مدیریت کاربران
-                </div>
-              </AccordionTrigger>
-
-              <AccordionContent className='flex flex-col space-y-3 '>
-                <hr className='w-full' />
-                <div className='flex flex-col space-y-3 pl-2'>
-                  <LinkCompo
-                    title='مشاهده کاربران'
-                    linkClass={`pl-8 `}
-                    iconClass='person-circle me-2'
-                    border={true}
-                    path={'/dashboard/admin/users'}
-                  />
-
-                  <hr />
-                  <LinkCompo
-                    title='کیف پول ها'
-                    iconClass='ticket-perforated me-2 '
-                    linkClass={`pl-8`}
-                    border={true}
-                    path={'/dashboard/admin/users/wallet'}
-                  />
-
-                  <hr />
-                  <LinkCompo
-                    title='نقش ها'
-                    iconClass='ticket-perforated me-2 '
-                    linkClass={`pl-8`}
-                    border={true}
-                    path={'/dashboard/admin/users/wallet'}
-                  />
-
-                  <hr />
-                  <LinkCompo
-                    title='مجوز ها'
-                    iconClass='ticket-perforated me-2 '
-                    linkClass={`pl-8`}
-                    border={true}
-                    path={'/dashboard/admin/users/wallet'}
-                  />
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        <div dir='ltr' className='flex text-left mb-28 flex-col w-full '>
+          <AccordionCompo dir={'ltr'} data={data} />
         </div>
 
         {/* sidebar footer */}
