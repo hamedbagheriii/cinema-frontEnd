@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useToken } from '@/hooks/use-Token';
 import {
   DropdownMenu,
@@ -17,6 +16,7 @@ import FullName from '@/utils/fullName';
 import LinkCompo, { handleCheckLink } from '@/utils/Link';
 import { ConfirmAlert } from '@/utils/AlertCompo';
 import { hasAccess } from '@/utils/hasAccess';
+import AdminSidebar from '../dashboard/admin/AdminSidebar';
 
 const Header = () => {
   const { isUser } = useToken();
@@ -145,7 +145,12 @@ const Header = () => {
       </div>
 
       {/* sidebar */}
-      <Sidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
+      {router.pathname.startsWith('/dashboard') && isUser &&
+      hasAccess('', isUser.roles) === true ? (
+        <AdminSidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
+      ) : (
+        <Sidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
+      )}
     </div>
   );
 };

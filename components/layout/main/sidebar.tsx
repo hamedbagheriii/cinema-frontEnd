@@ -24,6 +24,13 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
     localToken();
   }, []);
 
+  const handleChangePath = () => {
+    setSidebar(false);
+    setTimeout(() => {
+      router.push('/dashboard/admin');
+    }, 700);
+  };
+
   return (
     <>
       {/* sidebar layer */}
@@ -100,12 +107,15 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
             </Accordion>
           ) : isUser && hasAccess('', isUser.roles) === true ? (
             <>
-              <LinkCompo
-                title='داشبورد مدیریت'
-                iconClass='person-gear me-2'
-                linkClass='mt-2 pl-3'
-                path={'/dashboard/admin'}
-              />
+              <span
+                onClick={() => handleChangePath()}
+                className={`py-3 pt-3.5 flex px-2 font-normal
+              hover:bg-black/50 transition-all cursor-pointer duration-150 rounded-md `}
+              >
+                <i className={`me-2 bi bi-person-gear`} style={{ fontSize: 17 }}></i>
+                داشبورد مدیریت
+                <i className={`bi bi-caret-right mt-0.5 ms-auto`}></i>
+              </span>
               <hr />
             </>
           ) : (
