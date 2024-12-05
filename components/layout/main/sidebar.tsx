@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { ConfirmAlert } from '@/utils/AlertCompo';
 import { localToken } from '@/utils/localToken';
 import { hasAccess } from '@/utils/hasAccess';
+import AccordionCompo, { accDataProps } from '@/utils/accordionCompo';
 
 interface sidebarProps {
   isSidebar: boolean;
@@ -31,6 +32,28 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
     }, 700);
   };
 
+  // ! data for sidebar
+  const data: accDataProps[] = [
+    {
+      title: 'داشبورد',
+      path: '/dashboard/user',
+      icon: 'columns-gap',
+      accordionChild: [
+        {
+          title: 'اطلاعات کاربری',
+          path: '/dashboard/user/profile',
+          icon: 'person-circle',
+        },
+        { title: 'بلیط ها', path: '/dashboard/user/ticket', icon: 'ticket-perforated' },
+        {
+          title: 'کیف پول',
+          path: '/dashboard/user/wallet',
+          icon: 'wallet2',
+        },
+      ],
+    },
+  ];
+
   return (
     <>
       {/* sidebar layer */}
@@ -49,7 +72,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
         {/* sidebar header */}
         <div
           className={`w-full h-16 flex ${
-            isUser ? 'mt-3 mb-2' : 'mt-1 mb-0'
+            isUser ? 'mt-2 mb-1 ' : 'mt-1 mb-0'
           } justify-between items-center  `}
         >
           <i
@@ -59,57 +82,17 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
           ></i>
           {isUser && <FullName icon={true} isUser={isUser} className='pt-1' />}
         </div>
-        <hr className='mb-4' />
+        <hr />
 
         {/* sidebar content */}
         <div dir='ltr' className='flex text-left space-y-6 flex-col w-full '>
           {isUser && hasAccess('', isUser.roles) !== true ? (
-            <Accordion type='single' collapsible>
-              <AccordionItem value='item-1' className='text-white Accordion '>
-                <AccordionTrigger
-                  className={`text-[16px] text-white px-3
-                mb-3 decoration-transparent font-normal hover:bg-black/50 
-                transition-all duration-150 rounded-md 
-                ${handleCheckLink('/dashboard', router)}`}
-                >
-                  <div className='flex gap-2 text-center '>
-                    <i className='bi bi-columns-gap mt-0.5'></i>
-                    داشبورد
-                  </div>
-                </AccordionTrigger>
-
-                <AccordionContent className='flex flex-col space-y-3 '>
-                  <hr className='w-full' />
-                  <LinkCompo
-                    title='اطالاعات کاربری'
-                    linkClass={`pl-8 `}
-                    iconClass='person-circle me-2'
-                    path={'/dashboard/user/profile'}
-                  />
-
-                  <hr className='w-11/12 ms-auto' />
-                  <LinkCompo
-                    title='بلیط ها'
-                    iconClass='ticket-perforated me-2 '
-                    linkClass={`pl-8`}
-                    path={'/dashboard/user/ticket'}
-                  />
-
-                  <hr className='w-11/12 ms-auto' />
-                  <LinkCompo
-                    title='کیف پول'
-                    linkClass={`pl-8 `}
-                    iconClass='wallet2 me-2'
-                    path={'/dashboard/user/wallet'}
-                  />
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+            <AccordionCompo data={data} dir='ltr' />
           ) : isUser && hasAccess('', isUser.roles) === true ? (
             <>
               <span
                 onClick={() => handleChangePath()}
-                className={`py-3 pt-3.5 flex px-2 font-normal
+                className={`py-3 mt-5 pt-3.5 flex px-2 font-normal
               hover:bg-black/50 transition-all cursor-pointer duration-150 rounded-md `}
               >
                 <i className={`me-2 bi bi-person-gear`} style={{ fontSize: 17 }}></i>

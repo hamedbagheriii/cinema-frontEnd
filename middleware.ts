@@ -20,7 +20,7 @@ export const middleware = async (req : NextRequest)=>{
     }
     else if(checkToken.success && req.nextUrl.pathname.startsWith('/auth') &&
     !req.nextUrl.pathname.startsWith('/auth/logout') ){
-        return NextResponse.redirect(new URL('/dashboard/profile', req.url))
+        return NextResponse.redirect(new URL('/dashboard/user/profile', req.url))
     }
     else if(!checkToken.success && req.nextUrl.pathname.startsWith('/event')){
         return NextResponse.redirect(new URL('/auth/login', req.url))

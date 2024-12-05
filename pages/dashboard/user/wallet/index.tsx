@@ -1,5 +1,5 @@
 import FormikControl from '@/components/formik/formikControl';
-import Layout from '@/components/layout/dashboard/layout';
+import Layout from '@/components/layout/dashboard/user/layout';
 import { useToast } from '@/hooks/use-toast';
 import { useToken } from '@/hooks/use-Token';
 import { incWalletService } from '@/services/wallet/wallet';
@@ -24,7 +24,7 @@ const onSubmit = async (values: any, action: any, toast: any, router: any) => {
     if (res.status === 200) {
       handleShowAlert(res.data.message, true, 'success', toast);
       setTimeout(() => {
-        router.push('/dashboard/profile');
+        router.push('/dashboard/user/profile');
       }, 1500);
     } else {
       handleShowAlert(res.response.data.message || res.message, false, 'error', toast);

@@ -27,7 +27,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       if (res.status === 200) {
         handleShowAlert('بلیط با موفقیت چاپ شد !', true, 'success', toast);
         setTimeout(() => {
-          router.push('/dashboard/profile');
+          router.push('/dashboard/user/profile');
         }, 3000);
       } else {
         handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
@@ -54,7 +54,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
             title='اطلاعات کاربری'
             iconClass='columns-gap me-2 mt-0.5'
             linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-            path={'/dashboard/profile'}
+            path={'/dashboard/user/profile'}
             dir='rtl'
           />
           <hr />
@@ -62,7 +62,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
             title='بلیط ها'
             iconClass='ticket-perforated me-2 mt-0.5'
             linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-            path={'/dashboard/ticket'}
+            path={'/dashboard/user/ticket'}
             dir='rtl'
           />
           <hr />
@@ -70,7 +70,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
             title='کیف پول'
             iconClass='wallet2 me-2'
             linkClass={`rounded-full justify-center pb-2 pt-2 hover:bg-black/80 `}
-            path={'/dashboard/wallet'}
+            path={'/dashboard/user/wallet'}
             dir='rtl'
           />
           <hr />

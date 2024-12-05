@@ -24,7 +24,11 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       path: '/dashboard/admin/cinema',
       icon: 'camera-reels',
       accordionChild: [
-        { title: 'مدیریت سینما ها', path: '/dashboard/admin/cinema', icon: 'camera-reels' },
+        {
+          title: 'مدیریت سینما ها',
+          path: '/dashboard/admin/cinema',
+          icon: 'camera-reels',
+        },
         { title: 'مدیریت فیلم ها', path: '/dashboard/admin/cinema/movies', icon: 'film' },
         {
           title: 'مدیریت بلیط ها',
@@ -53,7 +57,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       accordionChild: [
         { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles', icon: 'person-vcard' },
         {
-          title: 'مدیریت مجوز ها',
+          title: 'مشاهده مجوز ها',
           path: '/dashboard/admin/roles/permissions',
           icon: 'shield-lock-fill',
         },
@@ -65,18 +69,30 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
     <div
       dir='rtl'
       className='flex flex-col mx-auto h-full  
-    sm:flex-row w-full pt-6 xl:max-w-[80vw] justify-between px-2'
+    sm:flex-row w-full pt-6 xl:max-w-[95vw] justify-between px-2'
     >
       {/* sidebar */}
-      <div className='w-full hidden max-h-[650px] h-full sm:flex sm:w-4/12 me-auto pt-2'>
+      <div className='w-full min-w-[250px] hidden min-h-[750px]  h-full sm:flex sm:w-5/12 me-auto pt-2'>
         <div
           dir='ltr'
           className='bg-red-800 w-full  overflow-y-auto sm:max-w-80 shadow-md 
           shadow-black/50 rounded-2xl h-full my-auto text-white gap-3 flex flex-col py-3 pt-0 px-2'
         >
           <div dir='rtl' className='w-full h-full justify-between flex-col flex'>
-            <AccordionCompo data={data} />
+            <div className='flex flex-col mt-4'>
+              <LinkCompo
+                title={'داشبورد'}
+                iconClass={`bar-chart-fill me-2`}
+                linkClass='mb-4'
+                path={'/dashboard/admin'}
+                dir={'rtl'}
+              />
+              <hr />
 
+              <AccordionCompo data={data} />
+            </div>
+
+            {/* logout */}
             <div className='mt-14 gap-2 flex flex-col'>
               <hr />
               <ConfirmAlert
@@ -101,7 +117,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       </div>
 
       {/* content */}
-      <div className='w-full mt-6 sm:mt-0  sm:w-8/12 pb-8 px-3 py-2 '>{children}</div>
+      <div className='w-full  sm:w-11/12 pb-8 px-3 py-2 '>{children}</div>
     </div>
   );
 };

@@ -1,17 +1,10 @@
 import React, { FC, useEffect } from 'react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import LinkCompo, { handleCheckLink } from '@/utils/Link';
 import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
 import { ConfirmAlert } from '@/utils/AlertCompo';
 import { localToken } from '@/utils/localToken';
-import { hasAccess } from '@/utils/hasAccess';
 import AccordionCompo, { accDataProps } from '@/utils/accordionCompo';
+import LinkCompo from '@/utils/Link';
 
 interface sidebarProps {
   isSidebar: boolean;
@@ -65,7 +58,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       accordionChild: [
         { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles', icon: 'person-vcard' },
         {
-          title: 'مدیریت مجوز ها',
+          title: 'مشاهده مجوز ها',
           path: '/dashboard/admin/roles/permissions',
           icon: 'shield-lock-fill',
         },
@@ -91,7 +84,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
         {/* sidebar header */}
         <div
           className={`w-full h-16 flex ${
-            isUser ? 'mt-3 mb-2' : 'mt-1 mb-0'
+            isUser ? 'mt-2 mb-1' : 'mt-1 mb-0'
           } justify-between items-center  `}
         >
           <i
@@ -101,10 +94,18 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
           ></i>
           {isUser && <FullName icon={true} isUser={isUser} className='pt-1' />}
         </div>
-        <hr className='' />
+        <hr />
 
         {/* sidebar content */}
         <div dir='ltr' className='flex text-left mb-28 flex-col w-full '>
+          <LinkCompo
+            title={'داشبورد'}
+            iconClass={`bar-chart-fill me-2`}
+            linkClass='my-4'
+            path={'/dashboard/admin'}
+            dir={'ltr'}
+          />
+          <hr />
           <AccordionCompo dir={'ltr'} data={data} />
         </div>
 

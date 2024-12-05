@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/dashboard/layout';
+import Layout from '@/components/layout/dashboard/user/layout';
 import {
   Accordion,
   AccordionItem,
