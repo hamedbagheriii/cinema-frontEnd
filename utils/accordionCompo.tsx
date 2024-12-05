@@ -30,7 +30,7 @@ const AccordionCompo: FC<accordionProps> = ({ data , bgColor = '' , dir = 'rtl'}
   return (
     <Accordion type='single' collapsible>
       {data.map((t: accDataProps, i: number) => (
-        <AccordionItem value={`item-${i + 1}`} className='text-white mt-3 Accordion '>
+        <AccordionItem key={`acc-${t.title}-${i}`} value={`item-${i + 1}`} className='text-white mt-3 Accordion '>
           <AccordionTrigger
             className={`text-[16px] text-white px-3
             mb-3 decoration-transparent font-normal ${bgColor} hover:bg-black/70 
@@ -48,6 +48,7 @@ const AccordionCompo: FC<accordionProps> = ({ data , bgColor = '' , dir = 'rtl'}
             <div className='flex flex-col space-y-3 pl-2'>
               {t.accordionChild.map((item: any) => (
                 <LinkCompo
+                  key={`itemAcc-${t.title}-${item.title}`}
                   title={item.title}
                   iconClass={`${item.icon} me-2`}
                   linkClass='ps-4'

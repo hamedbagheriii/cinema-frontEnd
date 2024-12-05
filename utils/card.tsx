@@ -12,7 +12,7 @@ interface cardProps {
 const Card: FC<cardProps> = ({ icon, title, dec, todayC, monthC, yearC }) => {
   return (
     <div
-      className='w-9/12  px-1 max-w-[360px] sm:w-10/12 md:w-6/12  text-white rounded-xl  flex 
+      className='w-full px-1 md:max-w-[360px] md:w-6/12  text-white rounded-xl  flex 
         flex-col justify-center items-center gap-y-4 '
     >
       <div
@@ -26,7 +26,7 @@ const Card: FC<cardProps> = ({ icon, title, dec, todayC, monthC, yearC }) => {
         </div>
 
         <div className='flex flex-col gap-y-2 text-center sm:text-right'>
-          <span className='text-[20px]'>{numberWithCommas(todayC) || 0}</span>
+          <span className='text-[20px] text-black'>{numberWithCommas(todayC) || 0}</span>
           <span className='text-[18px]'>{title} امروز</span>
           <span className='text-[14px]'>{dec}</span>
         </div>
@@ -37,14 +37,14 @@ const Card: FC<cardProps> = ({ icon, title, dec, todayC, monthC, yearC }) => {
        items-center ext-center gap-y-2 sm:gap-y-0 px-2  text-[15px]'
       >
         <div className='flex flex-col justify-center items-center'>
-          <span>{numberWithCommas(monthC) || 0}</span>
+          <span className='text-black'>{numberWithCommas(monthC) || 0}</span>
           <span className='w-fit '> در ماه گذشته</span>
         </div>
 
         <hr className='px-[0.5px] h-full py-3 flex  bg-white' />
 
         <div className='flex flex-col justify-center items-center'>
-          <span>{numberWithCommas(yearC) || 0}</span>
+          <span className='text-black'>{numberWithCommas(yearC) || 0}</span>
           <span className='w-fit '>در سال گذشته</span>
         </div>
       </div>
