@@ -2,16 +2,12 @@ import ChartComo from '@/components/chartComo';
 import Layout from '@/components/layout/dashboard/admin/layout';
 import {
   ChartConfig,
-  ChartContainer,
-  ChartTooltipContent,
-  ChartTooltip,
 } from '@/components/ui/chart';
 import { useToken } from '@/hooks/use-Token';
 import { getIncomeService } from '@/services/dashboard/dashboard';
 import Card from '@/utils/card';
 import React, { useEffect, useState } from 'react';
-import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-
+import jMoment from 'moment';
 const Index = () => {
   const { isUser } = useToken();
   const [cardData, setCardData] = useState<any>({});
@@ -31,30 +27,8 @@ const Index = () => {
   };
 
   const handleSetChartData = () => {
-    let months = [
-      'فروردین',
-      'اردیبهشت',
-      'خرداد',
-      'تیر',
-      'مرداد',
-      'شهریور',
-      'مهر',
-      'آبان',
-      'آذر',
-      'دی',
-      'بهمن',
-      'اسفند',
-    ];
-    let dataArr: any[] = [];
 
-    charDataArr.map((t: any) => {
-      dataArr.push({
-        month: months[t.month - 1],
-        income: t.income,
-      });
-    });
-
-    setCharData(dataArr);
+    setCharData(charDataArr);
   };
 
   useEffect(() => {

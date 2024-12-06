@@ -15,10 +15,10 @@ const ChartComo : FC<chartProps> = ({chartConfig , chartData}) => {
       config={chartConfig}
       className='min-h-[200px] bg-red-700  p-3 rounded-xl w-full max-w-[650px] mx-auto'
     >
-      <LineChart accessibilityLayer data={chartData} className='mx-auto'>
+      <LineChart  accessibilityLayer data={chartData} className='mx-auto'>
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey='month'
+          dataKey='month.title'
           tickLine={false}
           axisLine={false}
           tickMargin={8}

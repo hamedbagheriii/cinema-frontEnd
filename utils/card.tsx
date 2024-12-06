@@ -38,14 +38,14 @@ const Card: FC<cardProps> = ({ icon, title, dec, todayC, monthC, yearC }) => {
       >
         <div className='flex flex-col justify-center items-center'>
           <span className='text-black'>{numberWithCommas(monthC) || 0}</span>
-          <span className='w-fit '> در ماه گذشته</span>
+          <span className='w-fit '> در یک ماه اخیر</span>
         </div>
 
         <hr className='px-[0.5px] h-full py-3 flex  bg-white' />
 
         <div className='flex flex-col justify-center items-center'>
           <span className='text-black'>{numberWithCommas(yearC) || 0}</span>
-          <span className='w-fit '>در سال گذشته</span>
+          <span className='w-fit '>در یک سال اخیر</span>
         </div>
       </div>
     </div>
