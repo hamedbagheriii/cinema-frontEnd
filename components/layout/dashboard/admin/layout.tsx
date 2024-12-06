@@ -62,11 +62,11 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
   return (
     <div
       dir='rtl'
-      className='flex flex-col mx-auto h-full  
+      className='flex flex-col mx-auto min-h-full  
     sm:flex-row w-full pt-6 xl:max-w-[95vw] justify-between px-2'
     >
       {/* sidebar */}
-      <div className='w-full min-w-[250px] hidden min-h-[750px]  h-full sm:flex sm:w-5/12 me-auto pt-2'>
+      <div className='w-full min-w-[250px] hidden h-[750px] sm:flex sm:w-5/12 me-auto pt-2'>
         <div
           dir='ltr'
           className='bg-red-800 w-full  overflow-y-auto sm:max-w-80 shadow-md 
@@ -112,7 +112,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       </div>
 
       {/* content */}
-      <div className='w-full  sm:w-11/12 pb-8 px-3 py-2 '>{children}</div>
+      <div className='w-full  sm:w-11/12 overflow-x-hidden h-full pb-8 px-3 py-2 '>{children}</div>
     </div>
   );
 };

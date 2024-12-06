@@ -32,25 +32,30 @@ const Index = () => {
       field: null,
       title: 'آدرس',
       element: (row: any) => {
-        return <span className='text-red-700'>{`${row.province} , ${row.city} | ${row.address}`}</span>;
+        return <span>{`${row.province} , ${row.city} | ${row.address}`}</span>;
+      },
+    },
+    {
+      field: null,
+      title: 'سالن ها',
+      element: (row: any) => {
+        return <ChipsData target='hallName' data={row.halls} />;
       },
     },
     {
         field: null,
-        title: 'سالن',
-        element: (row: any) => {
-          return <ChipsData data={row.halls} />;
-        },
+        title: 'عملیات',
+        element: (row: any) => {}
       },
   ];
   return (
     <Layout>
-      <div className='border shadow-lg rounded-2xl flex flex-col px-2 py-5 md:pb-6'>
+      <div className='border shadow-lg rounded-2xl flex  flex-col px-3 py-5 md:pb-6 '>
         <span className='mx-auto text-[22px] text-red-700 border-[3px] px-6 py-1 rounded-full border-black'>
           مدیریت سینما ها
         </span>
         <hr className='w-11/12 my-10 mx-auto bg-red-700  pt-1 rounded-full' />
-        <div className='w-full flex flex-col  '>
+        <div>
           <PaginationTable
             data={cinemas}
             dataInfo={dataInfo}

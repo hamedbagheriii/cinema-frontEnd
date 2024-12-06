@@ -85,10 +85,10 @@ const PaginationTable: FC<IndexProps> = ({
           <LoadingData />
         </div>
       ) : (
-        <div>
+        <div className='w-full '>
           {/* search */}
           <div
-            className='flex w-10/12 flex-col sm:flex-row 
+            className='flex w-full flex-col sm:flex-row 
           justify-center sm:justify-between mx-auto items-center'
           >
             <div className='flex w-full max-w-sm items-center mb-7 '>
@@ -123,7 +123,7 @@ const PaginationTable: FC<IndexProps> = ({
 
           {/* table */}
           <div
-            className={`w-10/12 min-w-20 mx-auto bg-white
+            className={`w-full min-w-20 mx-auto bg-white
            shadow-black/20 shadow-md overflow-x-auto rounded-lg ${scrollBarStyle}`}
           >
             <Table className='w-full table-auto overflow-hidden border-none rounded-lg'>

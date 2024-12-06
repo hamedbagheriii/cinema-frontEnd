@@ -138,7 +138,7 @@ const Header = () => {
 
         {/* sidebar icon */}
         <i
-          className='bi bi-list text-center sm:hidden flex cursor-pointer'
+          className={`bi bi-list text-center sm:hidden flex cursor-pointer`}
           onClick={() => setSidebar(true)}
           style={{ fontSize: '1.5rem' }}
         ></i>
