@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import Link from 'next/link';
-import { handleShowAlert } from '@/utils/AlertCompo';
+import { handleShowAlert } from '@/components/AlertCompo';
 
 // ! formik dependencies
 const initalvalues = {

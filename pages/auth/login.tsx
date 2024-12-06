@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Cookies } from '@/services/service';
-import { handleShowAlert } from '@/utils/AlertCompo';
+import { handleShowAlert } from '@/components/AlertCompo';
 
 // ! formik dependencies
 const initalvalues = {
@@ -32,7 +32,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
       );
       
       setTimeout(() => {
-        router.push('/dashboard/user/profile');
+        router.push('/');
       }, 3000);
     } else {
       Cookies.remove('userToken');

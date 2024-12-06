@@ -1,12 +1,6 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import AccordionCompo, { accDataProps } from '@/utils/accordionCompo';
-import { ConfirmAlert, handleShowAlert } from '@/utils/AlertCompo';
-import LinkCompo, { handleCheckLink } from '@/utils/Link';
+import AccordionCompo, { accDataProps } from '@/components/accordionCompo';
+import { ConfirmAlert } from '@/components/AlertCompo';
+import LinkCompo from '@/components/LinkCompo';
 import { useRouter } from 'next/router';
 import React, { FC, ReactNode, useState } from 'react';
 
@@ -86,6 +80,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
                 linkClass='mb-4'
                 path={'/dashboard/admin'}
                 dir={'rtl'}
+                hover={router.pathname === ('/dashboard/admin')}
               />
               <hr />
 

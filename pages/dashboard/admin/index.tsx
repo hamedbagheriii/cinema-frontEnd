@@ -1,18 +1,13 @@
 import ChartComo from '@/components/chartComo';
 import Layout from '@/components/layout/dashboard/admin/layout';
-import {
-  ChartConfig,
-} from '@/components/ui/chart';
-import { useToken } from '@/hooks/use-Token';
+import { ChartConfig } from '@/components/ui/chart';
 import { getIncomeService } from '@/services/dashboard/dashboard';
 import Card from '@/utils/card';
 import React, { useEffect, useState } from 'react';
-import jMoment from 'moment';
+import LoadingData from '@/utils/loadingData';
 const Index = () => {
-  const { isUser } = useToken();
   const [cardData, setCardData] = useState<any>({});
   const [charDataArr, setCharDataArr] = useState<any[]>([]);
-  const [chartData, setCharData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // ! handle get income for cards =>
@@ -22,22 +17,15 @@ const Index = () => {
     if (res.data.success === true) {
       setCardData(res.data);
       setCharDataArr(res.data.chart);
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     }
-  };
-
-  const handleSetChartData = () => {
-
-    setCharData(charDataArr);
   };
 
   useEffect(() => {
     handleGetIncome();
   }, []);
-
-  useEffect(() => {
-    handleSetChartData();
-  }, [charDataArr]);
 
   const chartConfig = {
     income: {
@@ -48,9 +36,9 @@ const Index = () => {
   return (
     <Layout>
       {isLoading ? (
-        <div>isLoading</div>
+        <LoadingData  />
       ) : (
-        <div className='border shadow-lg rounded-2xl px-2 py-5'>
+        <div className='border shadow-lg rounded-2xl px-2 py-5 md:pb-6'>
           {/* cards */}
           <div
             className='w-full flex flex-col md:flex-row gap-y-4 md:gap-y-0 justify-center items-center
@@ -75,12 +63,13 @@ const Index = () => {
           </div>
 
           {/* chart */}
-          <div className='w-full flex flex-col justify-center items-center mt-10 '>
-            <span className='mx-auto mb-2 px-4 py-2 rounded-full text-white bg-red-700'>
+          <div className='w-full flex flex-col justify-center items-center mt-14'>
+            <span className='mx-auto mb-4 px-4 py-2 rounded-full text-white shadow-md
+             shadow-red-900 bg-red-700'>
               نمودار فروش یک سال گذشته :
             </span>
-            {chartData.length > 1 && (
-              <ChartComo chartConfig={chartConfig} chartData={chartData} />
+            {charDataArr.length > 1 && (
+              <ChartComo chartConfig={chartConfig} chartData={charDataArr} />
             )}
           </div>
         </div>

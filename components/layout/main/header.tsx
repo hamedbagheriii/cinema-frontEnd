@@ -13,8 +13,8 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Sidebar from './sidebar';
 import FullName from '@/utils/fullName';
-import LinkCompo, { handleCheckLink } from '@/utils/Link';
-import { ConfirmAlert } from '@/utils/AlertCompo';
+import LinkCompo, { handleCheckLink } from '@/components/LinkCompo';
+import { ConfirmAlert } from '@/components/AlertCompo';
 import { hasAccess } from '@/utils/hasAccess';
 import AdminSidebar from '../dashboard/admin/AdminSidebar';
 

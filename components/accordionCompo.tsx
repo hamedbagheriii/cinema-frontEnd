@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import React, { FC } from 'react';
-import LinkCompo, { handleCheckLink } from './Link';
+import LinkCompo, { handleCheckLink } from './LinkCompo';
 import { useRouter } from 'next/router';
 
 export interface accDataProps {

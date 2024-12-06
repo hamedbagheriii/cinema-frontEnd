@@ -1,17 +1,11 @@
 import React, { FC, useEffect } from 'react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import LinkCompo, { handleCheckLink } from '@/utils/Link';
+import LinkCompo from '@/components/LinkCompo';
 import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
-import { ConfirmAlert } from '@/utils/AlertCompo';
+import { ConfirmAlert } from '@/components/AlertCompo';
 import { localToken } from '@/utils/localToken';
 import { hasAccess } from '@/utils/hasAccess';
-import AccordionCompo, { accDataProps } from '@/utils/accordionCompo';
+import AccordionCompo, { accDataProps } from '@/components/accordionCompo';
 
 interface sidebarProps {
   isSidebar: boolean;

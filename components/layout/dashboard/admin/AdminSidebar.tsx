@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from 'react';
 import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
-import { ConfirmAlert } from '@/utils/AlertCompo';
+import { ConfirmAlert } from '@/components/AlertCompo';
 import { localToken } from '@/utils/localToken';
-import AccordionCompo, { accDataProps } from '@/utils/accordionCompo';
-import LinkCompo from '@/utils/Link';
+import AccordionCompo, { accDataProps } from '@/components/accordionCompo';
+import LinkCompo from '@/components/LinkCompo';
 
 interface sidebarProps {
   isSidebar: boolean;

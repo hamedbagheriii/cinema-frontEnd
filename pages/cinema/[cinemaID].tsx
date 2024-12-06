@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import CinemaDec from '@/utils/cinemaDec';
 import { convertDate } from '@/utils/convertDate';
 import MovieDec from '@/utils/movieDec';
-import { numberWithCommas } from '@/utils/numbWithCommas';
+import { numberWithCommas } from '@/utils/numWCommas';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { FC, use, useEffect, useState } from 'react';

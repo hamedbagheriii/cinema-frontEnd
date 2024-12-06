@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { numberWithCommas } from './numbWithCommas';
+import { numberWithCommas } from './numWCommas';
 
 interface cardProps {
   icon: string;
@@ -16,8 +16,8 @@ const Card: FC<cardProps> = ({ icon, title, dec, todayC, monthC, yearC }) => {
         flex-col justify-center items-center gap-y-4 '
     >
       <div
-        className='flex flex-col justify-center bg-red-700 w-full px-2 py-4 rounded-xl
-       items-center gap-y-3 sm:justify-around sm:flex-row-reverse'
+        className='flex flex-col justify-center shadow-md shadow-red-900 bg-red-700
+        w-full px-2 py-4 rounded-xl items-center gap-y-3 sm:justify-around sm:flex-row-reverse'
       >
         <div className='justify-center items-center flex'>
           <span className='size-12 flex justify-center items-center bg-white text-red-700 rounded-full'>
@@ -33,8 +33,8 @@ const Card: FC<cardProps> = ({ icon, title, dec, todayC, monthC, yearC }) => {
       </div>
 
       <div
-        className='flex flex-row  justify-around bg-red-700 w-full py-2 rounded-xl
-       items-center ext-center gap-y-2 sm:gap-y-0 px-2  text-[15px]'
+        className='flex flex-row  justify-around bg-red-700 shadow-md shadow-red-900
+        w-full py-2 rounded-xl items-center ext-center gap-y-2 sm:gap-y-0 px-2  text-[15px]'
       >
         <div className='flex flex-col justify-center items-center'>
           <span className='text-black'>{numberWithCommas(monthC) || 0}</span>

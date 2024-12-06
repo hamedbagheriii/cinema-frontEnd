@@ -1,5 +1,5 @@
 import Logo from '@/utils/logo';
-import TooltipCompo from '@/utils/tooltipCompo';
+import TooltipCompo from '@/components/tooltipCompo';
 import { useRouter } from 'next/router';
 import React, { FC, ReactNode } from 'react';
 

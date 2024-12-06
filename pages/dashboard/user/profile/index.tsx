@@ -3,7 +3,7 @@ import Layout from '@/components/layout/dashboard/user/layout';
 import { useToast } from '@/hooks/use-toast';
 import { useToken } from '@/hooks/use-Token';
 import { updatePassService, updateUserService } from '@/services/auth/auth';
-import { handleShowAlert } from '@/utils/AlertCompo';
+import { handleShowAlert } from '@/components/AlertCompo';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';

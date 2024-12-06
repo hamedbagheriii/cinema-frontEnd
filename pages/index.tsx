@@ -1,5 +1,5 @@
 import Section from '@/components/layout/main/section';
-import Slider from '@/utils/slider';
+import Slider from '@/components/sliderCompo';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
