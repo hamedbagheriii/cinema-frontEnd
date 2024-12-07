@@ -29,7 +29,7 @@ interface IndexProps {
   dataInfo: any[];
   numOfPage: number;
   isLoading: boolean;
-  searchField: string;
+  searchField: any;
   addItem?: string;
 }
 const PaginationTable: FC<IndexProps> = ({
@@ -75,7 +75,7 @@ const PaginationTable: FC<IndexProps> = ({
 
   // search =>
   const handleSetSearch = (target: string | number) => {
-    setInitData(data.filter((d) => d[searchField].includes(target)));
+    setInitData(data.filter((d) => d[searchField.target].includes(target)));
   };
 
   return (
@@ -105,15 +105,16 @@ const PaginationTable: FC<IndexProps> = ({
               <Input
                 type='text'
                 className='bg-white rounded-r-none placeholder:text-sm shadow-black/20 shadow-md'
-                placeholder='مقداری وارد کنید . . .'
+                placeholder={searchField.value || `مقداری وارد کنید . . .`}
                 ref={ref}
+                id='searchTable'
               />
             </div>
             {addItem && (
               <div className='flex w-full max-w-sm items-center mb-4 space-x-2'>
                 <Button
                   onClick={() => router.push(addItem)}
-                  className='bg-blue-600 w-full sm:w-fit ms-auto text-[14px] '
+                  className='bg-red-700 hover:bg-red-800 w-full sm:w-fit ms-auto text-[14px] '
                 >
                   افزودن
                 </Button>
