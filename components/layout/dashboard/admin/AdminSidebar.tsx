@@ -104,6 +104,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
             linkClass='my-4'
             path={'/dashboard/admin'}
             dir={'ltr'}
+            hover={router.pathname === '/dashboard/admin'}
           />
           <hr />
           <AccordionCompo dir={'ltr'} data={data} />

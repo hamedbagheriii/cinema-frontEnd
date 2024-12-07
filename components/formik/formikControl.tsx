@@ -4,8 +4,10 @@ import SubmitBtn from './submitButton';
 import { SubmitBtnProps } from './submitButton';
 import { SwitchProps } from './switch';
 import FormikSwitch from './switch';
+import TeaxtArea, { TeaxtAreaProps } from './teaxtArea';
+import FormikFile, { fileProps } from './file';
 
-const FormikControl: FC<InputProps | SubmitBtnProps | SwitchProps > = (
+const FormikControl: FC<InputProps | SubmitBtnProps | SwitchProps | TeaxtAreaProps | fileProps > = (
   props
 ) => {
   switch (props.control) {
@@ -19,6 +21,14 @@ const FormikControl: FC<InputProps | SubmitBtnProps | SwitchProps > = (
 
     case 'switch':
       return <FormikSwitch {...(props as SwitchProps)} />;
+    break;
+
+    case 'teaxtArea':
+      return <TeaxtArea {...(props as TeaxtAreaProps)} />;
+    break;
+
+    case 'file':
+      return <FormikFile {...(props as fileProps)} />;
     break;
   }
 };

@@ -94,7 +94,7 @@ const PaginationTable: FC<IndexProps> = ({
             <div className='flex w-full max-w-sm items-center mb-7 '>
               <Button
                 type='submit'
-                className='rounded-l-none bg-red-700 shadow-black/20 shadow-md
+                className='rounded-l-none shadow-md shadow-red-900 bg-red-700 
                 hover:bg-red-800 '
                 onClick={() => {
                   handleSetSearch(ref.current?.value || '');
@@ -111,10 +111,10 @@ const PaginationTable: FC<IndexProps> = ({
               />
             </div>
             {addItem && (
-              <div className='flex w-full max-w-sm items-center mb-4 space-x-2'>
+              <div className='flex w-full max-w-sm items-center mb-5 space-x-2'>
                 <Button
                   onClick={() => router.push(addItem)}
-                  className='bg-red-700 hover:bg-red-800 w-full sm:w-fit ms-auto text-[14px] '
+                  className='bg-red-700 hover:bg-red-800 shadow-md shadow-red-900 w-full sm:w-fit ms-auto text-[14px] '
                 >
                   افزودن
                 </Button>
