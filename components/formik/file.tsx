@@ -10,8 +10,15 @@ export interface fileProps {
   label: string;
   className?: string;
   padding?: boolean;
+  formik: any;
 }
-const FormikFile: FC<fileProps> = ({ name, className, label, padding = false }) => {
+const FormikFile: FC<fileProps> = ({
+  name,
+  className,
+  label,
+  padding = false,
+  formik,
+}) => {
   const ref = useRef<HTMLInputElement>(null);
 
   //  handle change file =>
@@ -22,6 +29,11 @@ const FormikFile: FC<fileProps> = ({ name, className, label, padding = false }) 
     } else {
       ref.current?.click();
     }
+  };
+
+  // ! handle set file =>
+  const handleSetFile = (e: any, form: any) => {
+    form.form.setFieldValue(name, e.target.files[0]);
   };
 
   return (
@@ -43,7 +55,7 @@ const FormikFile: FC<fileProps> = ({ name, className, label, padding = false }) 
                 font-bold text-[14px] placeholder:text-[14px]'
                 {...form.field}
                 value={undefined}
-                onChange={(e: any) => form.form.setFieldValue(name, e.target.files[0])}
+                onChange={(e: any) => handleSetFile(e, form)}
               />
               <span
                 onClick={(e) => handleChange(e, form)}
@@ -63,7 +75,12 @@ const FormikFile: FC<fileProps> = ({ name, className, label, padding = false }) 
                 )}
               </span>
             </div>
-            <div className={`${padding && 'md:relative md:-mt-2 md:mb-10'}`}>
+            <div
+              className={`${
+                padding && 'md:relative md:-mt-2 md:mb-10'
+              } gap-4 flex flex-col`}
+            >
+              {formik.errors[name]}
               <ErrorAlert name={name} padding={padding} />
             </div>
           </div>

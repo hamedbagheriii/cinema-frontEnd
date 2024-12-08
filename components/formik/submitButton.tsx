@@ -9,6 +9,7 @@ export interface SubmitBtnProps {
   formik: any;
   disabled?: boolean;
   onClick?: () => void;
+  type ?: any;
 }
 const SubmitBtn: FC<SubmitBtnProps> = ({
   title,
@@ -16,15 +17,16 @@ const SubmitBtn: FC<SubmitBtnProps> = ({
   formik,
   disabled = false,
   onClick,
+  type = 'submit',
 }) => {
   return (
     <Button
-      type='submit'
+      type={type }
       className={`w-4/12 text-[17px] min-w-[160px] max-w-[250px]  bg-red-700 hover:bg-red-800 mx-auto  ${className}`}
       disabled={disabled}
       onClick={onClick}
     >
-      {formik.isSubmitting ? (
+      {formik.isSubmitting && type !== 'button' ? (
         <Loader2 className='animate-spin' style={{ width: '20px', height: '20px' }} />
       ) : (
         title

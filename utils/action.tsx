@@ -17,14 +17,14 @@ const Action: FC<actionProps> = ({
   const classStyle = 'text-red-600 text-[16px] cursor-pointer';
   return (
     <div className='flex flex-row justify-center gap-4 items-center'>
-      <TooltipCompo sideOffset={10} title={`حذف ${target}`}>
+      <span>
         <ConfirmAlert
           onClick={() => handleDeteleData(rowData)}
           title={`آیا از حذف ${target} ${rowData.id} اطمینان دارید ؟`}
         >
           <i className={`bi bi-trash3 ${classStyle}`}></i>
         </ConfirmAlert>
-      </TooltipCompo>
+      </span>
       <TooltipCompo sideOffset={10} title={`ویرایش ${target}`}>
         <i
           onClick={() => handleEditData(rowData)}

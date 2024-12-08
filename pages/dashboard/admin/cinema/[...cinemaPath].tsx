@@ -1,6 +1,11 @@
+import AddHeaderCompo from '@/components/addHeaderCompo';
+import { handleShowAlert } from '@/components/AlertCompo';
 import FormikControl from '@/components/formik/formikControl';
+import { useToast } from '@/hooks/use-toast';
+import { addCinemaService, editCinemaService } from '@/services/dashboard/cinema/cinema';
 import { Form, Formik } from 'formik';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
 // ! formik dependencies
@@ -12,40 +17,50 @@ const initalvalues = {
   image: null,
 };
 
-// const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
-//   try {
-//     const res: any = await loginUserService(values);
-//     if (res.status === 200) {
-//       localStorage.setItem('userToken', res.data.token);
-//       Cookies.set('userToken', res.data.token);
+const onSubmit = async (
+  values: any,
+  actions: any,
+  toast: any,
+  router: any,
+  reinitalvalues: null | any
+) => {
+  try {
+    // ! handle add data =>
+    const formData = new FormData();
+    Object.keys(values).forEach((key) => {
+      if (key !== 'id') {
+        formData.append(key, values[key]);
+      }
+    });
+    let res: any;
 
-//       handleShowAlert(
-//         'شما با موفقیت وارد حساب کاربری خود شدید !',
-//         true,
-//         'success',
-//         toast
-//       );
+    if (reinitalvalues) res = await editCinemaService(formData, reinitalvalues.id);
+    else res = await addCinemaService(formData);
 
-//       setTimeout(() => {
-//         router.push('/');
-//       }, 3000);
-//     } else {
-//       Cookies.remove('userToken');
-//       localStorage.removeItem('userToken');
+    if (res.status === 200) {
+      handleShowAlert(
+        `سینما با نام ${values.cinemaName} با موفقیت ${
+          reinitalvalues ? 'ویرایش' : 'اضافه'
+        } شد . `,
+        true,
+        'success',
+        toast
+      );
 
-//       handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
-//     }
-//   } catch (error: any) {
-//     handleShowAlert(error.response.data.message || error.message, false, 'error', toast);
-
-//     localStorage.removeItem('userToken');
-//     Cookies.remove('userToken');
-//   } finally {
-//     setTimeout(() => {
-//       actions.setSubmitting(false);
-//     }, 1000);
-//   }
-// };
+      setTimeout(() => {
+        router.back();
+      }, 2000);
+    } else {
+      handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
+    }
+  } catch (error: any) {
+    handleShowAlert(error.response.data.message || error.message, false, 'error', toast);
+  } finally {
+    setTimeout(() => {
+      actions.setSubmitting(false);
+    }, 1000);
+  }
+};
 
 const validationSchema = Yup.object({
   cinemaName: Yup.string()
@@ -60,27 +75,49 @@ const validationSchema = Yup.object({
   address: Yup.string()
     .min(10, 'حداقل 10 کاراکتر وارد کنید .')
     .required('این فیلد الزامی میباشد .'),
-  image: Yup.mixed().required('این فیلد الزامی میباشد .'),
 });
 // ! formik dependencies
 const CinemaPath = () => {
+  const router = useRouter();
+  const { toast } = useToast();
+  const [reinitalvalues, setReinitialvalues] = useState<any | null>(null);
+  const { cinemaPath } = router.query;
+
+  //  ! handle edit data =>
+  const handleEditData = async () => {
+    const data = await JSON.parse(router.query.data as string);
+
+    setReinitialvalues({
+      id: data.id,
+      cinemaName: data.cinemaName,
+      province: data.province,
+      city: data.city,
+      address: data.address,
+    });
+  };
+
+  useEffect(() => {
+    if (cinemaPath?.[0] === 'edit') {
+      handleEditData();
+    }
+  }, [cinemaPath]);
+
   return (
-    <div
-      dir='rtl'
-      className='w-full h-full flex flex-col items-center justify-start px-4 py-5'
+    <AddHeaderCompo
+      title={reinitalvalues ? 'ویرایش سینما' : 'افزودن سینما'}
+      icon='camera-reels'
     >
       <Formik
-        initialValues={initalvalues}
-        onSubmit={(value) => {
-          console.log(value);
+        initialValues={reinitalvalues || initalvalues}
+        onSubmit={(values, actions) => {
+          onSubmit(values, actions, toast, router, reinitalvalues);
         }}
         validationSchema={validationSchema}
+        enableReinitialize={true}
       >
         {(formik: any) => {
-            console.log(formik.values);
-            
           return (
-            <Form className='w-full h-full flex flex-col items-center justify-evenly gap-y-4'>
+            <Form className='w-full flex flex-col items-center justify-evenly gap-y-4'>
               <FormikControl
                 name='cinemaName'
                 type='text'
@@ -112,17 +149,39 @@ const CinemaPath = () => {
                 label='آدرس'
               />
 
-              <FormikControl
-                name='image'
-                label='عکس سینما'
-                control='file'
-                formik={formik}
-              />
+              {!reinitalvalues && (
+                <div className={`${formik.errors.image ? 'mb-2' : 'mb-12'} w-full`}>
+                  <FormikControl
+                    name='image'
+                    label='عکس سینما'
+                    control='file'
+                    formik={formik}
+                  />
+                </div>
+              )}
+
+              <div className='flex sm:max-w-[400px] flex-col gap-y-2 sm:flex-row justify-around w-full'>
+                <FormikControl
+                  title='بازگشت'
+                  control='submitBTN'
+                  onClick={() => router.back()}
+                  className='bg-gray-800 w-full sm:w-fit hover:bg-gray-700'
+                  formik={formik}
+                  type='button'
+                />
+
+                <FormikControl
+                  title={reinitalvalues ? 'ویرایش' : 'افزودن'}
+                  className='w-full sm:w-fit'
+                  control='submitBTN'
+                  formik={formik}
+                />
+              </div>
             </Form>
           );
         }}
       </Formik>
-    </div>
+    </AddHeaderCompo>
   );
 };
 

@@ -6,8 +6,9 @@ import { ErrorMessage } from 'formik';
 interface ErrorAlertProps {
   name: string;
   padding?: boolean;
+  children?: string;
 }
-const ErrorAlert: FC<ErrorAlertProps> = ({ name, padding }) => {
+const ErrorAlert: FC<ErrorAlertProps> = ({ name, padding , children }) => {
   return (
     <ErrorMessage name={name}>
       {(message: any) => {
@@ -20,7 +21,7 @@ const ErrorAlert: FC<ErrorAlertProps> = ({ name, padding }) => {
             <span className='flex items-center justify-center mx-2'>
               <AlertCircle className='size-3.5 font-bold' />
             </span>
-            <AlertTitle className='align-bottom mt-1.5 text-[13px]'>{message}</AlertTitle>
+            <AlertTitle className='align-bottom mt-1.5 text-[13px]'>{ message}</AlertTitle>
           </Alert>
         );
       }}

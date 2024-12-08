@@ -8,12 +8,14 @@ import {
 } from '@/services/dashboard/cinema/cinema';
 import Action from '@/utils/action';
 import ChipsData from '@/utils/chipsData';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 const Index = () => {
   const [cinemas, setCinemas] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
+  const router = useRouter();
 
   // ! handle get cinemas =>
   const handleGetCinemas = async () => {
@@ -32,7 +34,7 @@ const Index = () => {
     const res = await deleteCinemaService(rowData.id);
     if (res.data?.success === true) {
       handleShowAlert(
-        `سینما با آیدی ${rowData.id} با موفقیت حذف شد . `,
+        `سینما با آیدی ${rowData.id} ( ${rowData.cinemaName} ) با موفقیت حذف شد . `,
         true,
         'success',
         toast
@@ -40,20 +42,17 @@ const Index = () => {
 
       setTimeout(() => {
         handleGetCinemas();
-      }, 2000);
-    }
-    else{
-      handleShowAlert(
-        'عملیات با خطا مواجه شد ! ',
-        false,
-        'error',
-        toast
-      );
+      }, 1000);
+    } else {
+      handleShowAlert('عملیات با خطا مواجه شد ! ', false, 'error', toast);
     }
   };
 
   const handleEditData = (rowData: any) => {
-    
+    router.push({
+      pathname : '/dashboard/admin/cinema/edit',
+      query : {data : JSON.stringify(rowData)}
+    })
   };
 
   useEffect(() => {

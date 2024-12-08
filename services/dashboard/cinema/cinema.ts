@@ -7,3 +7,11 @@ export const getCinemasService = async ()=>{
 export const deleteCinemaService = async (id : number)=>{
     return await service(`/cinema/${id}`, 'delete');
 };
+
+export const addCinemaService = async (values : any)=>{
+    return await service(`/cinema/add`, 'post', values , 'multipart/form-data');
+};
+
+export const editCinemaService = async (values : any , id : number)=>{
+    return await service(`/cinema/edit/${id}`, 'put', values , 'multipart/form-data');
+};
