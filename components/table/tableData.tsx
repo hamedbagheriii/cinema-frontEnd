@@ -29,7 +29,7 @@ interface IndexProps {
   dataInfo: any[];
   numOfPage: number;
   isLoading: boolean;
-  searchField: any;
+  searchField?: any;
   addItem?: string;
 }
 const PaginationTable: FC<IndexProps> = ({
@@ -91,25 +91,27 @@ const PaginationTable: FC<IndexProps> = ({
             className='flex w-full flex-col sm:flex-row 
           justify-center sm:justify-between mx-auto items-center'
           >
-            <div className='flex w-full max-w-sm items-center mb-7 '>
-              <Button
-                type='submit'
-                className='rounded-l-none shadow-md shadow-red-900 bg-red-700 
+            {searchField && (
+              <div className='flex w-full max-w-sm items-center mb-7 '>
+                <Button
+                  type='submit'
+                  className='rounded-l-none shadow-md shadow-red-900 bg-red-700 
                 hover:bg-red-800 '
-                onClick={() => {
-                  handleSetSearch(ref.current?.value || '');
-                }}
-              >
-                جستجو
-              </Button>
-              <Input
-                type='text'
-                className='bg-white rounded-r-none placeholder:text-sm shadow-black/20 shadow-md'
-                placeholder={searchField.value || `مقداری وارد کنید . . .`}
-                ref={ref}
-                id='searchTable'
-              />
-            </div>
+                  onClick={() => {
+                    handleSetSearch(ref.current?.value || '');
+                  }}
+                >
+                  جستجو
+                </Button>
+                <Input
+                  type='text'
+                  className='bg-white rounded-r-none placeholder:text-sm shadow-black/20 shadow-md'
+                  placeholder={searchField.value || `مقداری وارد کنید . . .`}
+                  ref={ref}
+                  id='searchTable'
+                />
+              </div>
+            )}
             {addItem && (
               <div className='flex w-full max-w-sm items-center mb-5 space-x-2'>
                 <Button

@@ -5,22 +5,24 @@ interface submitProps {
   router: any;
   reinitalvalues?: boolean;
   formik: any;
-  className ?: string;
+  className?: string;
+  cancel?: () => void;
 }
 const SubmitCompo: FC<submitProps> = ({
   router,
   reinitalvalues = false,
   formik,
   className,
+  cancel,
 }) => {
   return (
     <div
       className={`flex sm:max-w-[400px] flex-col gap-y-2 sm:flex-row justify-around w-full ${className}`}
     >
       <FormikControl
-        title='بازگشت'
+        title={reinitalvalues ? 'لغو' : 'بازگشت'}
         control='submitBTN'
-        onClick={() => router.back()}
+        onClick={reinitalvalues ? cancel : () => router.back()}
         className='bg-gray-800 w-full sm:w-fit hover:bg-gray-700'
         formik={formik}
         type='button'
