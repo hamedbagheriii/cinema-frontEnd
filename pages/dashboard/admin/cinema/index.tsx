@@ -50,15 +50,44 @@ const Index = () => {
 
   const handleEditData = (rowData: any) => {
     router.push({
-      pathname : '/dashboard/admin/cinema/edit',
-      query : {data : JSON.stringify(rowData)}
-    })
+      pathname: '/dashboard/admin/cinema/action/edit',
+      query: {
+        data: JSON.stringify({
+          id: rowData.id,
+          cinemaName: rowData.cinemaName,
+          province: rowData.province,
+          city: rowData.city,
+          address: rowData.address,
+          image: rowData.image,
+        }),
+      },
+    });
   };
 
   useEffect(() => {
     handleGetCinemas();
   }, []);
 
+  // ! handle dataInfo =>
+  const AdditionData = [
+    {
+      title: 'سالن ها',
+      color: 'text-blue-800',
+      icon: 'door-open',
+      function: (rowData: any) => {
+        router.push({
+          pathname: 'cinema/hall/',
+          query: {
+            data: JSON.stringify({
+              id: rowData.id,
+              cinemaName: rowData.cinemaName,
+              halls: rowData.halls,
+            }),
+          },
+        });
+      },
+    },
+  ];
   const dataInfo = [
     { field: 'id', title: 'آیدی' },
     { field: 'cinemaName', title: 'نام' },
@@ -73,7 +102,11 @@ const Index = () => {
       field: null,
       title: 'سالن ها',
       element: (row: any) => {
-        return <ChipsData target='hallName' data={row.halls} />;
+        return row.halls.length > 0 ? (
+          <ChipsData target='hallName' data={row.halls} />
+        ) : (
+          <hr className='w-2/12 h-1 rounded-full mx-auto  bg-red-700' />
+        );
       },
     },
     {
@@ -86,6 +119,7 @@ const Index = () => {
             handleEditData={handleEditData}
             target='سینما'
             rowData={row}
+            AdditionData={AdditionData}
           />
         );
       },
@@ -106,7 +140,7 @@ const Index = () => {
             numOfPage={10}
             isLoading={isLoading}
             searchField={{ target: 'cinemaName', value: 'نام سینما را جستجو کنید . . .' }}
-            addItem='cinema/add'
+            addItem='cinema/action/add'
           />
         </div>
       </div>

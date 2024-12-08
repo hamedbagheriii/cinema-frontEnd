@@ -7,12 +7,14 @@ interface actionProps {
   handleEditData: any;
   target: string;
   rowData: any;
+  AdditionData?: any[] | null;
 }
 const Action: FC<actionProps> = ({
   handleDeteleData,
   handleEditData,
   target,
   rowData,
+  AdditionData = null,
 }) => {
   const classStyle = 'text-red-600 text-[16px] cursor-pointer';
   return (
@@ -28,9 +30,18 @@ const Action: FC<actionProps> = ({
       <TooltipCompo sideOffset={10} title={`ویرایش ${target}`}>
         <i
           onClick={() => handleEditData(rowData)}
-          className={`bi bi-pencil-square ${classStyle} text-orange-400`}
+          className={`bi bi-pencil-square ${classStyle} text-orange-500`}
         ></i>
       </TooltipCompo>
+      {AdditionData &&
+        AdditionData.map((t) => (
+          <TooltipCompo key={`${t.title}_${t.icon}`} sideOffset={10} title={`${t.title}`}>
+            <i
+              onClick={() => t.function(rowData)}
+              className={`bi bi-${t.icon} ${classStyle} ${t.color}`}
+            ></i>
+          </TooltipCompo>
+        ))}
     </div>
   );
 };

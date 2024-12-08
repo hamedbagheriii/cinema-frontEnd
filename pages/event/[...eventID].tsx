@@ -12,11 +12,9 @@ import { handleShowAlert } from '@/components/AlertCompo';
 import { convertDate } from '@/utils/convertDate';
 import { hasAccess } from '@/utils/hasAccess';
 import { numberWithCommas } from '@/utils/numWCommas';
-import exp from 'constants';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { it } from 'node:test';
 import React, { FC, useEffect, useState } from 'react';
 
 interface eventProps {
@@ -60,7 +58,7 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
     for (let i = 1; i <= hallData.maximumRows; i++) {
       numRows.push(i);
     }
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 1; i <= hallData.maximumCol; i++) {
       numSeats.push(i);
     }
 

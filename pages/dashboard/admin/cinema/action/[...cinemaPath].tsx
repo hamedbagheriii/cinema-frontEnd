@@ -1,12 +1,14 @@
 import AddHeaderCompo from '@/components/addHeaderCompo';
 import { handleShowAlert } from '@/components/AlertCompo';
 import FormikControl from '@/components/formik/formikControl';
+import SubmitCompo from '@/components/submitCompo';
 import { useToast } from '@/hooks/use-toast';
 import { addCinemaService, editCinemaService } from '@/services/dashboard/cinema/cinema';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+
 
 // ! formik dependencies
 const initalvalues = {
@@ -77,6 +79,8 @@ const validationSchema = Yup.object({
     .required('این فیلد الزامی میباشد .'),
 });
 // ! formik dependencies
+
+
 const CinemaPath = () => {
   const router = useRouter();
   const { toast } = useToast();
@@ -160,23 +164,7 @@ const CinemaPath = () => {
                 </div>
               )}
 
-              <div className='flex sm:max-w-[400px] flex-col gap-y-2 sm:flex-row justify-around w-full'>
-                <FormikControl
-                  title='بازگشت'
-                  control='submitBTN'
-                  onClick={() => router.back()}
-                  className='bg-gray-800 w-full sm:w-fit hover:bg-gray-700'
-                  formik={formik}
-                  type='button'
-                />
-
-                <FormikControl
-                  title={reinitalvalues ? 'ویرایش' : 'افزودن'}
-                  className='w-full sm:w-fit'
-                  control='submitBTN'
-                  formik={formik}
-                />
-              </div>
+              <SubmitCompo router={router} reinitalvalues={reinitalvalues} formik={formik} />
             </Form>
           );
         }}

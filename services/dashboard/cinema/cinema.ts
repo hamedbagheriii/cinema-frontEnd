@@ -15,3 +15,18 @@ export const addCinemaService = async (values : any)=>{
 export const editCinemaService = async (values : any , id : number)=>{
     return await service(`/cinema/edit/${id}`, 'put', values , 'multipart/form-data');
 };
+
+
+// !  =================================== Hall ===================================
+
+// export const deleteCinemaService = async (id : number)=>{
+//     return await service(`/cinema/${id}`, 'delete');
+// };
+
+export const addHallService = async (values : any)=>{
+    return await service(`/cinema/halls/add`, 'post', values );
+};
+
+// export const editCinemaService = async (values : any , id : number)=>{
+//     return await service(`/cinema/edit/${id}`, 'put', values , 'multipart/form-data');
+// };
