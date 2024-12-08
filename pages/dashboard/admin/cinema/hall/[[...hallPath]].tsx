@@ -35,7 +35,8 @@ const onSubmit = async (
         maximumCol: values.maximumCol,
       };
       res = await editHallService(data, values.id);
-    } else {
+    } 
+    else {
       res = await addHallService(values);
     }
 
@@ -174,7 +175,7 @@ const HallPath = () => {
           <Formik
             initialValues={reinitalvalues || initalvalues}
             onSubmit={(values, actions) => {
-              onSubmit(values, actions, toast, router);
+              onSubmit(values, actions, toast, router , reinitalvalues);
             }}
             validationSchema={validationSchema}
             enableReinitialize={true}
