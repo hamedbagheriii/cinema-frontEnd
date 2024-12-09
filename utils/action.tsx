@@ -18,7 +18,7 @@ const Action: FC<actionProps> = ({
 }) => {
   const classStyle = 'text-red-600 text-[16px] cursor-pointer';
   return (
-    <div className='flex flex-row justify-center gap-4 items-center'>
+    <div className='flex px-2 flex-row justify-center gap-4 items-center'>
       <span>
         <ConfirmAlert
           onClick={() => handleDeteleData(rowData)}

@@ -79,7 +79,7 @@ const validationSchema = Yup.object({
 });
 // ! formik dependencies
 
-const HallPath = () => {
+const HallIndex = () => {
   const router = useRouter();
   const { toast } = useToast();
   const { data } = router.query as any;
@@ -217,6 +217,7 @@ const HallPath = () => {
                     router={router}
                     formik={formik}
                     className={'mt-3'}
+                    isCancel={reinitalvalues}
                   />
                 </Form>
               );
@@ -240,4 +241,4 @@ const HallPath = () => {
   );
 };
 
-export default HallPath;
+export default HallIndex;

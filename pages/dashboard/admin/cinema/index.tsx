@@ -1,5 +1,5 @@
 import { handleShowAlert } from '@/components/AlertCompo';
-import Layout from '@/components/layout/dashboard/admin/layout';
+import TableLayout from '@/components/layout/dashboard/admin/tableLayout';
 import PaginationTable from '@/components/table/tableData';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -87,6 +87,23 @@ const Index = () => {
         });
       },
     },
+    {
+      title: 'فیلم ها',
+      color: 'text-purple-500',
+      icon: 'film',
+      function: (rowData: any) => {
+        router.push({
+          pathname: 'cinema/movies/',
+          query: {
+            data: JSON.stringify({
+              id: rowData.id,
+              cinemaName: rowData.cinemaName,
+              movies: rowData.movies,
+            }),
+          },
+        });
+      },
+    },
   ];
   const dataInfo = [
     { field: 'id', title: 'آیدی' },
@@ -127,24 +144,18 @@ const Index = () => {
   ];
 
   return (
-    <Layout>
-      <div className='border shadow-lg rounded-2xl flex  flex-col px-4 py-5 md:pb-6 '>
-        <span className='mx-auto text-[22px] text-red-700 border-[3px] px-6 py-1 rounded-full border-black'>
-          مدیریت سینما ها
-        </span>
-        <hr className='w-11/12 my-10 mx-auto bg-red-700  pt-1 rounded-full' />
-        <div>
-          <PaginationTable
-            data={cinemas}
-            dataInfo={dataInfo}
-            numOfPage={10}
-            isLoading={isLoading}
-            searchField={{ target: 'cinemaName', value: 'نام سینما را جستجو کنید . . .' }}
-            addItem='cinema/action/add'
-          />
-        </div>
+    <TableLayout title='مدیریت سینما ها' icon='camera-reels'>
+      <div>
+        <PaginationTable
+          data={cinemas}
+          dataInfo={dataInfo}
+          numOfPage={10}
+          isLoading={isLoading}
+          searchField={{ target: 'cinemaName', value: 'نام سینما را جستجو کنید . . .' }}
+          addItem='cinema/action/add'
+        />
       </div>
-    </Layout>
+    </TableLayout>
   );
 };
 

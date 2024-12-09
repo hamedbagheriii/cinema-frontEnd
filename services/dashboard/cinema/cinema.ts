@@ -16,6 +16,10 @@ export const editCinemaService = async (values: any, id: number) => {
   return await service(`/cinema/edit/${id}`, 'put', values, 'multipart/form-data');
 };
 
+export const addMovieCinemaService = async (values: any, id: number) => {
+    return await service(`/cinema/UPMovies/${id}`, 'put', values, );
+  };
+  
 // !  =================================== Hall ===================================
 
 export const addHallService = async (values: any) => {

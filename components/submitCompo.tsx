@@ -7,6 +7,7 @@ interface submitProps {
   formik: any;
   className?: string;
   cancel?: () => void;
+  isCancel ?: boolean
 }
 const SubmitCompo: FC<submitProps> = ({
   router,
@@ -14,15 +15,16 @@ const SubmitCompo: FC<submitProps> = ({
   formik,
   className,
   cancel,
+  isCancel = false,
 }) => {
   return (
     <div
       className={`flex sm:max-w-[400px] flex-col gap-y-2 sm:flex-row justify-around w-full ${className}`}
     >
       <FormikControl
-        title={reinitalvalues ? 'لغو' : 'بازگشت'}
+        title={isCancel ? 'لغو' : 'بازگشت'}
         control='submitBTN'
-        onClick={reinitalvalues ? cancel : () => router.back()}
+        onClick={isCancel ? cancel : () => router.back()}
         className='bg-gray-800 w-full sm:w-fit hover:bg-gray-700'
         formik={formik}
         type='button'
