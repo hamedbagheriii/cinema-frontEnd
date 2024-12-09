@@ -20,7 +20,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       accordionChild: [
         {
           title: 'مدیریت سینما ها',
-          path: '/dashboard/admin/cinema',
+          path: '/dashboard/admin/cinema/cinemaInfo',
           icon: 'camera-reels',
         },
         { title: 'مدیریت فیلم ها', path: '/dashboard/admin/cinema/movies', icon: 'film' },

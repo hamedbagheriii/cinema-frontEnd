@@ -25,7 +25,7 @@ export const handleShowAlert = (
       duration: 2000,
       className: `${
         success ? 'bg-green-600' : 'bg-red-600 '
-      } shadow-black/50 border-2 border-black text-white shadow-md
+      } shadow-black/50 border-2 border-black text-right text-wrap text-white shadow-md
        `,
       dir: 'rtl',
     });

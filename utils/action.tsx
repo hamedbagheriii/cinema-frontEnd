@@ -16,7 +16,7 @@ const Action: FC<actionProps> = ({
   rowData,
   AdditionData = null,
 }) => {
-  const classStyle = 'text-red-600 text-[16px] cursor-pointer';
+  const classStyle = ' text-[16px] cursor-pointer';
   return (
     <div className='flex px-2 flex-row justify-center gap-4 items-center'>
       <span>
@@ -24,7 +24,7 @@ const Action: FC<actionProps> = ({
           onClick={() => handleDeteleData(rowData)}
           title={`آیا از حذف ${target} ${rowData.id} اطمینان دارید ؟`}
         >
-          <i className={`bi bi-trash3 ${classStyle}`}></i>
+          <i className={`bi bi-trash3 ${classStyle} text-red-600`}></i>
         </ConfirmAlert>
       </span>
       <TooltipCompo sideOffset={10} title={`ویرایش ${target}`}>

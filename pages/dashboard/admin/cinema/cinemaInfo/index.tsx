@@ -76,7 +76,7 @@ const Index = () => {
       icon: 'door-open',
       function: (rowData: any) => {
         router.push({
-          pathname: 'cinema/hall/',
+          pathname: 'cinemaInfo/hall/',
           query: {
             data: JSON.stringify({
               id: rowData.id,
@@ -93,7 +93,7 @@ const Index = () => {
       icon: 'film',
       function: (rowData: any) => {
         router.push({
-          pathname: 'cinema/movies/',
+          pathname: 'cinemaInfo/movies/',
           query: {
             data: JSON.stringify({
               id: rowData.id,
@@ -152,7 +152,7 @@ const Index = () => {
           numOfPage={10}
           isLoading={isLoading}
           searchField={{ target: 'cinemaName', value: 'نام سینما را جستجو کنید . . .' }}
-          addItem='cinema/action/add'
+          addItem='cinemaInfo/action/add'
         />
       </div>
     </TableLayout>
