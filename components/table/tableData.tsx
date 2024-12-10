@@ -195,7 +195,7 @@ const PaginationTable: FC<IndexProps> = ({
                     <PaginationLink
                       className={`${
                         currentPage === page
-                          ? 'text-red-600 hover:bg-red-600/20 hover:text-red-600 bg-red-600/20 '
+                          ? 'text-red-600 hover:bg-red-600/20 font-bold hover:text-red-600 bg-red-600/20 '
                           : null
                       } px-2`}
                     >

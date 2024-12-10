@@ -45,7 +45,7 @@ const PaginationLink = ({
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
-  <a
+  <span
     aria-current={isActive ? "page" : undefined}
     className={cn(
       buttonVariants({
@@ -53,7 +53,7 @@ const PaginationLink = ({
         size,
       }),
       className
-    )}
+    ) + ' cursor-pointer'}
     {...props}
   />
 )
