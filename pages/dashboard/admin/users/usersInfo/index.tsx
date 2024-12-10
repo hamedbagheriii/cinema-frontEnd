@@ -2,13 +2,8 @@ import { handleShowAlert } from '@/components/AlertCompo';
 import TableLayout from '@/components/layout/dashboard/admin/tableLayout';
 import PaginationTable from '@/components/table/tableData';
 import { useToast } from '@/hooks/use-toast';
-import {
-  deleteCinemaService,
-  getCinemasService,
-} from '@/services/dashboard/cinema/cinema';
 import { deleteuserService, getUsersService } from '@/services/dashboard/users/users';
 import Action from '@/utils/action';
-import ChipsData from '@/utils/chipsData';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
