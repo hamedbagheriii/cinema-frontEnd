@@ -54,11 +54,11 @@ const Index = () => {
       query: {
         data: JSON.stringify({
           id: rowData.id,
-          movieName: rowData.cinemaName,
-          province: rowData.province,
-          city: rowData.city,
-          address: rowData.address,
-          image: rowData.image,
+          movieName: rowData.movieName,
+          decription: rowData.decription,
+          time: rowData.time,
+          price: rowData.price,
+          createdAt: rowData.createdAt,
         }),
       },
     });

@@ -3,7 +3,7 @@ import { handleShowAlert } from '@/components/AlertCompo';
 import FormikControl from '@/components/formik/formikControl';
 import SubmitCompo from '@/components/submitCompo';
 import { useToast } from '@/hooks/use-toast';
-import { addCinemaService, editCinemaService } from '@/services/dashboard/cinema/cinema';
+import { addMovieService, editMovieService } from '@/services/dashboard/movie/movie';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -19,50 +19,50 @@ const initalvalues = {
   image: null,
 };
 
-// const onSubmit = async (
-//   values: any,
-//   actions: any,
-//   toast: any,
-//   router: any,
-//   reinitalvalues: null | any
-// ) => {
-//   try {
-//     // ! handle add data =>
-//     const formData = new FormData();
-//     Object.keys(values).forEach((key) => {
-//       if (key !== 'id') {
-//         formData.append(key, values[key]);
-//       }
-//     });
-//     let res: any;
+const onSubmit = async (
+  values: any,
+  actions: any,
+  toast: any,
+  router: any,
+  reinitalvalues: null | any
+) => {
+  try {
+    // ! handle add data =>
+    const formData = new FormData();
+    Object.keys(values).forEach((key) => {
+      if (key !== 'id') {
+        formData.append(key, values[key]);
+      }
+    });
+    let res: any;
 
-//     if (reinitalvalues) res = await editCinemaService(formData, reinitalvalues.id);
-//     else res = await addCinemaService(formData);
+    if (reinitalvalues) res = await editMovieService(formData, reinitalvalues.id);
+    else res = await addMovieService(formData);
 
-//     if (res.status === 200) {
-//       handleShowAlert(
-//         `سینما با نام ${values.cinemaName} با موفقیت ${
-//           reinitalvalues ? 'ویرایش' : 'اضافه'
-//         } شد . `,
-//         true,
-//         'success',
-//         toast
-//       );
+    if (res.status === 200) {
+      handleShowAlert(
+        `فیلم با نام ${values.movieName} با موفقیت ${
+          reinitalvalues ? 'ویرایش' : 'اضافه'
+        } شد . `,
+        true,
+        'success',
+        toast
+      );
 
-//       setTimeout(() => {
-//         router.back();
-//       }, 2000);
-//     } else {
-//       handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
-//     }
-//   } catch (error: any) {
-//     handleShowAlert(error.response.data.message || error.message, false, 'error', toast);
-//   } finally {
-//     setTimeout(() => {
-//       actions.setSubmitting(false);
-//     }, 1000);
-//   }
-// };
+      setTimeout(() => {
+        router.back();
+      }, 2000);
+    } else {
+      handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
+    }
+  } catch (error: any) {
+    handleShowAlert(error.response.data.message || error.message, false, 'error', toast);
+  } finally {
+    setTimeout(() => {
+      actions.setSubmitting(false);
+    }, 1000);
+  }
+};
 
 const validationSchema = Yup.object({
   movieName: Yup.string()
@@ -104,13 +104,7 @@ const MoviePath = () => {
   const handleEditData = async () => {
     const data = await JSON.parse(router.query.data as string);
 
-    setReinitialvalues({
-      id: data.id,
-      cinemaName: data.cinemaName,
-      province: data.province,
-      city: data.city,
-      address: data.address,
-    });
+    setReinitialvalues(data);
   };
 
   useEffect(() => {
@@ -124,8 +118,7 @@ const MoviePath = () => {
       <Formik
         initialValues={reinitalvalues || initalvalues}
         onSubmit={(values, actions) => {
-          //   onSubmit(values, actions, toast, router, reinitalvalues);
-          console.log(values);
+          onSubmit(values, actions, toast, router, reinitalvalues);
         }}
         validationSchema={validationSchema}
         enableReinitialize={true}
@@ -173,14 +166,16 @@ const MoviePath = () => {
                 control='input'
               />
 
-              <div className={`${formik.errors.image ? 'mb-2' : 'mb-12'} w-full`}>
-                <FormikControl
-                  name='image'
-                  label='عکس فیلم'
-                  control='file'
-                  formik={formik}
-                />
-              </div>
+              {!reinitalvalues && (
+                <div className={`${formik.errors.image ? 'mb-2' : 'mb-12'} w-full`}>
+                  <FormikControl
+                    name='image'
+                    label='عکس فیلم'
+                    control='file'
+                    formik={formik}
+                  />
+                </div>
+              )}
 
               <SubmitCompo
                 router={router}

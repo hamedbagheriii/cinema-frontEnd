@@ -12,6 +12,6 @@ export const addMovieService = async (values: any) => {
   return await service(`/movie/add`, 'post', values, 'multipart/form-data');
 };
 
-// export const editMovieService = async (values: any, id: number) => {
-//   return await service(`/movie/edit/${id}`, 'put', values, 'multipart/form-data');
-// };
+export const editMovieService = async (values: any, id: number) => {
+  return await service(`/movie/edit/${id}`, 'put', values, 'multipart/form-data');
+};
