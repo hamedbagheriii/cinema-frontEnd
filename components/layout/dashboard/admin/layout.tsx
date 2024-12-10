@@ -36,7 +36,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       path: '/dashboard/admin/users',
       icon: 'people',
       accordionChild: [
-        { title: 'مشاهده کاربران', path: '/dashboard/admin/users', icon: 'people' },
+        { title: 'مشاهده کاربران', path: '/dashboard/admin/users/usersInfo', icon: 'people' },
         {
           title: 'مدیریت کیف پول ها',
           path: '/dashboard/admin/users/wallets',
@@ -49,7 +49,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       path: '/dashboard/admin/roles',
       icon: 'shield-shaded',
       accordionChild: [
-        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles', icon: 'person-vcard' },
+        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles/rolesInfo', icon: 'person-vcard' },
         {
           title: 'مشاهده مجوز ها',
           path: '/dashboard/admin/roles/permissions',

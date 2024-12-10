@@ -8,6 +8,7 @@ interface actionProps {
   target: string;
   rowData: any;
   AdditionData?: any[] | null;
+  targetKey?: string;
 }
 const Action: FC<actionProps> = ({
   handleDeteleData,
@@ -15,6 +16,7 @@ const Action: FC<actionProps> = ({
   target,
   rowData,
   AdditionData = null,
+  targetKey = 'id',
 }) => {
   const classStyle = ' text-[16px] cursor-pointer';
   return (
@@ -22,7 +24,7 @@ const Action: FC<actionProps> = ({
       <span>
         <ConfirmAlert
           onClick={() => handleDeteleData(rowData)}
-          title={`آیا از حذف ${target} ${rowData.id} اطمینان دارید ؟`}
+          title={`آیا از حذف ${target} ${rowData[targetKey]} اطمینان دارید ؟`}
         >
           <i className={`bi bi-trash3 ${classStyle} text-red-600`}></i>
         </ConfirmAlert>

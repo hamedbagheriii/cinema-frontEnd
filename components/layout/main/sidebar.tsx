@@ -66,7 +66,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
         {/* sidebar header */}
         <div
           className={`w-full h-16 flex ${
-            isUser ? 'mt-2 mb-1 ' : 'mt-1 mb-0'
+            isUser ? 'mt-2 mb-1 ' : 'mt-1 mb-0 '
           } justify-between items-center  `}
         >
           <i
@@ -100,7 +100,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
               <LinkCompo
                 title='ورود یا ثبت نام'
                 iconClass='person-add me-2'
-                linkClass='mt-2 pl-3'
+                linkClass='mt-5 pl-3'
                 path={'/auth/login'}
               />
               <hr />
