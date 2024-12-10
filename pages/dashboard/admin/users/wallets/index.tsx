@@ -82,7 +82,6 @@ const Index = () => {
           numOfPage={10}
           isLoading={isLoading}
           searchField={{ target: 'email', value: 'ایمیل کاربر را جستجو کنید . . .' }}
-          addItem='wallets/edit'
         />
       </div>
     </TableLayout>

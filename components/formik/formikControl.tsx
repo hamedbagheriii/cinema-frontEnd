@@ -6,30 +6,35 @@ import { SwitchProps } from './switch';
 import FormikSwitch from './switch';
 import TeaxtArea, { TeaxtAreaProps } from './teaxtArea';
 import FormikFile, { fileProps } from './file';
+import FormikCheck, { checkProps } from './checkbox';
 
-const FormikControl: FC<InputProps | SubmitBtnProps | SwitchProps | TeaxtAreaProps | fileProps > = (
-  props
-) => {
+const FormikControl: FC<
+  InputProps | SubmitBtnProps | SwitchProps | TeaxtAreaProps | fileProps | checkProps
+> = (props) => {
   switch (props.control) {
     case 'input':
       return <FormikInput {...(props as InputProps)} />;
-    break;
+      break;
 
     case 'submitBTN':
       return <SubmitBtn {...(props as SubmitBtnProps)} />;
-    break;
+      break;
 
     case 'switch':
       return <FormikSwitch {...(props as SwitchProps)} />;
-    break;
+      break;
 
     case 'teaxtArea':
       return <TeaxtArea {...(props as TeaxtAreaProps)} />;
-    break;
+      break;
 
     case 'file':
       return <FormikFile {...(props as fileProps)} />;
-    break;
+      break;
+
+    case 'checkbox':
+      return <FormikCheck {...(props as checkProps)} />;
+      break;
   }
 };
 
