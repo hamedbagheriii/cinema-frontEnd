@@ -5,8 +5,9 @@ interface movieDec {
   title?: string;
   icon?: string;
   moviePage?: boolean;
+  target ?: string
 }
-const MovieDec: FC<movieDec> = ({ movieData, title, icon, moviePage = false }) => {
+const MovieDec: FC<movieDec> = ({ movieData , target = 'createdAt', title, icon, moviePage = false }) => {
   return moviePage ? (
     <div className='flex flex-col w-full text-center sm:text-right gap-1 mt-3'>
       <span className='text-[24px] mb-2'>{movieData.movieName}</span>
@@ -39,7 +40,7 @@ const MovieDec: FC<movieDec> = ({ movieData, title, icon, moviePage = false }) =
     </div>
   ) : (
     <span className='flex text-nowrap flex-col text-center text-[13px]'>
-      {movieData.createdAt}
+      {movieData[target]}
       <div className='flex gap-1.5'>
         <i className={`bi bi-${icon} mt-0.5 text-red-700`}></i> {title}
       </div>

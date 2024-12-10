@@ -16,6 +16,8 @@ const initalvalues = {
   time: '',
   price: '',
   createdAt: '',
+  isShow: true,
+  addImage: true,
   image: null,
 };
 
@@ -30,11 +32,12 @@ const onSubmit = async (
     // ! handle add data =>
     const formData = new FormData();
     Object.keys(values).forEach((key) => {
-      if (key !== 'id') {
+      if (key !== ('id') && key !== 'addImage') {
         formData.append(key, values[key]);
       }
     });
     let res: any;
+        
 
     if (reinitalvalues) res = await editMovieService(formData, reinitalvalues.id);
     else res = await addMovieService(formData);
@@ -72,8 +75,8 @@ const validationSchema = Yup.object({
     .min(10, 'حداقل 10 کاراکتر وارد کنید .')
     .required('این فیلد الزامی میباشد .'),
   time: Yup.string()
-    .matches(/^\d+((:\d+)*|-\d+)?$/, 'لطفا قالب فرمت 00:00 را رعایت کنید .')
-    .length(5, 'حداقل 5 کاراکتر وارد کنید .')
+    .matches(/^\d+((:\d+)*|-\d+)?$/, 'لطفا قالب فرمت 00:00:00 را رعایت کنید .')
+    .length(8, 'حداقل 8 کاراکتر وارد کنید .')
     .required('این فیلد الزامی میباشد .'),
   price: Yup.string()
     .min(4, 'حداقل 4 کاراکتر وارد کنید .')
@@ -85,12 +88,16 @@ const validationSchema = Yup.object({
       (value) => value?.toString().length === 4
     )
     .required('این فیلد الزامی میباشد .'),
-  image: Yup.mixed()
-    .required('این فیلد الزامی میباشد .')
-    .test('check-image', 'این فیلد الزامی میباشد .', (value: any) => {
-      if (value.type.startsWith('image')) return true;
-      else return false;
-    }),
+  image: Yup.mixed().when('addImage', {
+    is: (value: any) => value,
+    then: () =>
+      Yup.mixed()
+        .required('این فیلد الزامی میباشد .')
+        .test('check-image', 'این فیلد الزامی میباشد .', (value: any) => {
+          if (value.type.startsWith('image')) return true;
+          else return false;
+        }),
+  }),
 });
 // ! formik dependencies
 
@@ -167,7 +174,7 @@ const MoviePath = () => {
               />
 
               {!reinitalvalues && (
-                <div className={`${formik.errors.image ? 'mb-2' : 'mb-12'} w-full`}>
+                <div className={`${formik.errors.image ? 'mb-2' : 'mb-10'} w-full`}>
                   <FormikControl
                     name='image'
                     label='عکس فیلم'
@@ -176,6 +183,14 @@ const MoviePath = () => {
                   />
                 </div>
               )}
+
+              <FormikControl
+                name='isShow'
+                type='switch'
+                label='نمایش فیلم'
+                control='switch'
+                className='mb-4'
+              />
 
               <SubmitCompo
                 router={router}

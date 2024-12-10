@@ -129,7 +129,7 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
           let movieIndex = cinemaData.movies.indexOf(movie);
           let movieData = movie.movie;
 
-          return (
+          return movieData.isShow && (
             <div
               key={movieData.id}
               className='w-full  flex-col  mx-auto flex min-h-[200px] bg-black/5 px-4 py-2 rounded-lg'
@@ -158,7 +158,7 @@ const Cinema: FC<cinemaProps> = ({ cinemaData }) => {
                     {movieData.decription}
                   </span>
                   <div className='flex flex-row gap-5 mt-10 font-normal'>
-                    <MovieDec title='زمان' icon='clock-fill' movieData={movieData} />
+                    <MovieDec target='time' title='زمان' icon='clock-fill' movieData={movieData} />
 
                     <MovieDec
                       title='تاریخ انتشار'

@@ -16,6 +16,7 @@ const initalvalues = {
   city: '',
   address: '',
   image: null,
+  addImage: true,
 };
 
 const onSubmit = async (
@@ -29,7 +30,7 @@ const onSubmit = async (
     // ! handle add data =>
     const formData = new FormData();
     Object.keys(values).forEach((key) => {
-      if (key !== 'id') {
+      if (key !== 'id' && key !== 'addImage') {
         formData.append(key, values[key]);
       }
     });
@@ -76,12 +77,16 @@ const validationSchema = Yup.object({
   address: Yup.string()
     .min(10, 'حداقل 10 کاراکتر وارد کنید .')
     .required('این فیلد الزامی میباشد .'),
-  image: Yup.mixed()
-    .required('این فیلد الزامی میباشد .')
-    .test('check-image', 'این فیلد الزامی میباشد .', (value: any) => {
-      if (value.type.startsWith('image')) return true;
-      else return false;
-    }),
+  image: Yup.mixed().when('addImage', {
+    is: (value: any) => value,
+    then: () =>
+      Yup.mixed()
+        .required('این فیلد الزامی میباشد .')
+        .test('check-image', 'این فیلد الزامی میباشد .', (value: any) => {
+          if (value.type.startsWith('image')) return true;
+          else return false;
+        }),
+  }),
 });
 // ! formik dependencies
 

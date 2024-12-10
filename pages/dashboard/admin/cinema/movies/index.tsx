@@ -59,6 +59,8 @@ const Index = () => {
           time: rowData.time,
           price: rowData.price,
           createdAt: rowData.createdAt,
+          isShow: rowData.isShow,
+          addImage: false,
         }),
       },
     });
@@ -74,6 +76,17 @@ const Index = () => {
     { field: 'movieName', title: 'نام' },
     { field: 'decription', title: 'توضیحات' },
     { field: 'time', title: 'زمان' },
+    {
+      field: null,
+      title: 'نمایش فیلم',
+      element: (row: any) => {
+        return (
+          <span className={`${row.isShow ? 'text-green-600' : 'text-red-500'}`}>
+            {row.isShow ? 'در حال نمایش' : 'مخفی شده'}
+          </span>
+        );
+      },
+    },
     {
       field: null,
       title: 'قیمت',

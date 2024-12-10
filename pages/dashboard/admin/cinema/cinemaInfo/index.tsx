@@ -50,7 +50,7 @@ const Index = () => {
 
   const handleEditData = (rowData: any) => {
     router.push({
-      pathname: '/dashboard/admin/cinema/action/edit',
+      pathname: 'cinemaInfo/action/edit',
       query: {
         data: JSON.stringify({
           id: rowData.id,
@@ -58,7 +58,7 @@ const Index = () => {
           province: rowData.province,
           city: rowData.city,
           address: rowData.address,
-          image: rowData.image,
+          addImage : false
         }),
       },
     });

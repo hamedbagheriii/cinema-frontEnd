@@ -16,37 +16,39 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
       {/* slider */}
       <Slider data={slider} />
 
-
       {/* movies */}
       <Section title='فیلم سینمایی' className=''>
-        {movies.map((movie: any) => (
-          <div
-            key={movie.id}
-            className='text-center max-w-[300px]  p-1 flex flex-col gap-2 w-1/3 md:w-1/4 lg:w-1/5'
-          >
-            <div
-              className='w-full h-full relative xl:max-w-[190px] mx-auto text-center'
-              onClick={() => router.push(`/movie/${movie.id}`)}
-            >
+        {movies.map(
+          (movie: any) =>
+            movie.isShow && (
               <div
-                className='w-full h-full absolute bg-transparent
+                key={movie.id}
+                className='text-center max-w-[300px]  p-1 flex flex-col gap-2 w-1/3 md:w-1/4 lg:w-1/5'
+              >
+                <div
+                  className='w-full h-full relative xl:max-w-[190px] mx-auto text-center'
+                  onClick={() => router.push(`/movie/${movie.id}`)}
+                >
+                  <div
+                    className='w-full h-full absolute bg-transparent
                 hover:bg-black/20 transition-all cursor-pointer duration-150 rounded-xl'
-              ></div>
-              <Image
-                src={movie.image[0].url}
-                alt={movie.movieName}
-                width={1}
-                height={1}
-                className='rounded-xl w-full h-full cursor-pointer'
-                style={{ objectFit: 'cover', objectPosition: 'center' }}
-                loading='lazy'
-                placeholder='empty'
-              />
-            </div>
+                  ></div>
+                  <Image
+                    src={movie.image[0].url}
+                    alt={movie.movieName}
+                    width={1}
+                    height={1}
+                    className='rounded-xl w-full h-full cursor-pointer'
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    loading='lazy'
+                    placeholder='empty'
+                  />
+                </div>
 
-            {movie.movieName}
-          </div>
-        ))}
+                {movie.movieName}
+              </div>
+            )
+        )}
       </Section>
 
       <hr className='w-11/12 mx-auto mt-14 mb-5 bg-red-800 pt-0.5 rounded-full' />
