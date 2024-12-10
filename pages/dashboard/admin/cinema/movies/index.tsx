@@ -86,15 +86,15 @@ const Index = () => {
       element: (row: any) => {
         return (
           <Image
-          src={row.image[0].url}
-          alt={row.movieName}
-          width={1}
-          height={1}
-          className='rounded-xl w-[90px] mx-auto '
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
-          loading='lazy'
-          placeholder='empty'
-        />
+            src={row.image[0].url}
+            alt={row.movieName}
+            width={1}
+            height={1}
+            className='rounded-xl w-[90px] mx-auto '
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            loading='lazy'
+            placeholder='empty'
+          />
         );
       },
     },

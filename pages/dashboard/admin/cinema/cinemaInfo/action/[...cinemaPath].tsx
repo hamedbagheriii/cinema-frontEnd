@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
-
 // ! formik dependencies
 const initalvalues = {
   cinemaName: '',
@@ -77,9 +76,14 @@ const validationSchema = Yup.object({
   address: Yup.string()
     .min(10, 'حداقل 10 کاراکتر وارد کنید .')
     .required('این فیلد الزامی میباشد .'),
+  image: Yup.mixed()
+    .required('این فیلد الزامی میباشد .')
+    .test('check-image', 'این فیلد الزامی میباشد .', (value: any) => {
+      if (value.type.startsWith('image')) return true;
+      else return false;
+    }),
 });
 // ! formik dependencies
-
 
 const CinemaPath = () => {
   const router = useRouter();
@@ -164,7 +168,11 @@ const CinemaPath = () => {
                 </div>
               )}
 
-              <SubmitCompo router={router} reinitalvalues={reinitalvalues} formik={formik} />
+              <SubmitCompo
+                router={router}
+                reinitalvalues={reinitalvalues}
+                formik={formik}
+              />
             </Form>
           );
         }}

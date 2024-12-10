@@ -27,7 +27,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       accordionChild: [
         {
           title: 'مدیریت سینما ها',
-          path: '/dashboard/admin/cinema',
+          path: '/dashboard/admin/cinema/cinemaInfo',
           icon: 'camera-reels',
         },
         { title: 'مدیریت فیلم ها', path: '/dashboard/admin/cinema/movies', icon: 'film' },
@@ -43,7 +43,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       path: '/dashboard/admin/users',
       icon: 'people',
       accordionChild: [
-        { title: 'مشاهده کاربران', path: '/dashboard/admin/users', icon: 'people' },
+        { title: 'مشاهده کاربران', path: '/dashboard/admin/users/usersInfo', icon: 'people' },
         {
           title: 'مدیریت کیف پول ها',
           path: '/dashboard/admin/users/wallets',
@@ -56,7 +56,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       path: '/dashboard/admin/roles',
       icon: 'shield-shaded',
       accordionChild: [
-        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles', icon: 'person-vcard' },
+        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles/rolesInfo', icon: 'person-vcard' },
         {
           title: 'مشاهده مجوز ها',
           path: '/dashboard/admin/roles/permissions',

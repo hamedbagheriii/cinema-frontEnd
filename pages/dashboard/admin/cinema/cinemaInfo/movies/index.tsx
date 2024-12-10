@@ -38,6 +38,8 @@ const HallPath = () => {
 
     // ! get movies =>
     const res = await getMovieService();
+    console.log(res);
+    
     if (res.data.success === true) {
       setMovies(res.data.data);
 
