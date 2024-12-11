@@ -102,7 +102,7 @@ const SelectChips: FC<selectProps> = ({
 
             {/* selected item => */}
             <div
-              className='w-11/12 mx-auto max-w-sm h-fit py-1   flex flex-row justify-start
+              className='w-11/12 mx-auto max-w-sm h-fit py-1 flex flex-row justify-start
              items-center gap-2 flex-wrap'
             >
               {selectedItem.length > 0 &&
