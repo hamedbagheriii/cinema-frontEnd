@@ -25,7 +25,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       router.push('/dashboard/admin');
     }, 700);
   };
-
+  
   // ! data for sidebar
   const data: accDataProps[] = [
     {
@@ -80,14 +80,12 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
 
         {/* sidebar content */}
         <div dir='ltr' className='flex text-left space-y-6 flex-col w-full '>
-          {isUser && hasAccess('', isUser.roles) !== true ? (
-            <AccordionCompo data={data} dir='ltr' />
-          ) : isUser && hasAccess('', isUser.roles) === true ? (
+          {isUser && hasAccess('all', isUser.roles) === true ? (
             <>
               <span
                 onClick={() => handleChangePath()}
                 className={`py-3 mt-5 pt-3.5 flex px-2 font-normal
-              hover:bg-black/50 transition-all cursor-pointer duration-150 rounded-md `}
+                  hover:bg-black/50 transition-all cursor-pointer duration-150 rounded-md `}
               >
                 <i className={`me-2 bi bi-person-gear`} style={{ fontSize: 17 }}></i>
                 داشبورد مدیریت
@@ -95,6 +93,8 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
               </span>
               <hr />
             </>
+          ) : isUser && hasAccess('all', isUser.roles) === false ? (
+            <AccordionCompo data={data} dir='ltr' />
           ) : (
             <>
               <LinkCompo

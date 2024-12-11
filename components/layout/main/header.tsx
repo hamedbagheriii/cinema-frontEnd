@@ -78,7 +78,7 @@ const Header = () => {
             <FullName isUser={isUser} icon={true} />
             <hr />
 
-            {isUser && hasAccess('', isUser.roles) === true ? (
+            {isUser && hasAccess('all', isUser.roles) === true ? (
               <LinkCompo
                 title='داشبورد مدیریت'
                 iconClass='person-gear me-2'
@@ -146,7 +146,7 @@ const Header = () => {
 
       {/* sidebar */}
       {router.pathname.startsWith('/dashboard') && isUser &&
-      hasAccess('', isUser.roles) === true ? (
+      hasAccess('all', isUser.roles) === true ? (
         <AdminSidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
       ) : (
         <Sidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />

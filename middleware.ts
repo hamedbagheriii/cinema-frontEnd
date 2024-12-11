@@ -10,11 +10,11 @@ export const middleware = async (req : NextRequest)=>{
     }    
     else if(checkToken.success && req.nextUrl.pathname.startsWith('/dashboard') ){
         if (req.nextUrl.pathname.startsWith('/dashboard/user') && 
-            hasAccess('', checkToken.data.roles) === true) {
+            hasAccess('all', checkToken.data.roles) === true) {
             return NextResponse.redirect(new URL('/dashboard/admin', req.url))
         }
         else if (req.nextUrl.pathname.startsWith('/dashboard/admin') && 
-            hasAccess('', checkToken.data.roles) !== true) {
+            hasAccess('all', checkToken.data.roles) === false) {
             return NextResponse.redirect(new URL('/dashboard/user/profile', req.url))
         }
     }

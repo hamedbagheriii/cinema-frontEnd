@@ -1,6 +1,7 @@
 import AccordionCompo, { accDataProps } from '@/components/accordionCompo';
 import { ConfirmAlert } from '@/components/AlertCompo';
 import LinkCompo from '@/components/LinkCompo';
+import { useAccess } from '@/hooks/use-Access';
 import { useRouter } from 'next/router';
 import React, { FC, ReactNode, useState } from 'react';
 
@@ -14,44 +15,65 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
   // ! data for sidebar
   const data: accDataProps[] = [
     {
-      title: 'مدیریت سینما',
+      title:
+        useAccess('get-cinema').res ||
+        useAccess('edit-movie').res ||
+        useAccess('get-tickets').res
+          ? 'مدیریت سینما'
+          : false,
       path: '/dashboard/admin/cinema',
       icon: 'camera-reels',
       accordionChild: [
         {
-          title: 'مدیریت سینما ها',
+          title: useAccess('get-cinema').res ? 'مدیریت سینما ها' : false,
           path: '/dashboard/admin/cinema/cinemaInfo',
           icon: 'camera-reels',
         },
-        { title: 'مدیریت فیلم ها', path: '/dashboard/admin/cinema/movies', icon: 'film' },
         {
-          title: 'مدیریت بلیط ها',
+          title: useAccess('edit-movie').res ? 'مدیریت فیلم ها' : false,
+          path: '/dashboard/admin/cinema/movies',
+          icon: 'film',
+        },
+        {
+          title: useAccess('get-tickets').res ? 'مدیریت بلیط ها' : false,
           path: '/dashboard/admin/cinema/tickets',
           icon: 'ticket-perforated',
         },
       ],
     },
     {
-      title: 'مدیریت کاربران',
+      title:
+        useAccess('get-users').res || useAccess('get-wallets').res
+          ? 'مدیریت کاربران'
+          : false,
       path: '/dashboard/admin/users',
       icon: 'people',
       accordionChild: [
-        { title: 'مشاهده کاربران', path: '/dashboard/admin/users/usersInfo', icon: 'people' },
         {
-          title: 'مدیریت کیف پول ها',
+          title: useAccess('get-users').res ? 'مشاهده کاربران' : false,
+          path: '/dashboard/admin/users/usersInfo',
+          icon: 'people',
+        },
+        {
+          title: useAccess('get-wallets').res ? 'مدیریت کیف پول ها' : false,
           path: '/dashboard/admin/users/wallets',
           icon: 'wallet2',
         },
       ],
     },
     {
-      title: 'مدیریت نقش ها',
+      title:
+        useAccess('get-role').res && useAccess('get-perm').res ? 'مدیریت نقش ها' : false,
       path: '/dashboard/admin/roles',
       icon: 'shield-shaded',
       accordionChild: [
-        { title: 'مشاهده نقش ها', path: '/dashboard/admin/roles/rolesInfo', icon: 'person-vcard' },
         {
-          title: 'مشاهده مجوز ها',
+          title: useAccess('get-role').res ? 'مشاهده نقش ها' : false,
+          path: '/dashboard/admin/roles/rolesInfo',
+          icon: 'person-vcard',
+        },
+        {
+          title: useAccess('get-perm').res ? 'مشاهده مجوز ها' : false,
           path: '/dashboard/admin/roles/permissions',
           icon: 'shield-lock-fill',
         },
