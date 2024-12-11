@@ -1,6 +1,6 @@
-import { service } from "../service";
+import { service } from '../service';
 
-export const getMovieService = async ()=>{
-    return await service('/movie', 'get');
+export const getMovieService = async () => {
+  return await service('/movie', 'get');
 };
-  
+

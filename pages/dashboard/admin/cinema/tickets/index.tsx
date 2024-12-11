@@ -1,4 +1,4 @@
-import { handleShowAlert } from '@/components/AlertCompo';
+import { ConfirmAlert, handleShowAlert } from '@/components/AlertCompo';
 import TableLayout from '@/components/layout/dashboard/admin/tableLayout';
 import PaginationTable from '@/components/table/tableData';
 import { useToast } from '@/hooks/use-toast';
@@ -55,27 +55,29 @@ const Index = () => {
     }
   };
 
-  const handleEditData = (rowData: any) => {
-    router.push({
-      pathname: 'cinemaInfo/action/edit',
-      query: {
-        data: JSON.stringify({
-          id: rowData.id,
-          cinemaName: rowData.cinemaName,
-          province: rowData.province,
-          city: rowData.city,
-          address: rowData.address,
-          addImage: false,
-        }),
-      },
-    });
-  };
-
   useEffect(() => {
     handleGetTickets();
   }, []);
 
   // ! handle dataInfo =>
+  const AdditionData = [
+    {
+      title: 'صندلی ها',
+      color: 'text-blue-800',
+      icon: 'ui-checks-grid',
+      function: (rowData: any) => {
+        router.push({
+          pathname: 'tickets/seats',
+          query: {
+            data: JSON.stringify({
+              rows : rowData.rows,
+              ticket : rowData.ticket
+            }),
+          },
+        });
+      },
+    },
+  ]
   const dataInfo = [
     { field: 'ticket', title: 'کد' },
     {
@@ -132,6 +134,13 @@ const Index = () => {
     },
     {
       field: null,
+      title: 'تعداد صندلی',
+      element: (row: any) => {
+        return <>{`${row.rows.length}`}</>;
+      },
+    },
+    {
+      field: null,
       title: 'وضعیت',
       element: (row: any) => {
         return (
@@ -148,7 +157,7 @@ const Index = () => {
         return (
           <Action
             handleDeteleData={handleDeteleData}
-            handleEditData={handleEditData}
+            AdditionData={AdditionData}
             target='بلیط'
             rowData={row}
             targetKey='ticket'

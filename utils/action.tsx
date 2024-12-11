@@ -12,7 +12,7 @@ interface actionProps {
 }
 const Action: FC<actionProps> = ({
   handleDeteleData = null,
-  handleEditData,
+  handleEditData = null,
   target,
   rowData,
   AdditionData = null,

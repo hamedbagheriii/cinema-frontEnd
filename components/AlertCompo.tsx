@@ -37,6 +37,7 @@ interface ConfirmProps {
   title: string;
   description?: string | null;
   onClick: () => void;
+  isClose?: boolean;
   children: ReactNode;
 }
 export const ConfirmAlert: FC<ConfirmProps> = ({
@@ -44,11 +45,12 @@ export const ConfirmAlert: FC<ConfirmProps> = ({
   description = null,
   onClick,
   children,
+  isClose = true,
 }) => {
   return (
-    <AlertDialog>
+    <AlertDialog >
       <AlertDialogTrigger className='w-full'>{children}</AlertDialogTrigger>
-      <AlertDialogContent dir='rtl' className='bg-white'>
+      <AlertDialogContent dir='rtl' className='bg-white overflow-hidden'>
         <AlertDialogHeader>
           <AlertDialogTitle className='text-right mb-2 text-red-800'>
             {title}
@@ -58,7 +60,7 @@ export const ConfirmAlert: FC<ConfirmProps> = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className='flex gap-3'>
-          <AlertDialogCancel className='min-w-24'>خیر</AlertDialogCancel>
+          {isClose && <AlertDialogCancel className='min-w-24'>خیر</AlertDialogCancel>}
           <AlertDialogAction
             className='min-w-24 bg-red-700 hover:bg-red-800'
             onClick={onClick}
