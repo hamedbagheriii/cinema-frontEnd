@@ -54,6 +54,9 @@ const Index = () => {
           lastName: rowData.lastName,
           email: rowData.email,
           addPassword: false,
+          roles : rowData.roles.map((t : any)=>{
+            return t.roleID
+          })
         }),
       },
     });

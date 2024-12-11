@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -31,6 +31,7 @@ interface IndexProps {
   isLoading: boolean;
   searchField?: any;
   addItem?: string;
+  children?: ReactNode;
 }
 const PaginationTable: FC<IndexProps> = ({
   data,
@@ -39,6 +40,7 @@ const PaginationTable: FC<IndexProps> = ({
   isLoading,
   searchField,
   addItem,
+  children = null,
 }) => {
   const [initData, setInitData] = useState<any[]>(data);
   const [tableData, setTableData] = useState<any[]>([]);
@@ -112,7 +114,7 @@ const PaginationTable: FC<IndexProps> = ({
                 />
               </div>
             )}
-            {addItem && (
+            {addItem ? (
               <div className='flex w-full max-w-sm items-center mb-5 space-x-2'>
                 <Button
                   onClick={() => router.push(addItem)}
@@ -121,7 +123,9 @@ const PaginationTable: FC<IndexProps> = ({
                   افزودن
                 </Button>
               </div>
-            )}
+            ) : children ? (
+              children
+            ) : null}
           </div>
 
           {/* table */}

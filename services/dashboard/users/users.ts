@@ -9,7 +9,7 @@ export const deleteuserService = async (id: number, data: any) => {
 };
 
 export const addUserService = async (values: any) => {
-  return await service(`/auth/sign-up`, 'post', values);
+  return await service(`/auth/users/add`, 'post', values);
 };
 
 export const editUserService = async (values: any) => {

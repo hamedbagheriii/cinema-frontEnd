@@ -17,6 +17,10 @@ export const editRoleService = async (values: any, id: number) => {
 };
 
 // ! ======================== permissions ========================
+export const addAllPermsService = async () => {
+  return await service(`/roles/perm/addAll`, 'get');
+};
+
 export const getPermService = async () => {
   return await service(`/roles/perm`, 'get');
 };

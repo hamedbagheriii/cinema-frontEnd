@@ -3,6 +3,7 @@ import { handleShowAlert } from '@/components/AlertCompo';
 import FormikControl from '@/components/formik/formikControl';
 import SubmitCompo from '@/components/submitCompo';
 import { useToast } from '@/hooks/use-toast';
+import { getRolesService } from '@/services/dashboard/roles/roles';
 import { addUserService, editUserService } from '@/services/dashboard/users/users';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
@@ -16,6 +17,8 @@ const initalvalues = {
   fristName: '',
   lastName: '',
   addPassword: true,
+  rolesArry: 1,
+  roles: [],
 };
 
 const onSubmit = async (
@@ -27,10 +30,11 @@ const onSubmit = async (
 ) => {
   try {
     let res;
-    const data : any = {
+    const data: any = {
       fristName: values.fristName,
       lastName: values.lastName,
       email: values.email,
+      roles: values.roles,
     };
 
     if (reinitalvalues) res = await editUserService(data);
@@ -89,6 +93,7 @@ const UserPath = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [reinitalvalues, setReinitialvalues] = useState<any | null>(null);
+  const [roles, setRoles] = useState<any[]>([]);
   const { userPath } = router.query;
 
   //  ! handle edit data =>
@@ -98,11 +103,31 @@ const UserPath = () => {
     setReinitialvalues(data);
   };
 
+  // ! handle get all roles =>
+  const handleGetAllRoles = async () => {
+    const res = await getRolesService();
+
+    if (res.data.success === true) {
+      const rolesData = [{ id: 0, roleName: 'برای انتخاب نقش کلیک کنید .' }];
+      res.data.roles.map((item: any) => {
+        rolesData.push(
+          { id: item.id, roleName: item.roleName }
+        );
+      }),
+
+      setRoles(rolesData);
+    }
+  };
+
   useEffect(() => {
     if (userPath?.[0] === 'edit') {
       handleEditData();
     }
   }, [userPath]);
+
+  useEffect(() => {
+    handleGetAllRoles();
+  }, []);
 
   return (
     <AddHeaderCompo
@@ -152,6 +177,19 @@ const UserPath = () => {
                   placeholder='مثال : reza1213'
                   label='رمز عبور'
                   control='input'
+                />
+              )}
+
+              {roles.length > 0 && (
+                <FormikControl
+                  name='rolesArry'
+                  type='selectChips'
+                  label='نقش ها'
+                  targetName='roles'
+                  control='selectChips'
+                  reinitalvalues={reinitalvalues}
+                  formik={formik}
+                  data={roles}
                 />
               )}
 

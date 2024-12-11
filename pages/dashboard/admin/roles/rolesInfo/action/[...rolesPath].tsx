@@ -91,7 +91,7 @@ const Add = () => {
     const res = await getPermService();
 
     setData(
-      res.data.perm.map((t: any) => {
+      res.data.perms.map((t: any) => {
         return {
           id: t.id,
           permName: t.permName,

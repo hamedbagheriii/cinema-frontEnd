@@ -7,9 +7,10 @@ import FormikSwitch from './switch';
 import TeaxtArea, { TeaxtAreaProps } from './teaxtArea';
 import FormikFile, { fileProps } from './file';
 import FormikCheck, { checkProps } from './checkbox';
+import SelectChips, { selectProps } from './selectChips';
 
 const FormikControl: FC<
-  InputProps | SubmitBtnProps | SwitchProps | TeaxtAreaProps | fileProps | checkProps
+  InputProps | SubmitBtnProps | SwitchProps | TeaxtAreaProps | fileProps | checkProps | selectProps
 > = (props) => {
   switch (props.control) {
     case 'input':
@@ -34,6 +35,10 @@ const FormikControl: FC<
 
     case 'checkbox':
       return <FormikCheck {...(props as checkProps)} />;
+      break;
+
+    case 'selectChips':
+      return <SelectChips {...(props as selectProps)} />;
       break;
   }
 };

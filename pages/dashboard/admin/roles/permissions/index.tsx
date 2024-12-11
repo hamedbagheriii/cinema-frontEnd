@@ -1,7 +1,9 @@
+import { handleShowAlert } from '@/components/AlertCompo';
 import TableLayout from '@/components/layout/dashboard/admin/tableLayout';
 import PaginationTable from '@/components/table/tableData';
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { getPermService } from '@/services/dashboard/roles/roles';
+import { addAllPermsService, getPermService } from '@/services/dashboard/roles/roles';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -24,6 +26,23 @@ const Index = () => {
     }
   };
 
+  // ! handle add all Perms
+  const handleAddAllPerms = async () => {
+    const res = await addAllPermsService();
+    
+    if (res.data.success === true) {
+      handleShowAlert(
+        'تمام دسترسی ها به دیتابیس با موفقیت افزوده شد .',
+        true,
+        'success',
+        toast
+      );
+    } 
+    else {
+      handleShowAlert(res.response?.data.message ||
+      res.data.message, false, 'error', toast);
+    }
+  };
 
   useEffect(() => {
     handleGetRoles();
@@ -45,7 +64,17 @@ const Index = () => {
           numOfPage={10}
           isLoading={isLoading}
           searchField={{ target: 'permName', value: 'نام مجوز را جستجو کنید . . .' }}
-        />
+        >
+          <div className='flex w-full  sm:hidden md:flex max-w-sm items-center mb-7 space-x-2'>
+            <Button
+              onClick={() => handleAddAllPerms()}
+              className='bg-red-700 hover:bg-red-800 shadow-md
+               shadow-red-900 w-full sm:w-fit ms-auto text-[14px] '
+            >
+              افزودن تمام دسترسی ها
+            </Button>
+          </div>
+        </PaginationTable>
       </div>
     </TableLayout>
   );
