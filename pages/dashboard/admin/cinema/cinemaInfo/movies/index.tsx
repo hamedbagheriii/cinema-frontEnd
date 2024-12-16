@@ -109,7 +109,7 @@ const HallPath = () => {
     </div>
   ) : (
     <AddHeaderCompo
-      className='max-w-[1000px]'
+      className='max-w-[1050px]'
       dec={`سینما : ${JSON.parse(data).cinemaName}`}
       title='فیلم ها'
       icon='film'

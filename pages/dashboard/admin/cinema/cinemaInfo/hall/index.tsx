@@ -1,3 +1,4 @@
+import { TokenData } from '@/atoms/atoms';
 import AddHeaderCompo from '@/components/addHeaderCompo';
 import { handleShowAlert } from '@/components/AlertCompo';
 import FormikControl from '@/components/formik/formikControl';
@@ -11,8 +12,10 @@ import {
 } from '@/services/dashboard/cinema/cinema';
 import Action from '@/utils/action';
 import ChipsData from '@/utils/chipsData';
+import { hasAccess } from '@/utils/hasAccess';
 import LoadingData from '@/utils/loadingData';
 import { Form, Formik } from 'formik';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -85,6 +88,7 @@ const HallIndex = () => {
   const { data } = router.query as any;
   const [dataObj, setDataObj] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isUser] = useAtom(TokenData);
   const [initalvalues, setInitalvalues] = useState<any>({
     cinemaID: 1,
     hallName: '',
@@ -149,7 +153,7 @@ const HallIndex = () => {
       element: (row: any) => {
         return (
           <Action
-            handleDeteleData={handleDeteleData}
+            handleDeteleData={hasAccess('delete-hall', isUser.roles) ? handleDeteleData : null}
             handleEditData={handleEditData}
             target='سالن'
             rowData={row}

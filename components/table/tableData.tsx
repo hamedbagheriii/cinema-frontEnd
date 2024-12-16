@@ -30,7 +30,7 @@ interface IndexProps {
   numOfPage: number;
   isLoading: boolean;
   searchField?: any;
-  addItem?: string;
+  addItem?: string | null;
   children?: ReactNode;
 }
 const PaginationTable: FC<IndexProps> = ({
