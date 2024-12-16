@@ -1,8 +1,5 @@
 import AddHeaderCompo from '@/components/addHeaderCompo';
 import { handleShowAlert } from '@/components/AlertCompo';
-import FormikControl from '@/components/formik/formikControl';
-import SubmitCompo from '@/components/submitCompo';
-import PaginationTable from '@/components/table/tableData';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -12,14 +9,11 @@ import {
   editHallService,
 } from '@/services/dashboard/cinema/cinema';
 import { getMovieService } from '@/services/movie/movie';
-import Action from '@/utils/action';
 import LoadingData from '@/utils/loadingData';
-import { Form, Formik } from 'formik';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import * as Yup from 'yup';
 
 const HallPath = () => {
   const router = useRouter();
@@ -38,7 +32,6 @@ const HallPath = () => {
 
     // ! get movies =>
     const res = await getMovieService();
-    console.log(res);
     
     if (res.data.success === true) {
       setMovies(res.data.data);
