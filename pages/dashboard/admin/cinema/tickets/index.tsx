@@ -1,3 +1,4 @@
+import { TokenData } from '@/atoms/atoms';
 import { ConfirmAlert, handleShowAlert } from '@/components/AlertCompo';
 import TableLayout from '@/components/layout/dashboard/admin/tableLayout';
 import PaginationTable from '@/components/table/tableData';
@@ -8,6 +9,9 @@ import {
 } from '@/services/dashboard/tickets/tickets';
 import Action from '@/utils/action';
 import { convertDate } from '@/utils/convertDate';
+import { hasAccess } from '@/utils/hasAccess';
+import LoadingData from '@/utils/loadingData';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -16,6 +20,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
   const router = useRouter();
+  const [isUser] = useAtom(TokenData);
 
   // ! handle get tickets =>
   const handleGetTickets = async () => {
@@ -65,19 +70,20 @@ const Index = () => {
       title: 'صندلی ها',
       color: 'text-blue-800',
       icon: 'ui-checks-grid',
+      access : 'get-tickets',
       function: (rowData: any) => {
         router.push({
           pathname: 'tickets/seats',
           query: {
             data: JSON.stringify({
-              rows : rowData.rows,
-              ticket : rowData.ticket
+              rows: rowData.rows,
+              ticket: rowData.ticket,
             }),
           },
         });
       },
     },
-  ]
+  ];
   const dataInfo = [
     { field: 'ticket', title: 'کد' },
     {
@@ -156,7 +162,9 @@ const Index = () => {
       element: (row: any) => {
         return (
           <Action
-            handleDeteleData={handleDeteleData}
+            handleDeteleData={
+              hasAccess('delete-tickets', isUser.roles) ? handleDeteleData : null
+            }
             AdditionData={AdditionData}
             target='بلیط'
             rowData={row}
@@ -167,7 +175,11 @@ const Index = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <div dir='rtl' className='w-11/12 mx-auto mt-10'>
+      <LoadingData />
+    </div>
+  ) : (
     <TableLayout title='مدیریت بلیط ها' icon='ticket-perforated'>
       <div>
         <PaginationTable
@@ -176,7 +188,6 @@ const Index = () => {
           numOfPage={15}
           isLoading={isLoading}
           searchField={{ target: 'ticket', value: 'کد بلیط را جستجو کنید . . .' }}
-          addItem='tickets/add'
         />
       </div>
     </TableLayout>

@@ -14,10 +14,15 @@ export const middleware = async (req: NextRequest) => {
         role: hasAccess('get-cinema', checkToken.data.roles),
       },
       {
-        path: '/cinema/cinemaInfo/action',
+        path: '/cinema/cinemaInfo/action/add',
         role:
-          (hasAccess('edit-cinema', checkToken.data.roles) ||
-            hasAccess('add-cinema', checkToken.data.roles)) &&
+          hasAccess('add-cinema', checkToken.data.roles) &&
+          hasAccess('get-cinema', checkToken.data.roles),
+      },
+      {
+        path: '/cinema/cinemaInfo/action/edit',
+        role:
+          hasAccess('edit-cinema', checkToken.data.roles) &&
           hasAccess('get-cinema', checkToken.data.roles),
       },
       {
@@ -32,18 +37,19 @@ export const middleware = async (req: NextRequest) => {
           hasAccess('add-movie-cinema', checkToken.data.roles) &&
           hasAccess('get-cinema', checkToken.data.roles),
       },
-      { path: '/cinema/movies', role: hasAccess('get-movie', checkToken.data.roles) },
+      {
+        path: '/cinema/movies',
+        role:
+          hasAccess('add-movie', checkToken.data.roles) ||
+          hasAccess('edit-movie', checkToken.data.roles),
+      },
       {
         path: '/cinema/movies/add',
-        role:
-          hasAccess('add-movie', checkToken.data.roles) &&
-          hasAccess('get-movie', checkToken.data.roles),
+        role: hasAccess('add-movie', checkToken.data.roles),
       },
       {
         path: '/cinema/movies/edit',
-        role:
-          hasAccess('edit-movie', checkToken.data.roles) &&
-          hasAccess('get-movie', checkToken.data.roles),
+        role: hasAccess('edit-movie', checkToken.data.roles),
       },
       { path: '/cinema/tickets', role: hasAccess('get-tickets', checkToken.data.roles) },
       {
@@ -63,10 +69,16 @@ export const middleware = async (req: NextRequest) => {
           hasAccess('get-role', checkToken.data.roles),
       },
       {
-        path: '/roles/rolesInfo/action',
+        path: '/roles/rolesInfo/action/add',
         role:
-          (hasAccess('edit-role', checkToken.data.roles) ||
-            hasAccess('add-role', checkToken.data.roles)) &&
+          hasAccess('add-role', checkToken.data.roles) &&
+          hasAccess('get-perm', checkToken.data.roles) &&
+          hasAccess('get-role', checkToken.data.roles),
+      },
+      {
+        path: '/roles/rolesInfo/action/edit',
+        role:
+          hasAccess('edit-role', checkToken.data.roles) &&
           hasAccess('get-perm', checkToken.data.roles) &&
           hasAccess('get-role', checkToken.data.roles),
       },
@@ -75,12 +87,14 @@ export const middleware = async (req: NextRequest) => {
         path: '/users/usersInfo/add',
         role:
           hasAccess('add-users', checkToken.data.roles) &&
+          hasAccess('get-role', checkToken.data.roles) &&
           hasAccess('get-users', checkToken.data.roles),
       },
       {
         path: '/users/usersInfo/edit',
         role:
           hasAccess('edit-users', checkToken.data.roles) &&
+          hasAccess('get-role', checkToken.data.roles) &&
           hasAccess('get-users', checkToken.data.roles),
       },
       { path: '/users/wallets', role: hasAccess('get-wallets', checkToken.data.roles) },
@@ -95,7 +109,7 @@ export const middleware = async (req: NextRequest) => {
     const data = URLS.filter(
       (t: any) => req.nextUrl.pathname === `/dashboard/admin${t.path}`
     )[0];
-    
+
     if (data !== undefined && !data.role) {
       return NextResponse.redirect(new URL('/dashboard/admin', req.url));
     }

@@ -1,10 +1,14 @@
+import { TokenData } from '@/atoms/atoms';
 import { handleShowAlert } from '@/components/AlertCompo';
 import TableLayout from '@/components/layout/dashboard/admin/tableLayout';
 import PaginationTable from '@/components/table/tableData';
 import { useToast } from '@/hooks/use-toast';
 import { deleteMovieService, getMovieService } from '@/services/dashboard/movie/movie';
 import Action from '@/utils/action';
+import { hasAccess } from '@/utils/hasAccess';
+import LoadingData from '@/utils/loadingData';
 import { numberWithCommas } from '@/utils/numWCommas';
+import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -14,6 +18,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
   const router = useRouter();
+  const [isUser] = useAtom(TokenData);
 
   // ! handle get Movies =>
   const handleGetMovies = async () => {
@@ -117,8 +122,10 @@ const Index = () => {
       element: (row: any) => {
         return (
           <Action
-            handleDeteleData={handleDeteleData}
-            handleEditData={handleEditData}
+            handleDeteleData={
+              hasAccess('delete-movie', isUser.roles) ? handleDeteleData : null
+            }
+            handleEditData={hasAccess('edit-movie', isUser.roles) ? handleEditData : null}
             target='فیلم'
             rowData={row}
           />
@@ -127,7 +134,11 @@ const Index = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <div dir='rtl' className='w-11/12 mx-auto mt-10'>
+      <LoadingData />
+    </div>
+  ) : (
     <TableLayout title='مدیریت فیلم ها' icon='film'>
       <div>
         <PaginationTable
@@ -136,7 +147,7 @@ const Index = () => {
           numOfPage={10}
           isLoading={isLoading}
           searchField={{ target: 'movieName', value: 'نام فیلم را جستجو کنید . . .' }}
-          addItem='movies/add'
+          addItem={hasAccess('add-movie', isUser.roles) ? 'movies/add' : null}
         />
       </div>
     </TableLayout>

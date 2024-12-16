@@ -1,9 +1,13 @@
+import { TokenData } from '@/atoms/atoms';
 import { handleShowAlert } from '@/components/AlertCompo';
 import TableLayout from '@/components/layout/dashboard/admin/tableLayout';
 import PaginationTable from '@/components/table/tableData';
 import { useToast } from '@/hooks/use-toast';
 import { deleteRoleService, getRolesService } from '@/services/dashboard/roles/roles';
 import Action from '@/utils/action';
+import { hasAccess } from '@/utils/hasAccess';
+import LoadingData from '@/utils/loadingData';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -12,6 +16,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
   const router = useRouter();
+  const [isUser] = useAtom(TokenData);
 
   // ! handle get Roles =>
   const handleGetRoles = async () => {
@@ -73,8 +78,10 @@ const Index = () => {
       element: (row: any) => {
         return (
           <Action
-            handleDeteleData={handleDeteleData}
-            handleEditData={handleEditData}
+            handleDeteleData={
+              hasAccess('edit-role', isUser.roles) ? handleDeteleData : null
+            }
+            handleEditData={hasAccess('edit-role', isUser.roles) ? handleEditData : null}
             target='نقش'
             rowData={row}
           />
@@ -83,7 +90,11 @@ const Index = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <div dir='rtl' className='w-11/12 mx-auto mt-10'>
+      <LoadingData />
+    </div>
+  ) : (
     <TableLayout title='مدیریت نقش ها' icon='shield-shaded'>
       <div>
         <PaginationTable
@@ -92,7 +103,7 @@ const Index = () => {
           numOfPage={10}
           isLoading={isLoading}
           searchField={{ target: 'roleName', value: 'نام نقش را جستجو کنید . . .' }}
-          addItem='rolesInfo/action/add'
+          addItem={hasAccess('add-role' , isUser.roles) ? 'rolesInfo/action/add' : null}
         />
       </div>
     </TableLayout>

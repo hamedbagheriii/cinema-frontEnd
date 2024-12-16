@@ -22,9 +22,13 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
     if (isUser !== null) {
       setData([
         {
-          title: hasAccess('get-cinema' || 'edit-movie' || 'get-tickets', isUser.roles)
-            ? 'مدیریت سینما'
-            : false,
+          title:
+            hasAccess('get-cinema', isUser.roles) ||
+            hasAccess('get-tickets', isUser.roles) ||
+            hasAccess('add-movie', isUser.roles) ||
+            hasAccess('edit-movie', isUser.roles)
+              ? 'مدیریت سینما'
+              : false,
           path: '/dashboard/admin/cinema',
           icon: 'camera-reels',
           accordionChild: [
@@ -34,7 +38,11 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
               icon: 'camera-reels',
             },
             {
-              title: hasAccess('edit-movie', isUser.roles) ? 'مدیریت فیلم ها' : false,
+              title:
+                hasAccess('add-movie', isUser.roles) ||
+                hasAccess('edit-movie', isUser.roles)
+                  ? 'مدیریت فیلم ها'
+                  : false,
               path: '/dashboard/admin/cinema/movies',
               icon: 'film',
             },
@@ -46,9 +54,10 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
           ],
         },
         {
-          title: hasAccess('get-users' || 'get-wallets', isUser.roles)
-            ? 'مدیریت کاربران'
-            : false,
+          title:
+            hasAccess('get-users', isUser.roles) || hasAccess('get-wallets', isUser.roles)
+              ? 'مدیریت کاربران'
+              : false,
           path: '/dashboard/admin/users',
           icon: 'people',
           accordionChild: [
@@ -65,9 +74,10 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
           ],
         },
         {
-          title: hasAccess('get-role' && 'get-perm', isUser.roles)
-            ? 'مدیریت نقش ها'
-            : false,
+          title:
+            hasAccess('get-role', isUser.roles) && hasAccess('get-perm', isUser.roles)
+              ? 'مدیریت نقش ها'
+              : false,
           path: '/dashboard/admin/roles',
           icon: 'shield-shaded',
           accordionChild: [
