@@ -78,7 +78,7 @@ const Index = () => {
     {
       title: 'سالن ها',
       color: 'text-blue-800',
-      access: 'add-hall' && 'edit-hall',
+      access: 'add-hall' ,
       icon: 'door-open',
       function: (rowData: any) => {
         router.push({
