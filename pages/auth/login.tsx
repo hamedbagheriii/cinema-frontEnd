@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Cookies } from '@/services/service';
 import { handleShowAlert } from '@/components/AlertCompo';
+import { useStore } from 'jotai';
+import { setToken } from '@/utils/setToken';
 
 // ! formik dependencies
 const initalvalues = {
@@ -17,7 +19,7 @@ const initalvalues = {
   rememberMe:true
 };
 
-const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
+const onSubmit = async (values: any, actions: any, toast: any, router: any , store : any) => {
   try {
     const res : any = await loginUserService(values);
     if (res.status === 200) {
@@ -33,6 +35,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any) => {
       
       setTimeout(() => {
         router.push('/');
+        setToken(store);
       }, 3000);
     } else {
       Cookies.remove('userToken');
@@ -70,6 +73,8 @@ const validationSchema = Yup.object({
 const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const store = useStore();
+
 
   return (
     <Layout title={'ورود به حساب'} icon={'bi bi-person-circle'}>
@@ -77,7 +82,7 @@ const Login = () => {
         <Formik
           initialValues={initalvalues}
           onSubmit={(values, actions) => {
-            onSubmit(values, actions, toast, router);
+            onSubmit(values, actions, toast, router , store);
           }}
           validationSchema={validationSchema}
         >

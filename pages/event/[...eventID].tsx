@@ -6,16 +6,17 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { useToken } from '@/hooks/use-Token';
 import { addTicketService } from '@/services/ticket/ticket';
 import { handleShowAlert } from '@/components/AlertCompo';
 import { convertDate } from '@/utils/convertDate';
-import { hasAccess } from '@/utils/hasAccess';
 import { numberWithCommas } from '@/utils/numWCommas';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { FC, useEffect, useState } from 'react';
+import { useAtom, useStore } from 'jotai';
+import { TokenData } from '@/atoms/atoms';
+import { setToken } from '@/utils/setToken';
 
 interface eventProps {
   movieData: any;
@@ -27,7 +28,7 @@ export interface seatProps {
   row: number;
 }
 const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
-  const { isUser } = useToken();
+  const [isUser] = useAtom(TokenData);
   const router = useRouter();
   const { toast } = useToast();
   const [rows, setRowsArr] = useState<number[]>([]); // for rows
@@ -37,6 +38,8 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
   const [alert, setAlert] = useState<boolean>(false);
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const { hall, date, time, cinema, eventID } = router.query;
+  const store = useStore();
+
   const seatsCircle: any[] = [
     { id: 1, bgColor: 'bg-white', title: 'خالی عادی' },
     { id: 2, bgColor: 'bg-red-700', title: 'انتخاب شما' },
@@ -133,7 +136,7 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
   const onSubmit = async () => {
     setIsSubmiting(true);
     if (selectSeats.length > 0) {
-      if (hasAccess('', isUser.roles) !== true) {
+      if (isUser.roles.length === 0) {
         const data = {
           ticket: Math.round(Math.random() * 1000000),
           email: isUser.email,
@@ -154,6 +157,7 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
 
           setTimeout(() => {
             router.push('/dashboard/user/ticket');
+            setToken(store);
           }, 3000);
         } else {
           handleShowAlert(
@@ -163,12 +167,14 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
             toast
           );
         }
-      } else {
-        handleShowAlert('عملیات به دلیل مدیر بودن شما لغو شد .', false, 'error', toast);
+
+        setTimeout(() => {
+          setIsSubmiting(false);
+        }, 3000);
+      } 
+      else {
+        handleShowAlert('بلیط به دلیل همکار بودن شما لغو شد !', false, 'error', toast);
       }
-      setTimeout(() => {
-        setIsSubmiting(false);
-      }, 3000);
     }
   };
 

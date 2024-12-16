@@ -7,6 +7,8 @@ import LinkCompo from '@/components/LinkCompo';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { FC, ReactNode, useState } from 'react';
+import { useStore } from 'jotai';
+import { setToken } from '@/utils/setToken';
 
 interface layoutProps {
   children: ReactNode;
@@ -17,6 +19,8 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
   const { toast } = useToast();
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const [ticket, setTicket] = useState<number | null>(null);
+  const store = useStore();
+
 
   // handle use ticket =>
   const onSubmit = async () => {
@@ -28,6 +32,7 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
         handleShowAlert('بلیط با موفقیت چاپ شد !', true, 'success', toast);
         setTimeout(() => {
           router.push('/dashboard/user/profile');
+          setToken(store);
         }, 3000);
       } else {
         handleShowAlert(res.response.data.message || res.message, false, 'error', toast);

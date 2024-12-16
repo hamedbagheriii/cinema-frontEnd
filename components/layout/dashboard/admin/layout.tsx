@@ -1,85 +1,91 @@
+import { TokenData } from '@/atoms/atoms';
 import AccordionCompo, { accDataProps } from '@/components/accordionCompo';
 import { ConfirmAlert } from '@/components/AlertCompo';
 import LinkCompo from '@/components/LinkCompo';
-import { useAccess } from '@/hooks/use-Access';
+import { useAtom } from 'jotai';
+import { hasAccess } from '@/utils/hasAccess';
 import { useRouter } from 'next/router';
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
+import LoadingData from '@/utils/loadingData';
 
 interface layoutProps {
   children: ReactNode;
   isTicket?: boolean;
 }
 const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
+  const [data, setData] = useState<accDataProps[]>([]);
+  const [isUser] = useAtom(TokenData);
   const router = useRouter();
 
   // ! data for sidebar
-  const data: accDataProps[] = [
-    {
-      title:
-        useAccess('get-cinema').res ||
-        useAccess('edit-movie').res ||
-        useAccess('get-tickets').res
-          ? 'مدیریت سینما'
-          : false,
-      path: '/dashboard/admin/cinema',
-      icon: 'camera-reels',
-      accordionChild: [
+  useEffect(() => {
+    if (isUser !== null) {
+      setData([
         {
-          title: useAccess('get-cinema').res ? 'مدیریت سینما ها' : false,
-          path: '/dashboard/admin/cinema/cinemaInfo',
+          title: hasAccess('get-cinema' || 'edit-movie' || 'get-tickets', isUser.roles)
+            ? 'مدیریت سینما'
+            : false,
+          path: '/dashboard/admin/cinema',
           icon: 'camera-reels',
+          accordionChild: [
+            {
+              title: hasAccess('get-cinema', isUser.roles) ? 'مدیریت سینما ها' : false,
+              path: '/dashboard/admin/cinema/cinemaInfo',
+              icon: 'camera-reels',
+            },
+            {
+              title: hasAccess('edit-movie', isUser.roles) ? 'مدیریت فیلم ها' : false,
+              path: '/dashboard/admin/cinema/movies',
+              icon: 'film',
+            },
+            {
+              title: hasAccess('get-tickets', isUser.roles) ? 'مدیریت بلیط ها' : false,
+              path: '/dashboard/admin/cinema/tickets',
+              icon: 'ticket-perforated',
+            },
+          ],
         },
         {
-          title: useAccess('edit-movie').res ? 'مدیریت فیلم ها' : false,
-          path: '/dashboard/admin/cinema/movies',
-          icon: 'film',
-        },
-        {
-          title: useAccess('get-tickets').res ? 'مدیریت بلیط ها' : false,
-          path: '/dashboard/admin/cinema/tickets',
-          icon: 'ticket-perforated',
-        },
-      ],
-    },
-    {
-      title:
-        useAccess('get-users').res || useAccess('get-wallets').res
-          ? 'مدیریت کاربران'
-          : false,
-      path: '/dashboard/admin/users',
-      icon: 'people',
-      accordionChild: [
-        {
-          title: useAccess('get-users').res ? 'مشاهده کاربران' : false,
-          path: '/dashboard/admin/users/usersInfo',
+          title: hasAccess('get-users' || 'get-wallets', isUser.roles)
+            ? 'مدیریت کاربران'
+            : false,
+          path: '/dashboard/admin/users',
           icon: 'people',
+          accordionChild: [
+            {
+              title: hasAccess('get-users', isUser.roles) ? 'مشاهده کاربران' : false,
+              path: '/dashboard/admin/users/usersInfo',
+              icon: 'people',
+            },
+            {
+              title: hasAccess('get-wallets', isUser.roles) ? 'مدیریت کیف پول ها' : false,
+              path: '/dashboard/admin/users/wallets',
+              icon: 'wallet2',
+            },
+          ],
         },
         {
-          title: useAccess('get-wallets').res ? 'مدیریت کیف پول ها' : false,
-          path: '/dashboard/admin/users/wallets',
-          icon: 'wallet2',
+          title: hasAccess('get-role' && 'get-perm', isUser.roles)
+            ? 'مدیریت نقش ها'
+            : false,
+          path: '/dashboard/admin/roles',
+          icon: 'shield-shaded',
+          accordionChild: [
+            {
+              title: hasAccess('get-role', isUser.roles) ? 'مشاهده نقش ها' : false,
+              path: '/dashboard/admin/roles/rolesInfo',
+              icon: 'person-vcard',
+            },
+            {
+              title: hasAccess('get-perm', isUser.roles) ? 'مشاهده مجوز ها' : false,
+              path: '/dashboard/admin/roles/permissions',
+              icon: 'shield-lock-fill',
+            },
+          ],
         },
-      ],
-    },
-    {
-      title:
-        useAccess('get-role').res && useAccess('get-perm').res ? 'مدیریت نقش ها' : false,
-      path: '/dashboard/admin/roles',
-      icon: 'shield-shaded',
-      accordionChild: [
-        {
-          title: useAccess('get-role').res ? 'مشاهده نقش ها' : false,
-          path: '/dashboard/admin/roles/rolesInfo',
-          icon: 'person-vcard',
-        },
-        {
-          title: useAccess('get-perm').res ? 'مشاهده مجوز ها' : false,
-          path: '/dashboard/admin/roles/permissions',
-          icon: 'shield-lock-fill',
-        },
-      ],
-    },
-  ];
+      ]);
+    }
+  }, [isUser]);
 
   return (
     <div
@@ -102,10 +108,9 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
                 linkClass='mb-4'
                 path={'/dashboard/admin'}
                 dir={'rtl'}
-                hover={router.pathname === ('/dashboard/admin')}
+                hover={router.pathname === '/dashboard/admin'}
               />
               <hr />
-
               <AccordionCompo data={data} />
             </div>
 
@@ -134,7 +139,9 @@ const Layout: FC<layoutProps> = ({ children, isTicket = false }) => {
       </div>
 
       {/* content */}
-      <div className='w-full  sm:w-11/12 overflow-x-hidden h-full pb-8 px-3 py-2 '>{children}</div>
+      <div className='w-full  sm:w-11/12 overflow-x-hidden h-full pb-8 px-3 py-2 '>
+        {children}
+      </div>
     </div>
   );
 };

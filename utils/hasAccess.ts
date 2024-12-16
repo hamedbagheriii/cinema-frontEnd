@@ -1,31 +1,27 @@
 export const hasAccess = (role: string, userRoles: any[]): any => {
-  if (userRoles.length <= 0) {
-    return {
-      message: 'شما دسترسی به این صفحه را ندارید !',
-      success: false,
-    };
-  } else if (role == 'all') {
+  const length = userRoles.length;
+  
+  if (length <= 0) {
+    return false;
+  } else if (role === 'show' && length > 0) {
+    return true;
+  } else if (
+    length > 0 &&
+    userRoles[0].roleData.permissions?.[0]
+    ?.permissionData?.permName === 'allAccess'
+  ) {
     return true;
   } else {
-    const handleCheck = () => {
-      let allPerms: any[] = [];
+    let allPerms: any[] = [];
 
-      userRoles.map((t: any) => {
-        const perms = t.roleData.permissions;
-        allPerms.push(...perms);
-      });
+    userRoles.map((t: any) => {
+      const perms = t.roleData.permissions;
+      allPerms.push(...perms);
+    });
 
-      const checkRole = allPerms.filter(
-        (t) =>
-          t.permissionData.permName === role ||
-         t.permissionData.permName === 'allAccess'
-      )[0];
+    const checkRole = allPerms.filter((t) => t.permissionData.permName === role)[0];
+    if (checkRole) return true;
 
-      if (checkRole) return true;
-
-      return false;
-    };
-
-    return handleCheck();
+    return false;
   }
 };

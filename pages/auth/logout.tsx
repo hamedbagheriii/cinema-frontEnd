@@ -1,11 +1,14 @@
 import { logoutUserService } from '@/services/auth/auth';
 import { Cookies } from '@/services/service';
 import PageLoading from '@/utils/pageLoading';
+import { setToken } from '@/utils/setToken';
+import { useStore } from 'jotai';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 const Logout = () => {
     const router = useRouter();
+    const store = useStore();
 
     const hanleLogoutUser = async ()=>{
         const res = await logoutUserService()
@@ -14,6 +17,7 @@ const Logout = () => {
 
 
         setTimeout(()=>{
+            setToken(store);
             router.push('/auth/login');
         },2000)
     }

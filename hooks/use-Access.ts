@@ -1,47 +1,44 @@
-import { useToken } from '@/hooks/use-Token';
 import { useEffect, useState } from 'react';
 
 export const useAccess = (role: string): any => {
-  const { isUser } = useToken();
-  const [userRoles, setUserRoles] = useState<any>(null);
-  const [res, setRes] = useState(false);
+  // const { isUser } = useToken();
+  // const [res, setRes] = useState<any>(null);
+  // const [userRoles, setUserRoles] = useState<any>(null);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const handleCheck = () => {
-    if (userRoles.length <= 0) {
-      setRes(false);
-    } 
-    else if (role === 'all') {
-      setRes(true);
-    } 
-    else {
-      let allPerms: any[] = [];
+  // const handleCheck = () => {
+  //   if (userRoles !== null && userRoles.length > 0) {
+  //     let allPerms: any[] = [];
 
-      userRoles.map((t: any) => {
-        const perms = t.roleData.permissions;
-        allPerms.push(...perms);
-      });
+  //     userRoles.map((t: any) => {
+  //       const perms = t.roleData.permissions;
+  //       allPerms.push(...perms);
+  //     });
 
-      const checkRole = allPerms.filter(
-        (t) => (t.permissionData.permName === role 
-        || t.permissionData.permName === 'allAccess')
-      )[0];
+  //     let checkRole: any = allPerms.map((t) => t.permissionData.permName);
+  //     if (checkRole.includes('allAccess')) {
+  //       setRes(true);
+  //     }
+  //     else{
+  //       checkRole = checkRole.includes(role);
+  //       setRes(checkRole);
+  //     }
 
-      if (checkRole) setRes(true);
-      else setRes(false);
-    }
-  };
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (isUser?.roles && isUser?.roles?.length > 0) {
-      setUserRoles(isUser.roles);
-    }
-  }, [isUser]);
+  // useEffect(() => {
+  //   if (isUser && isUser.roles) {
+  //     setUserRoles(isUser.roles);
+  //   }
+  // }, [isUser]);
 
-  useEffect(() => {
-    if (userRoles) {
-      handleCheck();
-    }
-  }, [userRoles]);
+  // useEffect(() => {
+  //   if (userRoles !== null) {
+  //     handleCheck();
+  //   }
+  // }, [userRoles]);
 
-  return { res };
+  return { res : true };
 };

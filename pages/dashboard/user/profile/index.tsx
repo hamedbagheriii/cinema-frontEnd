@@ -1,13 +1,15 @@
 import FormikControl from '@/components/formik/formikControl';
 import Layout from '@/components/layout/dashboard/user/layout';
 import { useToast } from '@/hooks/use-toast';
-import { useToken } from '@/hooks/use-Token';
 import { updatePassService, updateUserService } from '@/services/auth/auth';
 import { handleShowAlert } from '@/components/AlertCompo';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { useAtom, useStore } from 'jotai';
+import { TokenData } from '@/atoms/atoms';
+import { setToken } from '@/utils/setToken';
 
 // ! formik dependency =>
 const initalValues = {
@@ -19,7 +21,13 @@ const initalValues = {
   u_password: '',
 };
 
-const onSubmit = async (values: any, action: any, toast: any, router: any) => {
+const onSubmit = async (
+  values: any,
+  action: any,
+  toast: any,
+  router: any,
+  store: any
+) => {
   //  request =>
   try {
     let res: any;
@@ -45,6 +53,7 @@ const onSubmit = async (values: any, action: any, toast: any, router: any) => {
 
       setTimeout(() => {
         router.push('/');
+        setToken(store);
       }, 2000);
     } else {
       handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
@@ -87,10 +96,11 @@ const validationSchema = Yup.object({
 // ! formik dependency <=
 
 const Index = () => {
-  const { isLoading, isUser } = useToken();
+  const [isUser] = useAtom(TokenData);
   const [reinitalValues, setReinitialValues] = useState<any>(null);
   const { toast } = useToast();
   const router = useRouter();
+  const store = useStore();
 
   // ! handle get User data =>
   const handleGetData = async () => {
@@ -117,7 +127,7 @@ const Index = () => {
         <Formik
           initialValues={reinitalValues || initalValues}
           onSubmit={(values, actions) => {
-            onSubmit(values, actions, toast, router);
+            onSubmit(values, actions, toast, router, store);
           }}
           validationSchema={validationSchema}
           enableReinitialize={true}

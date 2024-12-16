@@ -7,6 +7,9 @@ import React, { useEffect, useState } from 'react';
 import LoadingData from '@/utils/loadingData';
 import { handleShowAlert } from '@/components/AlertCompo';
 import { useToast } from '@/hooks/use-toast';
+import { useAtom, useStore } from 'jotai';
+
+
 const Index = () => {
   const [cardData, setCardData] = useState<any>({});
   const [charDataArr, setCharDataArr] = useState<any[]>([]);
@@ -26,7 +29,7 @@ const Index = () => {
       } else {
         handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
       }
-    } catch (error : any) {
+    } catch (error: any) {
       handleShowAlert(
         error.response.data.message || error.message,
         false,
@@ -45,7 +48,6 @@ const Index = () => {
       label: 'درآمد',
     },
   } satisfies ChartConfig;
-
   return (
     <Layout>
       {isLoading ? (

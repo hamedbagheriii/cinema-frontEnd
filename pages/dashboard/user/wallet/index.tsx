@@ -1,7 +1,6 @@
 import FormikControl from '@/components/formik/formikControl';
 import Layout from '@/components/layout/dashboard/user/layout';
 import { useToast } from '@/hooks/use-toast';
-import { useToken } from '@/hooks/use-Token';
 import { incWalletService } from '@/services/wallet/wallet';
 import { handleShowAlert } from '@/components/AlertCompo';
 import { numberWithCommas } from '@/utils/numWCommas';
@@ -9,14 +8,22 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import * as Yup from 'yup';
-
+import { useAtom, useStore } from 'jotai';
+import { TokenData } from '@/atoms/atoms';
+import { setToken } from '@/utils/setToken';
 
 // ! formik dependency =>
 const initalValues = {
   amount: 10000,
 };
 
-const onSubmit = async (values: any, action: any, toast: any, router: any) => {
+const onSubmit = async (
+  values: any,
+  action: any,
+  toast: any,
+  router: any,
+  store: any
+) => {
   //  request =>
   try {
     const res: any = await incWalletService(values);
@@ -25,6 +32,7 @@ const onSubmit = async (values: any, action: any, toast: any, router: any) => {
       handleShowAlert(res.data.message, true, 'success', toast);
       setTimeout(() => {
         router.push('/dashboard/user/profile');
+        setToken(store);
       }, 1500);
     } else {
       handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
@@ -46,11 +54,11 @@ const validationSchema = Yup.object({
 });
 // ! formik dependency <=
 
-
 const Index = () => {
-  const { isUser } = useToken();
+  const [isUser] = useAtom(TokenData);
   const { toast } = useToast();
   const router = useRouter();
+  const store = useStore();
 
   // box actions and styles =>
   const amountBox = [
@@ -91,7 +99,7 @@ const Index = () => {
         <Formik
           initialValues={initalValues}
           onSubmit={(values, actions) => {
-            onSubmit(values, actions, toast, router);
+            onSubmit(values, actions, toast, router, store);
           }}
           validationSchema={validationSchema}
         >
@@ -122,8 +130,10 @@ const Index = () => {
                   ))}
                 </div>
 
-                <hr className='bg-black/20 mt-2 mb-2 h-1 w-11/12
-                max-w-[700px] rounded-full' />
+                <hr
+                  className='bg-black/20 mt-2 mb-2 h-1 w-11/12
+                max-w-[700px] rounded-full'
+                />
                 <FormikControl
                   control='submitBTN'
                   title='پرداخت'

@@ -1,5 +1,6 @@
 import Section from '@/components/layout/main/section';
 import Slider from '@/components/sliderCompo';
+import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -13,6 +14,7 @@ export default function Home({ movies, slider, cinemas }: HomeProps) {
 
   return (
     <div className='w-full flex pt-5   justify-center items-center flex-col'>
+      {}
       {/* slider */}
       <Slider data={slider} />
 

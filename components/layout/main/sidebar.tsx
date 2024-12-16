@@ -6,18 +6,21 @@ import { ConfirmAlert } from '@/components/AlertCompo';
 import { localToken } from '@/utils/localToken';
 import { hasAccess } from '@/utils/hasAccess';
 import AccordionCompo, { accDataProps } from '@/components/accordionCompo';
+import { useAtom } from 'jotai';
+import { TokenData } from '@/atoms/atoms';
 
 interface sidebarProps {
   isSidebar: boolean;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  isUser: any;
 }
-const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
+const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar }) => {
+  const [isUser] = useAtom(TokenData);
   const router = useRouter();
 
   useEffect(() => {
     localToken();
   }, []);
+
 
   const handleChangePath = () => {
     setSidebar(false);
@@ -25,7 +28,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
       router.push('/dashboard/admin');
     }, 700);
   };
-  
+
   // ! data for sidebar
   const data: accDataProps[] = [
     {
@@ -80,7 +83,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
 
         {/* sidebar content */}
         <div dir='ltr' className='flex text-left space-y-6 flex-col w-full '>
-          {isUser && hasAccess('all', isUser.roles) === true ? (
+          {isUser && hasAccess('show', isUser.roles) === true ? (
             <>
               <span
                 onClick={() => handleChangePath()}
@@ -93,7 +96,7 @@ const Sidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
               </span>
               <hr />
             </>
-          ) : isUser && hasAccess('all', isUser.roles) === false ? (
+          ) : isUser && hasAccess('show', isUser.roles) === false ? (
             <AccordionCompo data={data} dir='ltr' />
           ) : (
             <>

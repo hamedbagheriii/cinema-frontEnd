@@ -1,18 +1,21 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import FullName from '@/utils/fullName';
 import { useRouter } from 'next/router';
 import { ConfirmAlert } from '@/components/AlertCompo';
 import { localToken } from '@/utils/localToken';
 import AccordionCompo, { accDataProps } from '@/components/accordionCompo';
 import LinkCompo from '@/components/LinkCompo';
-import { useAccess } from '@/hooks/use-Access';
+import { useAtom } from 'jotai';
+import { TokenData } from '@/atoms/atoms';
+import { hasAccess } from '@/utils/hasAccess';
 
 interface sidebarProps {
   isSidebar: boolean;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  isUser: any;
 }
-const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
+const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar }) => {
+  const [isUser] = useAtom(TokenData);
+  const [data, setData] = useState<accDataProps[]>([]);
   const router = useRouter();
 
   // ! check role =>
@@ -22,88 +25,89 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
   }, []);
 
   // ! data for sidebar
-  const data: accDataProps[] = [
-    {
-      title:
-        useAccess('get-cinema').res ||
-        useAccess('edit-movie').res ||
-        useAccess('get-tickets').res
-          ? 'مدیریت سینما'
-          : false,
-      path: '/dashboard/admin/cinema',
-      icon: 'camera-reels',
-      accordionChild: [
+  useEffect(() => {
+    if (isUser !== null) {
+      setData([
         {
-          title: useAccess('get-cinema').res ? 'مدیریت سینما ها' : false,
-          path: '/dashboard/admin/cinema/cinemaInfo',
+          title: hasAccess('get-cinema' || 'edit-movie' || 'get-tickets', isUser.roles)
+            ? 'مدیریت سینما'
+            : false,
+          path: '/dashboard/admin/cinema',
           icon: 'camera-reels',
+          accordionChild: [
+            {
+              title: hasAccess('get-cinema', isUser.roles) ? 'مدیریت سینما ها' : false,
+              path: '/dashboard/admin/cinema/cinemaInfo',
+              icon: 'camera-reels',
+            },
+            {
+              title: hasAccess('edit-movie', isUser.roles) ? 'مدیریت فیلم ها' : false,
+              path: '/dashboard/admin/cinema/movies',
+              icon: 'film',
+            },
+            {
+              title: hasAccess('get-tickets', isUser.roles) ? 'مدیریت بلیط ها' : false,
+              path: '/dashboard/admin/cinema/tickets',
+              icon: 'ticket-perforated',
+            },
+          ],
         },
         {
-          title: useAccess('edit-movie').res ? 'مدیریت فیلم ها' : false,
-          path: '/dashboard/admin/cinema/movies',
-          icon: 'film',
-        },
-        {
-          title: useAccess('get-tickets').res ? 'مدیریت بلیط ها' : false,
-          path: '/dashboard/admin/cinema/tickets',
-          icon: 'ticket-perforated',
-        },
-      ],
-    },
-    {
-      title:
-        useAccess('get-users').res || useAccess('get-wallets').res
-          ? 'مدیریت کاربران'
-          : false,
-      path: '/dashboard/admin/users',
-      icon: 'people',
-      accordionChild: [
-        {
-          title: useAccess('get-users').res ? 'مشاهده کاربران' : false,
-          path: '/dashboard/admin/users/usersInfo',
+          title: hasAccess('get-users' || 'get-wallets', isUser.roles)
+            ? 'مدیریت کاربران'
+            : false,
+          path: '/dashboard/admin/users',
           icon: 'people',
+          accordionChild: [
+            {
+              title: hasAccess('get-users', isUser.roles) ? 'مشاهده کاربران' : false,
+              path: '/dashboard/admin/users/usersInfo',
+              icon: 'people',
+            },
+            {
+              title: hasAccess('get-wallets', isUser.roles) ? 'مدیریت کیف پول ها' : false,
+              path: '/dashboard/admin/users/wallets',
+              icon: 'wallet2',
+            },
+          ],
         },
         {
-          title: useAccess('get-wallets').res ? 'مدیریت کیف پول ها' : false,
-          path: '/dashboard/admin/users/wallets',
-          icon: 'wallet2',
+          title: hasAccess('get-role' && 'get-perm', isUser.roles)
+            ? 'مدیریت نقش ها'
+            : false,
+          path: '/dashboard/admin/roles',
+          icon: 'shield-shaded',
+          accordionChild: [
+            {
+              title: hasAccess('get-role', isUser.roles) ? 'مشاهده نقش ها' : false,
+              path: '/dashboard/admin/roles/rolesInfo',
+              icon: 'person-vcard',
+            },
+            {
+              title: hasAccess('get-perm', isUser.roles) ? 'مشاهده مجوز ها' : false,
+              path: '/dashboard/admin/roles/permissions',
+              icon: 'shield-lock-fill',
+            },
+          ],
         },
-      ],
-    },
-    {
-      title:
-        useAccess('get-role').res && useAccess('get-perm').res ? 'مدیریت نقش ها' : false,
-      path: '/dashboard/admin/roles',
-      icon: 'shield-shaded',
-      accordionChild: [
-        {
-          title: useAccess('get-role').res ? 'مشاهده نقش ها' : false,
-          path: '/dashboard/admin/roles/rolesInfo',
-          icon: 'person-vcard',
-        },
-        {
-          title: useAccess('get-perm').res ? 'مشاهده مجوز ها' : false,
-          path: '/dashboard/admin/roles/permissions',
-          icon: 'shield-lock-fill',
-        },
-      ],
-    },
-  ];
+      ]);
+    }
+  }, [isUser]);
 
   return (
     <>
       {/* sidebar layer */}
       <div
         className={`fixed top-0 left-0 z-10 h-dvh
-        bg-black/30 sm:hidden sidebarLyer w-full ${isSidebar ? 'active' : ''}`}
+      bg-black/30 sm:hidden sidebarLyer w-full ${isSidebar ? 'active' : ''}`}
         onClick={() => setSidebar(false)}
       ></div>
 
       {/* sidebar  */}
       <div
         className={`fixed transition-all isSidebar duration-300  
-        top-0 left-0 ${isSidebar ? 'active' : ''} sm:hidden  bg-red-700 shadow-lg 
-      shadow-red-800 z-10 flex px-6 flex-col`}
+      top-0 left-0 ${isSidebar ? 'active' : ''} sm:hidden  bg-red-700 shadow-lg 
+    shadow-red-800 z-10 flex px-6 flex-col`}
       >
         {/* sidebar header */}
         <div
@@ -113,7 +117,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
         >
           <i
             className='bi bi-x-lg cursor-pointer hover:bg-black/50 transition-all duration-150 px-2
-          pt-2 pb-1 rounded-md'
+        pt-2 pb-1 rounded-md'
             onClick={() => setSidebar(false)}
           ></i>
           {isUser && <FullName icon={true} isUser={isUser} className='pt-1' />}
@@ -146,7 +150,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar, isUser }) => {
             >
               <div
                 className='flex items-center px-2 mt-2 transition-all duration-150 rounded-md
-             font-normal justify-center pb-2 pt-2 hover:bg-black/80'
+           font-normal justify-center pb-2 pt-2 hover:bg-black/80'
               >
                 <i className='bi bi-box-arrow-right me-2 mt-0.5'></i>
                 <span>خروج از حساب</span>

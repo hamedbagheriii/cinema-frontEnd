@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { useToken } from '@/hooks/use-Token';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,9 +16,11 @@ import LinkCompo, { handleCheckLink } from '@/components/LinkCompo';
 import { ConfirmAlert } from '@/components/AlertCompo';
 import { hasAccess } from '@/utils/hasAccess';
 import AdminSidebar from '../dashboard/admin/AdminSidebar';
+import { useAtom } from 'jotai';
+import { TokenData } from '@/atoms/atoms';
 
 const Header = () => {
-  const { isUser } = useToken();
+  const [isUser] = useAtom(TokenData)
   const router = useRouter();
   const [isSidebar, setSidebar] = useState(false);
 
@@ -78,7 +79,7 @@ const Header = () => {
             <FullName isUser={isUser} icon={true} />
             <hr />
 
-            {isUser && hasAccess('all', isUser.roles) === true ? (
+            {isUser && hasAccess('show', isUser.roles) === true ? (
               <LinkCompo
                 title='داشبورد مدیریت'
                 iconClass='person-gear me-2'
@@ -146,10 +147,10 @@ const Header = () => {
 
       {/* sidebar */}
       {router.pathname.startsWith('/dashboard') && isUser &&
-      hasAccess('all', isUser.roles) === true ? (
+      hasAccess('show', isUser.roles) === true ? (
         <AdminSidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
       ) : (
-        <Sidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
+        <Sidebar isSidebar={isSidebar} setSidebar={setSidebar}  />
       )}
     </div>
   );

@@ -1,3 +1,4 @@
+import { TokenData } from '@/atoms/atoms';
 import Layout from '@/components/layout/dashboard/user/layout';
 import {
   Accordion,
@@ -5,13 +6,13 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '@/components/ui/accordion';
-import { useToken } from '@/hooks/use-Token';
 import { seatProps } from '@/pages/event/[...eventID]';
 import { convertDate } from '@/utils/convertDate';
+import { useAtom } from 'jotai';
 import React, { useEffect, useState } from 'react';
 
 const Index = () => {
-  const { isUser } = useToken();
+  const [ isUser ] = useAtom(TokenData)
   const [tickets, setTieckets] = useState<any[]>([]);
 
   // ! get tickets data =>

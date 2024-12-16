@@ -26,7 +26,7 @@ interface accordionProps {
 
 const AccordionCompo: FC<accordionProps> = ({ data, bgColor = '', dir = 'rtl' }) => {
   const router = useRouter();
-
+  
   return (
     <Accordion type='single' collapsible>
       {data.map((t: accDataProps, i: number) =>

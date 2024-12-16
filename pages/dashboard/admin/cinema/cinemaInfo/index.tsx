@@ -17,6 +17,7 @@ const Index = () => {
   const { toast } = useToast();
   const router = useRouter();
 
+
   // ! handle get cinemas =>
   const handleGetCinemas = async () => {
     setIsLoading(true);
@@ -63,6 +64,7 @@ const Index = () => {
       },
     });
   };
+  
 
   useEffect(() => {
     handleGetCinemas();
