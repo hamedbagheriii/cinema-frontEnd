@@ -165,7 +165,7 @@ const Index = () => {
             handleDeteleData={
               hasAccess('delete-tickets', isUser.roles) ? handleDeteleData : null
             }
-            AdditionData={AdditionData}
+            AdditionData={hasAccess('get-tickets', isUser.roles) ? AdditionData : null}
             target='بلیط'
             rowData={row}
             targetKey='ticket'

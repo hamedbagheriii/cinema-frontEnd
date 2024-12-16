@@ -24,7 +24,7 @@ const Action: FC<actionProps> = ({
   const [isUser] = useAtom(TokenData);
   const classStyle = ' text-[16px] cursor-pointer';
 
-  return (
+  return handleDeteleData || handleEditData || AdditionData ? (
     <div className='flex px-2 flex-row justify-center gap-4 items-center'>
       {handleDeteleData && (
         <span>
@@ -62,7 +62,7 @@ const Action: FC<actionProps> = ({
           }
         })}
     </div>
-  );
+  ) : '-' ;
 };
 
 export default Action;

@@ -22,7 +22,6 @@ const Index = () => {
   const router = useRouter();
   const [isUser] = useAtom(TokenData);
 
-
   // ! handle get cinemas =>
   const handleGetCinemas = async () => {
     setIsLoading(true);
@@ -64,12 +63,11 @@ const Index = () => {
           province: rowData.province,
           city: rowData.city,
           address: rowData.address,
-          addImage : false
+          addImage: false,
         }),
       },
     });
   };
-  
 
   useEffect(() => {
     handleGetCinemas();
@@ -80,7 +78,7 @@ const Index = () => {
     {
       title: 'سالن ها',
       color: 'text-blue-800',
-      access : ('add-hall' && 'edit-hall'),
+      access: 'add-hall' && 'edit-hall',
       icon: 'door-open',
       function: (rowData: any) => {
         router.push({
@@ -98,7 +96,7 @@ const Index = () => {
     {
       title: 'فیلم ها',
       color: 'text-purple-500',
-      access : 'add-movie-cinema',
+      access: 'add-movie-cinema',
       icon: 'film',
       function: (rowData: any) => {
         router.push({
@@ -141,11 +139,21 @@ const Index = () => {
       element: (row: any) => {
         return (
           <Action
-            handleDeteleData={hasAccess('delete-cinema', isUser.roles) ? handleDeteleData : null}
-            handleEditData={hasAccess('edit-cinema', isUser.roles) ? handleEditData : null}
+            handleDeteleData={
+              hasAccess('delete-cinema', isUser.roles) ? handleDeteleData : null
+            }
+            handleEditData={
+              hasAccess('edit-cinema', isUser.roles) ? handleEditData : null
+            }
             target='سینما'
             rowData={row}
-            AdditionData={AdditionData}
+            AdditionData={
+              (hasAccess('add-hall', isUser.roles) &&
+                hasAccess('edit-hall', isUser.roles)) ||
+              hasAccess('add-movie-cinema', isUser.roles)
+                ? AdditionData
+                : null
+            }
           />
         );
       },
