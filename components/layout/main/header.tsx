@@ -148,7 +148,7 @@ const Header = () => {
       {/* sidebar */}
       {router.pathname.startsWith('/dashboard') && isUser &&
       hasAccess('show', isUser.roles) === true ? (
-        <AdminSidebar isSidebar={isSidebar} setSidebar={setSidebar} isUser={isUser} />
+        <AdminSidebar isSidebar={isSidebar} setSidebar={setSidebar}  />
       ) : (
         <Sidebar isSidebar={isSidebar} setSidebar={setSidebar}  />
       )}
