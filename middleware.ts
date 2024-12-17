@@ -128,14 +128,14 @@ export const middleware = async (req: NextRequest) => {
     ) {
       return NextResponse.redirect(new URL('/dashboard/user/profile', req.url));
     }
+  } else if (req.nextUrl.pathname.startsWith('/event') && !isLogin) {
+    return NextResponse.redirect(new URL('/auth/login', req.url));
   } else if (
     isLogin &&
     req.nextUrl.pathname.startsWith('/auth') &&
     !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
     return NextResponse.redirect(new URL('/', req.url));
-  } else if (req.nextUrl.pathname.startsWith('/event') && !isLogin) {
-    return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 };
 
