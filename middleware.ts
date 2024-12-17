@@ -3,7 +3,11 @@ import { checkUserService } from './services/auth/auth';
 import { hasAccess } from './utils/hasAccess';
 
 export const middleware = async (req: NextRequest) => {
-  const checkToken = await checkUserService(req.cookies);
+  let checkToken: any;
+  const getData = async () => {
+    checkToken = await checkUserService(req.cookies);
+  };
+  await getData();
 
   if (!checkToken.success && req.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
@@ -131,8 +135,11 @@ export const middleware = async (req: NextRequest) => {
     !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
     return NextResponse.redirect(new URL('/dashboard/user/profile', req.url));
-  } else if (!checkToken.success && req.nextUrl.pathname.startsWith('/event')) {
-    return NextResponse.redirect(new URL('/auth/login', req.url));
+  } else if (req.nextUrl.pathname.startsWith('/event')) {
+    await getData();
+    if (!checkToken.success) {
+      return NextResponse.redirect(new URL('/auth/login', req.url));
+    }
   }
 };
 
