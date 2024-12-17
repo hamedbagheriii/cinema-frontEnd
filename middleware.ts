@@ -4,7 +4,6 @@ import { hasAccess } from './utils/hasAccess';
 
 export const middleware = async (req: NextRequest) => {
   const checkToken = await checkUserService(req.cookies);
-  console.log(checkToken.success);
   
 
   if (!checkToken.success && req.nextUrl.pathname.startsWith('/dashboard')) {
@@ -128,12 +127,14 @@ export const middleware = async (req: NextRequest) => {
       return NextResponse.redirect(new URL('/dashboard/user/profile', req.url));
     }
   } else if (
-    checkToken.success &&
+    checkToken.success === true &&
     req.nextUrl.pathname.startsWith('/auth') &&
     !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
+    console.log('vard auth');
     return NextResponse.redirect(new URL('/', req.url));
-  } else if ((!checkToken.success) && req.nextUrl.pathname.startsWith('/event')) {
+  } else if (checkToken.success === false && req.nextUrl.pathname.startsWith('/event')) {
+    console.log('vard event');
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 };
