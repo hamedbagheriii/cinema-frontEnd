@@ -4,9 +4,18 @@ import { hasAccess } from './utils/hasAccess';
 
 export const middleware = async (req: NextRequest) => {
   let isLogin = false;
-  const checkToken = await checkUserService(req.cookies);
-  if (checkToken.success) isLogin = true;
-  else isLogin = false;
+  let checkToken: any;
+
+  const getData = async () => {
+    checkToken = await checkUserService(req.cookies);
+    if (checkToken.success) isLogin = true;
+    else isLogin = false;
+  };
+  await getData();
+
+  if (req.nextUrl.pathname.startsWith('/auth')) {
+    await getData();
+  }
 
   if (!isLogin && req.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
@@ -128,14 +137,14 @@ export const middleware = async (req: NextRequest) => {
     ) {
       return NextResponse.redirect(new URL('/dashboard/user/profile', req.url));
     }
-  } else if (req.nextUrl.pathname.startsWith('/event') && !isLogin) {
-    return NextResponse.redirect(new URL('/auth/login', req.url));
   } else if (
     isLogin &&
     req.nextUrl.pathname.startsWith('/auth') &&
     !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
     return NextResponse.redirect(new URL('/', req.url));
+  } else if (req.nextUrl.pathname.startsWith('/event') && !isLogin) {
+    return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 };
 
