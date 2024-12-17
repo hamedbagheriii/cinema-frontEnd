@@ -3,12 +3,14 @@ import { checkUserService } from './services/auth/auth';
 import { hasAccess } from './utils/hasAccess';
 
 export const middleware = async (req: NextRequest) => {
+  let isLogin = false;
   const checkToken = await checkUserService(req.cookies);
-  
+  if (checkToken.success) isLogin = true;
+  else isLogin = false;
 
-  if (!checkToken.success && req.nextUrl.pathname.startsWith('/dashboard')) {
+  if (!isLogin && req.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
-  } else if (checkToken.success && req.nextUrl.pathname.startsWith('/dashboard/admin')) {
+  } else if (isLogin && req.nextUrl.pathname.startsWith('/dashboard/admin')) {
     const URLS = [
       {
         path: '/cinema/cinemaInfo',
@@ -114,7 +116,7 @@ export const middleware = async (req: NextRequest) => {
     if (data !== undefined && !data.role) {
       return NextResponse.redirect(new URL('/dashboard/admin', req.url));
     }
-  } else if (checkToken.success && req.nextUrl.pathname.startsWith('/dashboard')) {
+  } else if (isLogin && req.nextUrl.pathname.startsWith('/dashboard')) {
     if (
       req.nextUrl.pathname.startsWith('/dashboard/user') &&
       hasAccess('show', checkToken.data.roles) === true
@@ -127,21 +129,23 @@ export const middleware = async (req: NextRequest) => {
       return NextResponse.redirect(new URL('/dashboard/user/profile', req.url));
     }
   } else if (
-    checkToken.success &&
+    isLogin &&
     req.nextUrl.pathname.startsWith('/auth') &&
     !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
     return NextResponse.redirect(new URL('/', req.url));
-  } else if (!checkToken.success && req.nextUrl.pathname.startsWith('/event')) {
+  } else if (req.nextUrl.pathname.startsWith('/event') && !isLogin) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 };
 
 export const config = {
   matcher: [
-    '/:path*',
     '/dashboard/:path*',
     '/auth/:path*',
     '/event/:path*',
+    '/',
+    '/movie/:path*',
+    '/cinema/:path*',
   ],
 };
