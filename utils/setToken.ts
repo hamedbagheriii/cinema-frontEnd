@@ -1,5 +1,6 @@
 import { TokenData } from '@/atoms/atoms';
 import { getUserDataService } from '@/services/auth/auth';
+import { Cookies } from '@/services/service';
 
 export const setToken = async (store : any) => {
   const res = await getUserDataService();
@@ -9,5 +10,7 @@ export const setToken = async (store : any) => {
     
   } else {
     store.set(TokenData, null);
+    Cookies.remove('userToken');
+    localStorage.removeItem('userToken');
   }
 };

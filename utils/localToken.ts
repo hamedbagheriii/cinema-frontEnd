@@ -8,5 +8,6 @@ export const localToken = () => {
     }
     else{
         Cookies.remove('userToken');
+        
     }
 }
