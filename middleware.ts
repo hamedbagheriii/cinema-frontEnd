@@ -138,11 +138,9 @@ export const middleware = async (req: NextRequest) => {
 
 export const config = {
   matcher: [
-    '/',
+    '/:path*',
     '/dashboard/:path*',
     '/auth/:path*',
     '/event/:path*',
-    '/movie/:path*',
-    '/cinema/:path*',
   ],
 };
