@@ -128,8 +128,8 @@ export const middleware = async (req: NextRequest) => {
     }
   } else if (
     checkToken.success === true &&
-    req.nextUrl.pathname.startsWith('/auth') &&
-    !req.nextUrl.pathname.startsWith('/auth/logout')
+    req.nextUrl.pathname == ('/auth/login') ||
+    req.nextUrl.pathname == ('/auth/register') 
   ) {
     console.log('vard auth');
     return NextResponse.redirect(new URL('/', req.url));
