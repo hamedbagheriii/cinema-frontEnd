@@ -7,28 +7,25 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 const Logout = () => {
-    const router = useRouter();
-    const store = useStore();
+  const router = useRouter();
+  const store = useStore();
 
-    const hanleLogoutUser = async ()=>{
-        const res = await logoutUserService()
-        localStorage.removeItem('userToken');
-        Cookies.remove('userToken');
+  const hanleLogoutUser = async () => {
+    const res = await logoutUserService();
+    localStorage.removeItem('userToken');
+    Cookies.remove('userToken');
 
+    setTimeout(() => {
+      router.push('/auth/login');
+      setToken(store);
+    }, 2000);
+  };
 
-        setTimeout(()=>{
-            router.push('/auth/login');
-            setToken(store);
-        },2000)
-    }
+  useEffect(() => {
+    hanleLogoutUser();
+  }, []);
 
-    useEffect(() => {
-        hanleLogoutUser()
-    }, []);
-    
-    return (
-        <PageLoading title='درحال خروج از ' target='حساب کاربری' />
-    );
-}
+  return <PageLoading title='درحال خروج از ' target='حساب کاربری' />;
+};
 
 export default Logout;

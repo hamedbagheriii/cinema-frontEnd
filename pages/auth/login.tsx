@@ -16,14 +16,20 @@ import { setToken } from '@/utils/setToken';
 const initalvalues = {
   email: '',
   password: '',
-  rememberMe:true
+  rememberMe: true,
 };
 
-const onSubmit = async (values: any, actions: any, toast: any, router: any , store : any) => {
+const onSubmit = async (
+  values: any,
+  actions: any,
+  toast: any,
+  router: any,
+  store: any
+) => {
   try {
-    const res : any = await loginUserService(values);
+    const res: any = await loginUserService(values);
     if (res.status === 200) {
-      localStorage.setItem("userToken", res.data.token);
+      localStorage.setItem('userToken', res.data.token);
       Cookies.set('userToken', res.data.token);
 
       handleShowAlert(
@@ -32,27 +38,24 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any , sto
         'success',
         toast
       );
-      
+
       setTimeout(() => {
         router.push('/');
+        router.refresh();
         setToken(store);
       }, 3000);
     } else {
       Cookies.remove('userToken');
       localStorage.removeItem('userToken');
 
-      handleShowAlert(res.response.data.message || res.message,
-      false, 'error', toast);
+      handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
     }
-  } 
-  catch (error: any) {
-    handleShowAlert(error.response.data.message ||
-    error.message, false, 'error', toast);
+  } catch (error: any) {
+    handleShowAlert(error.response.data.message || error.message, false, 'error', toast);
 
     localStorage.removeItem('userToken');
     Cookies.remove('userToken');
-  }
-  finally {
+  } finally {
     setTimeout(() => {
       actions.setSubmitting(false);
     }, 1000);
@@ -74,15 +77,14 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const store = useStore();
-
-
+  
   return (
     <Layout title={'ورود به حساب'} icon={'bi bi-person-circle'}>
       <>
         <Formik
           initialValues={initalvalues}
           onSubmit={(values, actions) => {
-            onSubmit(values, actions, toast, router , store);
+            onSubmit(values, actions, toast, router, store);
           }}
           validationSchema={validationSchema}
         >
