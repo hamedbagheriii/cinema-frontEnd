@@ -51,7 +51,7 @@ const FormikFile: FC<fileProps> = ({
                 ref={ref}
                 id={name}
                 type='file'
-                className='h-10 w-full  absolute z-50 
+                className='h-10 w-full  absolute z-10 
                 font-bold text-[14px] placeholder:text-[14px]'
                 {...form.field}
                 value={undefined}
@@ -59,12 +59,12 @@ const FormikFile: FC<fileProps> = ({
               />
               <span
                 onClick={(e) => handleChange(e, form)}
-                className='h-10 w-full border-2 rounded-md absolute z-50 border-black/80 
+                className='h-10 w-full border-2 rounded-md absolute z-20 border-black/80 
                bg-white flex justify-center cursor-pointer items-center text-[14px] '
               >
                 {form.field.value ? (
                   <div className='cursor-pointer items-center w-full h-full justify-around flex'>
-                    <span>{form.field.value.name}</span>
+                    <span>{form.field.value.name.slice(0,10)}</span>
                     <hr className='w-[2px] bg-black h-full ' />
                     <span className='text-red-700 text-center'>
                       برای حذف عکس اینجا کلیک کنید !

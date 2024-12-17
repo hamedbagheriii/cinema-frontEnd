@@ -102,7 +102,7 @@ const HallPath = () => {
     </div>
   ) : (
     <AddHeaderCompo
-      className='max-w-[1050px]'
+      className='max-w-[1055px]'
       dec={`سینما : ${JSON.parse(data).cinemaName}`}
       title='فیلم ها'
       icon='film'
@@ -141,7 +141,7 @@ const HallPath = () => {
         </div>
 
         {/* show movies */}
-        <div className='w-full mx-auto flex flex-wrap gap-2 gap-y-6 justify-evenly items-center'>
+        <div className='w-full mx-auto flex flex-wrap gap-2 px-4 sm:px-0 gap-y-6 justify-evenly items-center'>
           {movies.map((movie: any) => (
             <div
               key={movie.id}

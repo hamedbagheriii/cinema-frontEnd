@@ -116,7 +116,7 @@ const AdminSidebar: FC<sidebarProps> = ({ isSidebar, setSidebar }) => {
 
       {/* sidebar  */}
       <div
-        className={`fixed transition-all isSidebar duration-300  
+        className={`fixed transition-all isSidebar min-w-[70%] duration-300  
       top-0 left-0 ${isSidebar ? 'active' : ''} sm:hidden  bg-red-700 shadow-lg 
     shadow-red-800 z-10 flex px-6 flex-col`}
       >

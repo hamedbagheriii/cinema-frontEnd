@@ -4,7 +4,6 @@ import { hasAccess } from './utils/hasAccess';
 
 export const middleware = async (req: NextRequest) => {
   const checkToken = await checkUserService(req.cookies);
-  
 
   if (!checkToken.success && req.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
@@ -127,25 +126,16 @@ export const middleware = async (req: NextRequest) => {
       return NextResponse.redirect(new URL('/dashboard/user/profile', req.url));
     }
   } else if (
-    checkToken.success === true &&
+    checkToken.success &&
     req.nextUrl.pathname.startsWith('/auth') &&
     !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
     return NextResponse.redirect(new URL('/', req.url));
-  } else if (checkToken.success === false && req.nextUrl.pathname.startsWith('/event')) {
-    const check = await checkUserService(req.cookies)
-    if (check.success === false) {
-      return NextResponse.redirect(new URL('/auth/login', req.url));
-    }
+  } else if (!checkToken.success && req.nextUrl.pathname.startsWith('/event')) {
+    return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 };
 
 export const config = {
-  matcher: [
-    '/dashboard/:path*',
-    '/auth/:path*',
-    '/event/:path*',
-    '/movie/:path*',
-    '/cinema/:path*',
-  ],
+  matcher: ['/dashboard/:path*', '/auth/:path*', '/event/:path*'],
 };

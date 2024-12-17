@@ -5,14 +5,12 @@ export default function Custom404() {
   const router = useRouter();
 
   return (
-    <div className='w-full flex-col h-screen flex justify-center items-center'>
+    <div dir='rtl' className='w-full flex-col h-screen flex justify-center items-center'>
       <span className='text-black text-[70px] font-bold'>
-        {' '}
         - <span className='text-red-700'>404</span> -
       </span>
-      <span className='text-red-700 text-[25px] font-bold '>
-        {' '}
-        ! متاسفانه صفحه ی مورد نظر وجود ندارد
+      <span className='text-red-700 text-center text-[25px] font-bold '>
+         متاسفانه صفحه ی مورد نظر وجود ندارد <span>!</span>
       </span>
       <Button
         onClick={() => router.push('/')}

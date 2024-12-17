@@ -11,10 +11,10 @@ const AddHeaderCompo: FC<addHeaderProps> = ({ title, icon, children, dec = null 
   return (
     <div
       dir='rtl'
-      className='w-full mt-4 flex flex-col items-center justify-center px-4 py-5'
+      className='w-full mt-4 flex flex-col items-center justify-center sm:px-4 py-5'
     >
       <div
-        className={`w-10/12 max-w-[600px] h-full  py-4 rounded-lg flex flex-col 
+        className={`w-11/12 max-w-[600px] h-full py-4 rounded-lg flex flex-col 
         items-center justify-center border-2 border-black/80 ${className}`}
       >
         <div className='w-full flex flex-col items-center justify-evenly '>
