@@ -17,8 +17,8 @@ const Logout = () => {
 
 
         setTimeout(()=>{
-            setToken(store);
             router.push('/auth/login');
+            setToken(store);
         },2000)
     }
 
