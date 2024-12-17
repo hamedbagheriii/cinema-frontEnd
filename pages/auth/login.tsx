@@ -41,7 +41,6 @@ const onSubmit = async (
 
       setTimeout(() => {
         router.push('/');
-        router.refresh();
         setToken(store);
       }, 3000);
     } else {

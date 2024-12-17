@@ -4,6 +4,7 @@ import { hasAccess } from './utils/hasAccess';
 
 export const middleware = async (req: NextRequest) => {
   const checkToken = await checkUserService(req.cookies);
+  console.log(checkToken.success);
   
 
   if (!checkToken.success && req.nextUrl.pathname.startsWith('/dashboard')) {
@@ -138,5 +139,12 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/auth/:path*', '/event/:path*'],
+  matcher: [
+    '/dashboard/:path*',
+    '/auth/:path*',
+    '/event/:path*',
+    '/',
+    '/movie/:path*',
+    '/cinema/:path*',
+  ],
 };

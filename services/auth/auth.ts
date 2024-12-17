@@ -1,4 +1,6 @@
+import { useAtom } from 'jotai';
 import { baseURL, service } from '../service';
+import { TokenData } from '@/atoms/atoms';
 
 export const loginUserService = async (data: any) => {
   return await service('/auth/sign-in', 'post', data);
