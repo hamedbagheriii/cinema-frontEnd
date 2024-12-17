@@ -25,6 +25,7 @@ const onSubmit = async (values: any, actions: any, toast: any, router: any , sto
     if (res.status === 200) {
       localStorage.setItem("userToken", res.data.token);
       Cookies.set('userToken', res.data.token);
+      setToken(store);
 
       handleShowAlert(
         'شما با موفقیت وارد حساب کاربری خود شدید !',
