@@ -128,14 +128,15 @@ export const middleware = async (req: NextRequest) => {
     }
   } else if (
     checkToken.success === true &&
-    req.nextUrl.pathname == ('/auth/login') ||
-    req.nextUrl.pathname == ('/auth/register') 
+    req.nextUrl.pathname.startsWith('/auth') &&
+    !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
-    console.log('vard auth');
     return NextResponse.redirect(new URL('/', req.url));
   } else if (checkToken.success === false && req.nextUrl.pathname.startsWith('/event')) {
-    console.log('vard event');
-    return NextResponse.redirect(new URL('/auth/login', req.url));
+    const check = await checkUserService(req.cookies)
+    if (check.success === false) {
+      return NextResponse.redirect(new URL('/auth/login', req.url));
+    }
   }
 };
 
@@ -144,7 +145,6 @@ export const config = {
     '/dashboard/:path*',
     '/auth/:path*',
     '/event/:path*',
-    '/',
     '/movie/:path*',
     '/cinema/:path*',
   ],
