@@ -146,6 +146,6 @@ export const config = {
     '/auth/:path*',
     '/event/:path*',
     '/movie/:path*',
-    'cinema/:path*',
+    '/cinema/:path*',
   ],
 };
