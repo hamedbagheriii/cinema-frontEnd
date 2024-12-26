@@ -2,6 +2,7 @@ import { TokenData } from '@/atoms/atoms';
 import Footer from '@/components/layout/main/footer';
 import Header from '@/components/layout/main/header';
 import { Toaster } from '@/components/ui/toaster';
+import { Cookies } from '@/services/service';
 import '@/styles/globals.css';
 import { localToken } from '@/utils/localToken';
 import { setToken } from '@/utils/setToken';
@@ -15,9 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
   const store = useStore();
   const [isUser] = useAtom(TokenData);
 
-  useEffect(() => {
-    localToken()
-  }, []);
+  // useEffect(() => {
+  //   localToken()
+  //   console.log(Cookies.get('userToken'))
+    
+  // }, []);
 
   useEffect(() => {
     if (isUser === null) {

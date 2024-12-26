@@ -1,5 +1,5 @@
 import Layout from '@/components/layout/auth/layout';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import FormikControl from '@/components/formik/formikControl';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ import { Cookies } from '@/services/service';
 import { handleShowAlert } from '@/components/AlertCompo';
 import { useStore } from 'jotai';
 import { setToken } from '@/utils/setToken';
+import { localToken } from '@/utils/localToken';
 
 // ! formik dependencies
 const initalvalues = {
@@ -78,7 +79,7 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const store = useStore();
-  
+
   return (
     <Layout title={'ورود به حساب'} icon={'bi bi-person-circle'}>
       <>

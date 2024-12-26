@@ -131,7 +131,11 @@ export const middleware = async (req: NextRequest) => {
     !req.nextUrl.pathname.startsWith('/auth/logout')
   ) {
     return NextResponse.redirect(new URL('/', req.url));
-  } else if (!checkToken.success && req.nextUrl.pathname.startsWith('/event')) {
+  } else if (
+    !checkToken.success &&
+    req.cookies.get('userToken') !== undefined &&
+    req.nextUrl.pathname.startsWith('/event')
+  ) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 };
