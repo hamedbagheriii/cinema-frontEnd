@@ -17,7 +17,10 @@ const Logout = () => {
     setToken(store);
 
     setTimeout(() => {
-      router.push('/auth/login');
+      router.push('/auth/login')
+      setTimeout(() => {
+        router.refresh();
+      }, 200);
     }, 2000);
   };
 

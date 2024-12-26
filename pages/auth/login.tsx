@@ -43,6 +43,7 @@ const onSubmit = async (
 
       setTimeout(() => {
         router.push('/');
+        router.refresh();
       }, 3000);
     } else {
       Cookies.remove('userToken');
@@ -79,7 +80,6 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const store = useStore();
-
   return (
     <Layout title={'ورود به حساب'} icon={'bi bi-person-circle'}>
       <>
