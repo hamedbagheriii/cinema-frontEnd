@@ -17,27 +17,29 @@ import React, { FC, useEffect, useState } from 'react';
 import { useAtom, useStore } from 'jotai';
 import { TokenData } from '@/atoms/atoms';
 import { setToken } from '@/utils/setToken';
+import { getCinemasService } from '@/services/dashboard/cinema/cinema';
+import { getMovieService, getReservedSeatsService } from '@/services/movie/movie';
+import LoadingData from '@/utils/loadingData';
 
-interface eventProps {
-  movieData: any;
-  cinemaData: any;
-  reservedSeats: any;
-}
 export interface seatProps {
   selectedSeats: number[];
   row: number;
 }
-const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
+const Event = () => {
   const [isUser] = useAtom(TokenData);
   const router = useRouter();
   const { toast } = useToast();
   const [rows, setRowsArr] = useState<number[]>([]); // for rows
   const [seat, setSeatsArr] = useState<number[]>([]); // for seats
+  const [movieData, setMovieData] = useState<any>({});
+  const [cinemaData, setCinemaData] = useState<any>({});
+  const [reservedSeats, setReservedSeats] = useState<any>({});
   const [hallData, setHallData] = useState<any>([]);
   const [selectSeats, setSelectSeats] = useState<seatProps[]>([]);
   const [alert, setAlert] = useState<boolean>(false);
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
-  const { hall, date, time, cinema, eventID } = router.query;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { hall, date, time, cinema, eventID }: any = router.query;
   const store = useStore();
 
   const seatsCircle: any[] = [
@@ -47,10 +49,23 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
   ];
 
   //   ! handle hall data
-  const handleHallData = () => {
-    const Data = cinemaData.halls.filter((t: any) => t.id == hall);
+  const handleAllData = async () => {
+    const cinemaReq = await getCinemasService(cinema);
+    const movieReq = await getMovieService(eventID[0]);
+    const reservedReq = await getReservedSeatsService(
+      eventID[0],
+      cinema,
+      hall,
+      date,
+      time
+    );
+    const Data = cinemaReq.data.data.halls.filter((t: any) => t.id == hall);
 
+    setCinemaData(cinemaReq.data.data);
+    setMovieData(movieReq.data.data);
+    setReservedSeats(reservedReq.data.data);
     setHallData(Data[0]);
+    setIsLoading(false);
   };
 
   //   ! handle Rows and seats
@@ -171,22 +186,25 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
         setTimeout(() => {
           setIsSubmiting(false);
         }, 3000);
-      } 
-      else {
+      } else {
         handleShowAlert('بلیط به دلیل همکار بودن شما لغو شد !', false, 'error', toast);
       }
     }
   };
 
   useEffect(() => {
-    handleHallData();
-  }, []);
+    if (eventID?.length > 0) {
+      handleAllData();
+    }
+  }, [eventID]);
 
   useEffect(() => {
     handleRows();
   }, [hallData]);
 
-  return (
+  return isLoading ? (
+    <LoadingData />
+  ) : (
     <div
       dir='rtl'
       className='w-full flex pt-5 flex-col  items-center px-4  justify-start'
@@ -408,26 +426,3 @@ const Event: FC<eventProps> = ({ movieData, cinemaData, reservedSeats }) => {
 };
 
 export default Event;
-
-export const getServerSideProps = async (props: any) => {
-  const movieURL = process.env.NEXT_PUBLIC_MOVIES_URL;
-  const cinemaURL = process.env.NEXT_PUBLIC_CINEMA_URL;
-
-  const movieData = await fetch(`${movieURL}/${props.query.eventID[0]}`).then((res) =>
-    res.json()
-  );
-  const cinemaData = await fetch(`${cinemaURL}/${props.query.cinema}`).then((res) =>
-    res.json()
-  );
-  const reservedSeats = await fetch(
-    `${movieURL}/resarvedSeats/${props.query.eventID[0]}/${props.query.cinema}/${props.query.hall}/${props.query.date}/${props.query.time}`
-  ).then((res) => res.json());
-
-  return {
-    props: {
-      movieData: movieData.data,
-      cinemaData: cinemaData.data,
-      reservedSeats: reservedSeats.data,
-    },
-  };
-};
