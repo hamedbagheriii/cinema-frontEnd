@@ -4,6 +4,8 @@ import { hasAccess } from './utils/hasAccess';
 
 export const middleware = async (req: NextRequest) => {
   const checkToken = await checkUserService(req.cookies);
+  console.log(req.cookies.get('userToken'))
+  console.log('c1')
 
   if (!checkToken.success && req.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
@@ -136,6 +138,9 @@ export const middleware = async (req: NextRequest) => {
     req.cookies.get('userToken') === undefined &&
     req.nextUrl.pathname.startsWith('/event')
   ) {
+    console.log(req.cookies.get('userToken'))
+    console.log('c2')
+    
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 };
