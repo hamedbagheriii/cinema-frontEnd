@@ -14,10 +14,10 @@ const Logout = () => {
     const res = await logoutUserService();
     localStorage.removeItem('userToken');
     Cookies.remove('userToken');
+    setToken(store);
 
     setTimeout(() => {
       router.push('/auth/login');
-      setToken(store);
     }, 2000);
   };
 

@@ -10,7 +10,7 @@ export const setToken = async (store : any) => {
     
   } else {
     store.set(TokenData, null);
-    Cookies.remove('userToken');
     localStorage.removeItem('userToken');
+    Cookies.remove('userToken');
   }
 };

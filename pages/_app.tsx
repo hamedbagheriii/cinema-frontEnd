@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isUser] = useAtom(TokenData);
 
   useEffect(() => {
-    localToken();
+    localToken()
   }, []);
 
   useEffect(() => {

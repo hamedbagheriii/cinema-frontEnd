@@ -18,16 +18,27 @@ axios.interceptors.response.use(
 // ! service =>>>
 export const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
-type ServiceProps = (url: string, method: string, data?: any , type ?: string) => Promise<any>;
-export const service: ServiceProps = async (url, method, data = null ,type = 'application/json') => {
+type ServiceProps = (
+  url: string,
+  method: string,
+  data?: any,
+  type?: string
+) => Promise<any>;
+export const service: ServiceProps = async (
+  url,
+  method,
+  data = null,
+  type = 'application/json'
+) => {
   return await axios({
     baseURL,
     url,
     method,
     data,
     headers: {
-      'Content-Type': type ,
-      Authorization: (await Cookies.get('userToken')) || '',
+      'Content-Type': type,
+      Authorization:
+        (await Cookies.get('userToken')) || localStorage.getItem('userToken') || '',
     },
   });
 };

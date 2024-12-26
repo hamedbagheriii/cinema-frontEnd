@@ -31,6 +31,7 @@ const onSubmit = async (
     if (res.status === 200) {
       localStorage.setItem('userToken', res.data.token);
       Cookies.set('userToken', res.data.token);
+      setToken(store);
 
       handleShowAlert(
         'شما با موفقیت وارد حساب کاربری خود شدید !',
@@ -41,11 +42,11 @@ const onSubmit = async (
 
       setTimeout(() => {
         router.push('/');
-        setToken(store);
       }, 3000);
     } else {
       Cookies.remove('userToken');
       localStorage.removeItem('userToken');
+      setToken(store);
 
       handleShowAlert(res.response.data.message || res.message, false, 'error', toast);
     }
@@ -54,6 +55,7 @@ const onSubmit = async (
 
     localStorage.removeItem('userToken');
     Cookies.remove('userToken');
+    setToken(store);
   } finally {
     setTimeout(() => {
       actions.setSubmitting(false);
@@ -112,7 +114,7 @@ const Login = () => {
                   className='w-9/12 mt-4'
                 />
 
-                <Link href='/auth/register' className='text-sm'>
+                <Link href='/auth/register' type='button' className='text-sm'>
                   حساب کاربری ندارید ؟ <span className='text-red-700'>ثبت نام . . .</span>
                 </Link>
               </Form>
