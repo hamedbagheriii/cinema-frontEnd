@@ -20,7 +20,7 @@ const Logout = () => {
       router.push('/auth/login')
       setTimeout(() => {
         router.refresh();
-      }, 200);
+      }, 400);
     }, 2000);
   };
 

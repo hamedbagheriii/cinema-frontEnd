@@ -203,7 +203,9 @@ const Event = () => {
   }, [hallData]);
 
   return isLoading ? (
-    <LoadingData />
+    <div className='my-10 px-4'>
+      <LoadingData />
+    </div>
   ) : (
     <div
       dir='rtl'
