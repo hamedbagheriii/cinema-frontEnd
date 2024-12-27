@@ -1,7 +1,7 @@
 import { service } from '../service';
 
 export const getMovieService = async (id?: number) => {
-  return await service(`/movie${id ? `/${id}` : null}`, 'get');
+  return await service(`/movie${id ? `/${id}` : ''}`, 'get');
 };
 
 export const getReservedSeatsService = async (

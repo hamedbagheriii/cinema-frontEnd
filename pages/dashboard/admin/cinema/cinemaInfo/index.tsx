@@ -26,7 +26,8 @@ const Index = () => {
   const handleGetCinemas = async () => {
     setIsLoading(true);
     const res = await getCinemasService();
-
+    console.log(res);
+    
     if (res.data.success === true) {
       setCinemas(res.data.data);
       setTimeout(() => {
